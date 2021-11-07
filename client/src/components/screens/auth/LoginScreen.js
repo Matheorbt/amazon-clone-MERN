@@ -1,4 +1,4 @@
-import { useState, useEffect } from "React";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -59,10 +59,20 @@ const LoginScreen = ({ history }) => {
             placeholder="Enter email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            tabIndex={1}
           />
         </div>
         <div className="form-group">
-          <label htmlFor="name">Password:</label>
+          <label htmlFor="name">
+            Password:
+            <Link
+              to="/forgotpassword"
+              className="login-screen__forgotpassword"
+              tabIndex={4}
+            >
+              Forgot Password ?
+            </Link>
+          </label>
           <input
             type="password"
             required
@@ -70,10 +80,11 @@ const LoginScreen = ({ history }) => {
             placeholder="Enter password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            tabIndex={2}
           />
         </div>
 
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary" tabIndex={3}>
           Login
         </button>
 
