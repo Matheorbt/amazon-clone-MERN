@@ -89,7 +89,7 @@ const LoginScreen = ({ history }) => {
         </button>
 
         <span className="register-screen__subtext">
-          Don't have an account ?<Link to="/register">Login</Link>
+          Don't have an account ?<Link to="/register">Register</Link>
         </span>
       </form>
     </div>
