@@ -1,0 +1,40 @@
+.login-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+form {
+  flex-grow: 1;
+}
+
+.footer-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: visible;
+  position: relative;
+}
+
+.footer-container__square {
+  width: 100%;
+  height: 200px;
+  bottom: 0;
+}
+
+.orange-square {
+  background-color: var(--main-orange);
+}
+
+.blue-square {
+  background-color: var(--main-blue);
+}
+
+.login-screen__logo {
+  min-width: 200px;
+  width: 20%;
+}

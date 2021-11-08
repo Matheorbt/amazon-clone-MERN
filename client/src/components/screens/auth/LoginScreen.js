@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 
 import "./LoginScreen.css";
 
+import AmazonLogo from "../../../assets/logo/Amazon-logo_black.png";
+
 const LoginScreen = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -47,6 +49,7 @@ const LoginScreen = ({ history }) => {
 
   return (
     <div className="login-screen">
+      <img className="login-screen__logo" src={AmazonLogo} alt="amazon logo" />
       <form onSubmit={loginHandler} action="" className="login-screen__form">
         <h3 className="login-screen__title">Login</h3>
         {error && <span className="error-message">{error}</span>}
@@ -92,6 +95,10 @@ const LoginScreen = ({ history }) => {
           Don't have an account ?<Link to="/register">Register</Link>
         </span>
       </form>
+      <footer className="footer-container">
+        <div className="footer-container__square orange-square"></div>
+        <div className="footer-container__square blue-square"></div>
+      </footer>
     </div>
   );
 };

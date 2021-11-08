@@ -1,3 +1,10 @@
+:root {
+  --main-blue: #232f3f;
+  --main-orange: #d87310;
+
+  --main-font: "PT Sans", sans-serif;
+}
+
 * {
   padding: 0;
   margin: 0;
