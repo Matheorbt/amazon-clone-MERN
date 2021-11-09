@@ -21,7 +21,7 @@ const LoginScreen = ({ history }) => {
     e.preventDefault();
 
     const config = {
-      hearder: {
+      header: {
         "Content-type": "application/json",
       },
     };
@@ -72,6 +72,7 @@ const LoginScreen = ({ history }) => {
               to="/forgotpassword"
               className="login-screen__forgotpassword"
               tabIndex={4}
+              style={{ color: "#5185F3", fontSize: "1rem" }}
             >
               Forgot Password ?
             </Link>
@@ -92,13 +93,12 @@ const LoginScreen = ({ history }) => {
         </button>
 
         <span className="register-screen__subtext">
-          Don't have an account ?<Link to="/register">Register</Link>
+          Don't have an account ?{" "}
+          <Link style={{ color: "#5185F3" }} to="/register">
+            Register
+          </Link>
         </span>
       </form>
-      <footer className="footer-container">
-        <div className="footer-container__square orange-square"></div>
-        <div className="footer-container__square blue-square"></div>
-      </footer>
     </div>
   );
 };

@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 
 import "./RegisterScreen.css";
 
+import AmazonLogo from "../../../assets/logo/Amazon-logo_black.png";
+
 const RegisterScreen = ({ history }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -21,7 +23,7 @@ const RegisterScreen = ({ history }) => {
     e.preventDefault();
 
     const config = {
-      hearder: {
+      header: {
         "Content-type": "application/json",
       },
     };
@@ -59,6 +61,11 @@ const RegisterScreen = ({ history }) => {
 
   return (
     <div className="register-screen">
+      <img
+        className="register-screen__logo"
+        src={AmazonLogo}
+        alt="amazon logo"
+      />
       <form
         onSubmit={registerHandler}
         action=""
@@ -115,7 +122,10 @@ const RegisterScreen = ({ history }) => {
         </button>
 
         <span className="register-screen__subtext">
-          Already have an account ? <Link to="/login">Login</Link>
+          Already have an account ?{" "}
+          <Link style={{ color: "#5185F3" }} to="/login">
+            Login
+          </Link>
         </span>
       </form>
     </div>

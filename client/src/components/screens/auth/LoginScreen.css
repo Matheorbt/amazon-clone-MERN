@@ -7,34 +7,52 @@
   width: 100%;
 }
 
-form {
-  flex-grow: 1;
-}
-
-.footer-container {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  overflow: visible;
-  position: relative;
-}
-
-.footer-container__square {
-  width: 100%;
-  height: 200px;
-  bottom: 0;
-}
-
-.orange-square {
-  background-color: var(--main-orange);
-}
-
-.blue-square {
-  background-color: var(--main-blue);
+.login-screen__title {
+  font-size: 2.5rem;
 }
 
 .login-screen__logo {
   min-width: 200px;
-  width: 20%;
+  width: 15%;
+  position: absolute;
+  top: 0;
+}
+
+.login-screen__form {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: flex-start;
+  gap: 20px;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 5px 5px 16px 5px rgba(0, 0, 0, 0.25);
+}
+
+.form-group {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group label {
+  font-size: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group input {
+  all: unset;
+  border: none;
+  border-bottom: 1px solid black;
+}
+
+.login-screen__forgotpassword {
+  font-size: italic;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
 }
