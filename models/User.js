@@ -8,6 +8,14 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide a username"],
   },
+  firstName: {
+    type: String,
+    required: [true, "Please provide a first name"],
+  },
+  lastName: {
+    type: String,
+    required: [true, "Please provide a last name"],
+  },
   test: {
     type: Array,
     default: ["test0", "test1"],

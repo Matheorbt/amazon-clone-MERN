@@ -6,6 +6,7 @@ const HomePage = ({ history }) => {
   const [error, setError] = useState("");
   const [privateData, setPrivateData] = useState("");
   const [usernames, setUsernames] = useState([""]);
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     if (!localStorage.getItem("authToken")) {
@@ -28,27 +29,34 @@ const HomePage = ({ history }) => {
       }
     };
     fetchPrivateData();
-
-    const fetchUserUsername = async () => {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        },
-      };
-
-      try {
-        const { data } = await axios.get("/api/fetchUserData/homepage", config);
-        // setUsernames(data.data);
-        for (let i = 0; i < data.data.length; i++) {
-          setUsernames((usernames) => [...usernames, data.data[i].username]);
-        }
-      } catch (error) {
-        setError("Error while trying to retrieve usernames");
-      }
-    };
-    fetchUserUsername();
   }, [history]);
+
+  const handleUsernameFetching = async (e) => {
+    e.preventDefault();
+    setUsernames([""]);
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    };
+
+    try {
+      const { data } = await axios.post(
+        "/api/fetchUserData/homepage",
+        {
+          username,
+        },
+        config
+      );
+      for (let i = 0; i < data.data.length; i++) {
+        setUsernames((usernames) => [...usernames, " " + data.data[i]._id]);
+      }
+    } catch (error) {
+      setError("Error while trying to retrieve usernames");
+    }
+  };
 
   const logoutHandler = () => {
     localStorage.removeItem("authToken");
@@ -61,8 +69,21 @@ const HomePage = ({ history }) => {
       <br />
       {privateData}
       <br />
-      {usernames}
+      Requested user id: {usernames}
       <br />
+      <form onSubmit={handleUsernameFetching}>
+        <input
+          type="text"
+          required
+          id="username"
+          placeholder="Enter username"
+          autoComplete="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          tabIndex={1}
+        />
+        <button type="submit">submit</button>
+      </form>
       <button onClick={() => logoutHandler()}>Log out</button>
     </>
   );
