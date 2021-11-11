@@ -13,7 +13,7 @@ const LoginScreen = ({ history }) => {
 
   useEffect(() => {
     if (localStorage.getItem("authToken")) {
-      history.push("/");
+      history.push("/homepage");
     }
   }, [history]);
 
@@ -38,7 +38,7 @@ const LoginScreen = ({ history }) => {
 
       localStorage.setItem("authToken", data.token);
 
-      history.push("/");
+      history.push("/homepage");
     } catch (error) {
       setError(error.response.data.error);
       setTimeout(() => {
@@ -60,6 +60,7 @@ const LoginScreen = ({ history }) => {
             required
             id="email"
             placeholder="Enter email"
+            autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             tabIndex={1}
@@ -82,6 +83,7 @@ const LoginScreen = ({ history }) => {
             required
             id="password"
             placeholder="Enter password"
+            autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             tabIndex={2}

@@ -15,7 +15,7 @@ const RegisterScreen = ({ history }) => {
 
   useEffect(() => {
     if (localStorage.getItem("authToken")) {
-      history.push("/");
+      history.push("/homepage");
     }
   }, [history]);
 

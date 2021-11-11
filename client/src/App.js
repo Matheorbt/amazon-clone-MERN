@@ -9,6 +9,8 @@ import LoginScreen from "./components/screens/auth/LoginScreen";
 import RegisterScreen from "./components/screens/auth/RegisterScreen";
 import ForgotPasswordScreen from "./components/screens/auth/ForgotPasswordScreen";
 import ResetPasswordScreen from "./components/screens/auth/ResetPasswordScreen";
+import NotFound from "./components/screens/misc/NotFound";
+import HomePage from "./components/screens/HomePage";
 
 const App = () => {
   return (
@@ -16,6 +18,7 @@ const App = () => {
       <div className="app">
         <Switch>
           <PrivateRoute exact path="/" component={PrivateScreen} />
+          <PrivateRoute exact path="/homepage" component={HomePage} />
           <Route exact path="/login" component={LoginScreen} />
           <Route exact path="/register" component={RegisterScreen} />
           <Route
@@ -28,6 +31,7 @@ const App = () => {
             path="/passwordreset/:resetToken"
             component={ResetPasswordScreen}
           />
+          <Route component={NotFound} />
         </Switch>
       </div>
     </Router>
