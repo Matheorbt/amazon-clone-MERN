@@ -2,13 +2,14 @@ const User = require("../models/User");
 const ErrorResponse = require("../utils/errorResponse");
 
 exports.fetchUserData = async (req, res, next) => {
-  const { username } = req.body;
+  const id = req.user._id.toString();
+  const array = ["test", "test1"];
 
   try {
-    const user = await User.find({ username });
+    const user = await User.findOne({ _id: id });
 
     if (!user) {
-      return next(new ErrorResponse("No users match this username", 404));
+      return next(new ErrorResponse("No user found", 404));
     }
 
     res.status(200).json({

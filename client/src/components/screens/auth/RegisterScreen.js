@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-import "./RegisterScreen.css";
-
 import AmazonLogo from "../../../assets/logo/Amazon-logo_black.png";
 
 const RegisterScreen = ({ history }) => {
@@ -50,7 +48,7 @@ const RegisterScreen = ({ history }) => {
 
       localStorage.setItem("authToken", data.token);
 
-      history.push("/");
+      history.push("/homepage");
     } catch (error) {
       setError(error.response.data.error);
       setTimeout(() => {
@@ -60,19 +58,15 @@ const RegisterScreen = ({ history }) => {
   };
 
   return (
-    <div className="register-screen">
+    <div className="flex flex-col justify-center items-center w-full h-screen">
       <img
-        className="register-screen__logo"
+        className="min-w-[250px] w-[20%] fixed top-0"
         src={AmazonLogo}
         alt="amazon logo"
       />
-      <form
-        onSubmit={registerHandler}
-        action=""
-        className="register-screen__form"
-      >
-        <h3 className="register-screen__title">Register</h3>
-        {error && <span className="error-message">{error}</span>}
+      <form onSubmit={registerHandler} action="" className="form-auth">
+        <h3 className="text-2xl font-bold">Register</h3>
+        {error && <span className="text-warning font-bold">{error}</span>}
         <div className="form-group">
           <label htmlFor="name">Username:</label>
           <input
@@ -117,11 +111,11 @@ const RegisterScreen = ({ history }) => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn-primary">
           Register
         </button>
 
-        <span className="register-screen__subtext">
+        <span className="italic">
           Already have an account ?{" "}
           <Link style={{ color: "#5185F3" }} to="/login">
             Login

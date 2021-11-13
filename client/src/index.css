@@ -1,42 +1,21 @@
-:root {
-  --main-blue: #232f3f;
-  --main-orange: #d87310;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  --link-color: #5185f3;
+@layer components {
+  .form-group {
+    @apply flex flex-col gap-4;
+  }
 
-  --main-font: "PT Sans", sans-serif;
-}
+  .form-group label {
+    @apply font-medium;
+  }
 
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  font-family: var(--main-font);
-  list-style-type: none;
-  text-decoration: none;
-}
+  .form-auth {
+    @apply flex flex-col gap-4 shadow-md p-8 rounded-lg;
+  }
 
-.btn {
-  all: unset;
-  color: white;
-  font-size: 1.5rem;
-  text-align: center;
-  width: 100%;
-  padding: 10px 0px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 5px;
-  transition: all 0.25s ease-in-out;
-}
-
-.btn:hover {
-  cursor: pointer;
-  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.25);
-}
-
-.btn-primary {
-  background-color: var(--main-blue);
-}
-
-.btn-secondary {
-  background-color: var(--main-orange);
+  .btn-primary {
+    @apply bg-main-blue text-white p-2 shadow-md transition-all rounded hover:shadow-none cursor-pointer;
+  }
 }
