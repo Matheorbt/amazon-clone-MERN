@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 import AmazonLogo from "../../../assets/logo/Amazon-logo_black.png";
+import FooterImage from "../../../assets/footer/footer-test.svg";
 
 const LoginScreen = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -103,8 +104,11 @@ const LoginScreen = ({ history }) => {
         </span>
       </form>
       <footer className="fixed bottom-0 w-screen flex">
-        <div className="w-[100%]  bg-main-orange h-24"></div>
-        <div className="w-[100%]  bg-main-blue h-24"></div>
+        <img
+          alt="footer visual"
+          src={FooterImage}
+          className="fixed bottom-0 w-screen z-[-1]"
+        />
       </footer>
     </div>
   );
