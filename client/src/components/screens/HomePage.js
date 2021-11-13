@@ -43,7 +43,6 @@ const HomePage = ({ history }) => {
         const { data } = await axios.get("/api/fetchUserData/homepage", config);
         const userInfosRaw = JSON.stringify(data.data);
         const userInfos = JSON.parse(userInfosRaw);
-        console.log(userInfos);
         setUsername(userInfos.username);
       } catch (error) {
         setError("Error while trying to retrieve user id");

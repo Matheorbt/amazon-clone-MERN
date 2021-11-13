@@ -4,13 +4,15 @@ const ErrorResponse = require("../utils/errorResponse");
 const sendEmail = require("../utils/sendEmail");
 
 exports.register = async (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, lastName, firstName } = req.body;
 
   try {
     const user = await User.create({
       username,
       email,
       password,
+      lastName,
+      firstName,
     });
 
     sendToken(user, 201, res);

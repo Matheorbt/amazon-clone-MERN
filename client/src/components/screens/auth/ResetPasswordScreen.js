@@ -42,13 +42,9 @@ const ResetPasswordScreen = ({ match }) => {
     }
   };
   return (
-    <div className="resetpassword-screen">
-      <form
-        action=""
-        className="resetpassword-screen__form"
-        onSubmit={resetPasswordHandler}
-      >
-        <h3 className="forgotpassword-screen__title">Reset password</h3>
+    <div className="flex flex-col justify-center items-center w-full h-screen">
+      <form action="" className="form-auth" onSubmit={resetPasswordHandler}>
+        <h3 className="text-2xl font-bold">Reset password</h3>
         {error && <span className="error-message">{error}</span>}
         {success && (
           <span className="success-message">
@@ -79,7 +75,7 @@ const ResetPasswordScreen = ({ match }) => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn-primary">
           Reset password
         </button>
       </form>

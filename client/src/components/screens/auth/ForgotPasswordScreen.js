@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 
+import AmazonLogo from "../../../assets/logo/Amazon-logo_black.png";
+
 const ForgotPasswordScreen = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
@@ -33,15 +35,16 @@ const ForgotPasswordScreen = () => {
   };
 
   return (
-    <div className="forgotpassword-screen">
-      <form
-        action=""
-        className="forgotpassword-screen__form"
-        onSubmit={forgotPasswordHandler}
-      >
-        <h3 className="forgotpassword-screen__title">Forgot password</h3>
-        {error && <span className="error-message">{error}</span>}
-        {success && <span className="success-message">{success}</span>}
+    <div className="flex flex-col justify-center items-center w-full h-screen">
+      <img
+        className="min-w-[250px] w-[15%] fixed top-0"
+        src={AmazonLogo}
+        alt="amazon logo"
+      />
+      <form action="" className="form-auth" onSubmit={forgotPasswordHandler}>
+        <h3 className="text-2xl font-bold">Forgot password</h3>
+        {error && <span className="text-warning">{error}</span>}
+        {success && <span className="text-success">{success}</span>}
         <div className="form-group">
           <p className="forgotpassword-screen_subtext">
             Please enter the email address you register your account with. We

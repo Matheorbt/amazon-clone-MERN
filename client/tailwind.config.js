@@ -11,6 +11,7 @@ module.exports = {
       black: "#000000",
       white: "#FFFFFF",
       warning: "#DE3F44",
+      success: "#1BA345",
     },
     fontFamily: {
       body: ["PT Sans", "sans-serif"],

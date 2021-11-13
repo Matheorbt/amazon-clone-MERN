@@ -6,6 +6,8 @@ import AmazonLogo from "../../../assets/logo/Amazon-logo_black.png";
 
 const RegisterScreen = ({ history }) => {
   const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -42,6 +44,8 @@ const RegisterScreen = ({ history }) => {
           username,
           email,
           password,
+          lastName,
+          firstName,
         },
         config
       );
@@ -76,6 +80,28 @@ const RegisterScreen = ({ history }) => {
             placeholder="Enter username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="name">Prénom:</label>
+          <input
+            type="text"
+            required
+            id="firstName"
+            placeholder="Enter first name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="name">Nom:</label>
+          <input
+            type="text"
+            required
+            id="lastName"
+            placeholder="Enter last name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
           />
         </div>
         <div className="form-group">
