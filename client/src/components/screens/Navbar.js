@@ -13,6 +13,7 @@ const Navbar = ({ history }) => {
   const [streetIndex, setStreetIndex] = useState("");
   const [country, setCountry] = useState("");
   const [zipCode, setZipCode] = useState("");
+  const [userInfo, setUserInfo] = useState([""]);
 
   const tags = [
     "Tous",
@@ -50,8 +51,9 @@ const Navbar = ({ history }) => {
         const { data } = await axios.get("/api/fetchUserData/homepage", config);
         const userInfosRaw = JSON.stringify(data.data);
         const userInfos = JSON.parse(userInfosRaw);
+        setUserInfo(userInfos);
       } catch (error) {
-        setError("Error while trying to retrieve user id");
+        setError("Error while trying to retrieve user infos");
       }
     };
     handleCurrentUserIdFetching();
@@ -91,7 +93,7 @@ const Navbar = ({ history }) => {
           </div>
           <div className="flex gap-2 flex-shrink">
             <h3 className="text-medium text-white">
-              Bonjour <span className="font-bold">{user.firstName}</span>{" "}
+              Bonjour <span className="font-bold">{userInfo["firstName"]}</span>{" "}
             </h3>
             <h3 className="font-bold text-white hover:opacity-70 cursor-pointer transition-all">
               Panier

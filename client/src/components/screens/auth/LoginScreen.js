@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 import AmazonLogo from "../../../assets/logo/Amazon-logo_black.png";
-import FooterImage from "../../../assets/footer/footer-test.svg";
+import FooterImage from "../../../assets/footer/footer-visual.svg";
 
 const LoginScreen = ({ history }) => {
   const [email, setEmail] = useState("");

@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 import AmazonLogo from "../../../assets/logo/Amazon-logo_black.png";
-import FooterImage from "../../../assets/footer/footer-test.svg";
+import FooterImage from "../../../assets/footer/footer-visual.svg";
 
 const RegisterScreen = ({ history }) => {
   //Form step index
@@ -40,6 +40,26 @@ const RegisterScreen = ({ history }) => {
     formIndex !== 0
       ? setFormIndex(formIndex - 1)
       : handleBackAlert("Already at step one");
+  };
+
+  const handleNext = () => {
+    if (formIndex === 0 && email !== "") {
+      setFormIndex(formIndex + 1);
+      setError("");
+    } else if (
+      formIndex === 1 &&
+      username !== "" &&
+      firstName !== "" &&
+      lastName !== ""
+    ) {
+      setFormIndex(formIndex + 1);
+      setError("");
+    } else {
+      setError("Please fill all the fields");
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+    }
   };
 
   const registerHandler = async (e) => {
@@ -94,13 +114,16 @@ const RegisterScreen = ({ history }) => {
       <form onSubmit={registerHandler} action="" className="form-auth">
         <h3 className="text-2xl font-bold">Register</h3>
         {error && <span className="text-warning font-bold">{error}</span>}
-        <button
-          type="button"
-          onClick={handleBack}
-          className="font-bold  flex justify-start items-center gap-2"
-        >
-          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
-        </button>
+        {formIndex === 0 ? null : (
+          <button
+            type="button"
+            onClick={handleBack}
+            className="font-bold  flex justify-start items-center gap-2"
+          >
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+          </button>
+        )}
+
         {formIndex === 0 ? (
           <div className="form-group">
             <label htmlFor="name">Email:</label>
@@ -179,7 +202,7 @@ const RegisterScreen = ({ history }) => {
           <button
             type="button"
             className="btn-primary"
-            onClick={() => setFormIndex(formIndex + 1)}
+            onClick={() => handleNext()}
           >
             Next
           </button>

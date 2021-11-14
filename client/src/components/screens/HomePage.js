@@ -30,25 +30,6 @@ const HomePage = ({ history }) => {
       }
     };
     fetchPrivateData();
-
-    const handleCurrentUserIdFetching = async () => {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        },
-      };
-
-      try {
-        const { data } = await axios.get("/api/fetchUserData/homepage", config);
-        const userInfosRaw = JSON.stringify(data.data);
-        const userInfos = JSON.parse(userInfosRaw);
-        setUsername(userInfos.username);
-      } catch (error) {
-        setError("Error while trying to retrieve user id");
-      }
-    };
-    handleCurrentUserIdFetching();
   }, [history]);
 
   const logoutHandler = () => {
@@ -59,13 +40,11 @@ const HomePage = ({ history }) => {
   return (
     <>
       <Navbar />
-      {error ? error : "no error"}
-      <br />
-      {privateData}
-      <br />
-      Current user infos: {username}
-      <br />
-      <button onClick={() => logoutHandler()}>Log out</button>
+      <div className="flex flex-col justify-center items-center w-full ">
+        <button onClick={() => logoutHandler()} className="btn-warning">
+          Log out
+        </button>
+      </div>
     </>
   );
 };
