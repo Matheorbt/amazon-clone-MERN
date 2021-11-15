@@ -91,10 +91,19 @@ const Navbar = ({ history }) => {
               </button>
             </div>
           </div>
-          <div className="flex gap-2 flex-shrink">
+          <div className="flex gap-2 flex-shrink relative items-start">
             <h3 className="text-medium text-white">
-              Bonjour <span className="font-bold">{userInfo["firstName"]}</span>{" "}
+              Bonjour {userInfo["firstName"]} <br />{" "}
+              <span className="font-bold">Compte et listes</span>
             </h3>
+            <div className="bg-white absolute p-12 top-[50px] invisible group-hover:visible">
+              <ul>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li>
+              </ul>
+            </div>
             <h3 className="font-bold text-white hover:opacity-70 cursor-pointer transition-all">
               Panier
             </h3>

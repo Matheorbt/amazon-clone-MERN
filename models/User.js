@@ -16,9 +16,31 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide a last name"],
   },
-  test: {
+  shoppingBag: {
     type: Array,
-    default: ["test0", "test1"],
+    default: [""],
+  },
+  deliveryInformation: {
+    city: {
+      type: String,
+      default: "",
+    },
+    zipCode: {
+      type: String,
+      default: "0",
+    },
+    streetName: {
+      type: String,
+      default: "",
+    },
+    streetIndex: {
+      type: String,
+      default: "",
+    },
+    country: {
+      type: String,
+      default: "France",
+    },
   },
   email: {
     type: String,

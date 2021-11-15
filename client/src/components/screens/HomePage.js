@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import React from "react";
 import axios from "axios";
 
+import carouselTest from "../../assets/logo/Amazon-logo_black.png";
+
 import Navbar from "./Navbar";
 
 const HomePage = ({ history }) => {

@@ -9,7 +9,14 @@ const NotFound = () => {
           <span className="text-main-orange">404</span>{" "}
           <span className="text-main-orange">page not found</span>
         </h1>
-        <Link to="/homepage" style={{ fontStyle: "bold", fontSize: "4rem" }}>
+        <Link
+          to="/homepage"
+          style={{
+            fontStyle: "bold",
+            fontSize: "4rem",
+            color: "white",
+          }}
+        >
           Accueil
         </Link>
       </div>
