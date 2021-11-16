@@ -13,7 +13,7 @@ app.use(express.json());
 
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/private", require("./routes/private"));
-app.use("/api/fetchUserData", require("./routes/fetchUserData"));
+app.use("/api/profile", require("./routes/profile"));
 
 //Error Handler Must be last Middleware
 app.use(errorHandler);

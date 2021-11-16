@@ -181,6 +181,7 @@ const RegisterScreen = ({ history }) => {
                 required
                 id="password"
                 placeholder="Enter password"
+                autoComplete="new-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -192,6 +193,7 @@ const RegisterScreen = ({ history }) => {
                 required
                 id="confirmpassword"
                 placeholder="Confirm password"
+                autoComplete="new-password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />

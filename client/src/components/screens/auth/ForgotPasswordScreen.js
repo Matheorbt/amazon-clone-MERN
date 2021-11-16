@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 
 import AmazonLogo from "../../../assets/logo/Amazon-logo_black.png";
+import FooterImage from "../../../assets/footer/footer-visual.svg";
 
 const ForgotPasswordScreen = () => {
   const [email, setEmail] = useState("");
@@ -64,6 +65,13 @@ const ForgotPasswordScreen = () => {
           Send Email
         </button>
       </form>
+      <footer className="fixed bottom-0 w-screen flex">
+        <img
+          alt="footer visual"
+          src={FooterImage}
+          className="fixed bottom-0 w-screen z-[-1]"
+        />
+      </footer>
     </div>
   );
 };

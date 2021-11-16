@@ -5,6 +5,7 @@ import axios from "axios";
 import carouselTest from "../../assets/logo/Amazon-logo_black.png";
 
 import Navbar from "./Navbar";
+import Account from "./Account";
 
 const HomePage = ({ history }) => {
   const [error, setError] = useState("");
@@ -42,6 +43,7 @@ const HomePage = ({ history }) => {
   return (
     <>
       <Navbar />
+      <Account />
       <div className="flex flex-col justify-center items-center w-full ">
         <button onClick={() => logoutHandler()} className="btn-warning">
           Log out

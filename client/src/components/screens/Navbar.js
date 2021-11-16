@@ -48,12 +48,15 @@ const Navbar = ({ history }) => {
       };
 
       try {
-        const { data } = await axios.get("/api/fetchUserData/homepage", config);
+        const { data } = await axios.get("/api/profile/info", config);
         const userInfosRaw = JSON.stringify(data.data);
         const userInfos = JSON.parse(userInfosRaw);
         setUserInfo(userInfos);
       } catch (error) {
         setError("Error while trying to retrieve user infos");
+        setTimeout(() => {
+          setError("");
+        }, 5000);
       }
     };
     handleCurrentUserIdFetching();
@@ -75,6 +78,7 @@ const Navbar = ({ history }) => {
               {user.deliveryAdress.city + " " + user.deliveryAdress.zipCode}
             </span>
           </h3>
+          {error}
           <div className="flex flex-grow">
             <div className="bg-white shadow-md rounded-lg w-[100%] flex justify-around h-12">
               <select
