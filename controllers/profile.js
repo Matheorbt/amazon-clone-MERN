@@ -26,25 +26,50 @@ exports.info = async (req, res, next) => {
 };
 
 exports.update = async (req, res, next) => {
-  const id = req.user._id.toString();
-  const array = ["test", "test1"];
+  const {
+    email,
+    lastName,
+    firstName,
+    zipCode,
+    streetIndex,
+    streetName,
+    city,
+    country,
+    userID,
+  } = req.body;
+  console.log(userID);
+  if (!email || !lastName || !firstName) {
+    return next(
+      new ErrorResponse(
+        "Please provide at least an email, a last name and a first name",
+        400
+      )
+    );
+  }
 
   try {
-    const user = await User.findOne({ _id: id });
+    const user = await User.findOne({ _id: userID });
 
     if (!user) {
-      return next(new ErrorResponse("No user found", 404));
+      return next(new ErrorResponse("Invalid user ID", 400));
     }
 
-    res.status(200).json({
+    user.email = email;
+    user.lastName = lastName;
+    user.firstName = firstName;
+    user.zipCode = zipCode;
+    user.streetIndex = streetIndex;
+    user.streetName = streetName;
+    user.city = city;
+    user.country = country;
+
+    await user.save();
+
+    res.status(201).json({
       success: true,
-      data: user,
+      data: "User personnal informations modification success",
     });
   } catch (error) {
-    res.status(500).json({
-      succes: false,
-      error: error.message,
-    });
-    return next(new ErrorResponse("Error while trying to retrieve user", 500));
+    next(error);
   }
 };

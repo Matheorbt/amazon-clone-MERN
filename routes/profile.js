@@ -6,6 +6,6 @@ const { info, update } = require("../controllers/profile");
 
 router.route("/info").get(protect, info);
 
-router.route("/update").patch(protect, update);
+router.route("/update").put(protect, update);
 
 module.exports = router;
