@@ -27,18 +27,18 @@ exports.info = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   const {
-    email,
-    lastName,
-    firstName,
-    zipCode,
-    streetIndex,
-    streetName,
-    city,
-    country,
+    emailModification,
+    lastNameModification,
+    firstNameModification,
+    zipCodeModification,
+    streetIndexModification,
+    streetNameModification,
+    cityModification,
+    countryModification,
     userID,
   } = req.body;
-  console.log(userID);
-  if (!email || !lastName || !firstName) {
+
+  if (!emailModification || !lastNameModification || !firstNameModification) {
     return next(
       new ErrorResponse(
         "Please provide at least an email, a last name and a first name",
@@ -54,14 +54,14 @@ exports.update = async (req, res, next) => {
       return next(new ErrorResponse("Invalid user ID", 400));
     }
 
-    user.email = email;
-    user.lastName = lastName;
-    user.firstName = firstName;
-    user.zipCode = zipCode;
-    user.streetIndex = streetIndex;
-    user.streetName = streetName;
-    user.city = city;
-    user.country = country;
+    user.email = emailModification;
+    user.lastName = lastNameModification;
+    user.firstName = firstNameModification;
+    user.zipCode = zipCodeModification;
+    user.streetIndex = streetIndexModification;
+    user.streetName = streetNameModification;
+    user.city = cityModification;
+    user.country = countryModification;
 
     await user.save();
 

@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const Account = ({ history }) => {
+const Account = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -15,6 +15,16 @@ const Account = ({ history }) => {
   const [streetIndex, setStreetIndex] = useState("");
   const [country, setCountry] = useState("");
   const [zipCode, setZipCode] = useState("");
+
+  const [firstNameModification, setFirstNameModification] = useState("");
+  const [emailModification, setEmailModification] = useState("");
+  const [lastNameModification, setLastNameModification] = useState("");
+
+  const [cityModification, setCityModification] = useState("");
+  const [streetNameModification, setStreetNameModification] = useState("");
+  const [streetIndexModification, setStreetIndexModification] = useState("");
+  const [countryModification, setCountryModification] = useState("");
+  const [zipCodeModification, setZipCodeModification] = useState("");
 
   const [userInfo, setUserInfo] = useState([""]);
   const [userDeliveryInfo, setUserDeliveryInfo] = useState([""]);
@@ -60,7 +70,7 @@ const Account = ({ history }) => {
       }
     };
     handleCurrentUserIdFetching();
-  }, [history, userInfo, userDeliveryInfo]);
+  }, [userInfo, userDeliveryInfo]);
 
   const profileModificationHandler = async (e) => {
     e.preventDefault();
@@ -74,14 +84,14 @@ const Account = ({ history }) => {
       const { data } = await axios.put(
         "/api/profile/update",
         {
-          email,
-          lastName,
-          firstName,
-          zipCode,
-          streetIndex,
-          streetName,
-          city,
-          country,
+          emailModification,
+          lastNameModification,
+          firstNameModification,
+          zipCodeModification,
+          streetIndexModification,
+          streetNameModification,
+          cityModification,
+          countryModification,
           userID,
         },
         config
@@ -121,8 +131,8 @@ const Account = ({ history }) => {
                   id="email"
                   placeholder="Enter email"
                   autoComplete="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  defaultValue={email}
+                  onChange={(e) => setEmailModification(e.target.value)}
                 />
               </div>
               <div className="form-group">
@@ -131,10 +141,10 @@ const Account = ({ history }) => {
                   type="text"
                   required
                   id="firstName"
-                  value={firstName}
+                  defaultValue={firstName}
                   placeholder="Enter First name"
                   autoComplete="given-name"
-                  onChange={(e) => setFirstName(e.target.value)}
+                  onChange={(e) => setFirstNameModification(e.target.value)}
                 />
               </div>
 
@@ -146,8 +156,8 @@ const Account = ({ history }) => {
                   id="lastName"
                   placeholder="Enter Last name"
                   autoComplete="family-name"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
+                  defaultValue={lastName}
+                  onChange={(e) => setLastNameModification(e.target.value)}
                 />
               </div>
             </section>
@@ -161,9 +171,9 @@ const Account = ({ history }) => {
                   id="country"
                   name="Country"
                   className="form-select"
-                  value={country}
+                  defaultValue={country}
                   autoComplete="country-name"
-                  onChange={(e) => setCountry(e.target.value)}
+                  onChange={(e) => setCountryModification(e.target.value)}
                 >
                   <option value="Afghanistan">Afghanistan</option>
                   <option value="Åland Islands">Åland Islands</option>
@@ -488,8 +498,8 @@ const Account = ({ history }) => {
                   id="city"
                   placeholder="Enter City"
                   autoComplete="current-password"
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
+                  defaultValue={city}
+                  onChange={(e) => setCityModification(e.target.value)}
                 />
               </div>
               <div className="form-group">
@@ -500,8 +510,8 @@ const Account = ({ history }) => {
                   id="streetNumber"
                   placeholder="Enter Street number"
                   autoComplete="address-line1"
-                  value={streetIndex}
-                  onChange={(e) => setStreetIndex(e.target.value)}
+                  defaultValue={streetIndex}
+                  onChange={(e) => setStreetIndexModification(e.target.value)}
                 />
               </div>
 
@@ -513,8 +523,8 @@ const Account = ({ history }) => {
                   id="streetName"
                   placeholder="Enter Street name"
                   autoComplete="on"
-                  value={streetName}
-                  onChange={(e) => setStreetName(e.target.value)}
+                  defaultValue={streetName}
+                  onChange={(e) => setStreetNameModification(e.target.value)}
                 />
               </div>
 
@@ -526,13 +536,13 @@ const Account = ({ history }) => {
                   id="zipCode"
                   placeholder="Enter zip code"
                   autoComplete="postal-code"
-                  value={zipCode}
-                  onChange={(e) => setZipCode(e.target.value)}
+                  defaultValue={zipCode}
+                  onChange={(e) => setZipCodeModification(e.target.value)}
                 />
               </div>
             </section>
           </div>
-          <button type="submit" className="btn-primary grow-1">
+          <button type="submit" className="btn-primary w-[100%]">
             Save
           </button>
         </form>

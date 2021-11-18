@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import React from "react";
 import axios from "axios";
 
-import carouselTest from "../../assets/logo/Amazon-logo_black.png";
-
 import Navbar from "./Navbar";
+import Items from "./items/ItemsGrid";
 import Account from "./Account";
+import ItemsGrid from "./items/ItemsGrid";
 
 const HomePage = ({ history }) => {
   const [error, setError] = useState("");
@@ -43,6 +43,7 @@ const HomePage = ({ history }) => {
   return (
     <>
       <Navbar />
+      <ItemsGrid />
       <Account />
       <div className="flex flex-col justify-center items-center w-full ">
         <button onClick={() => logoutHandler()} className="btn-warning">

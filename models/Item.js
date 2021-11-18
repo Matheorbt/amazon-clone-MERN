@@ -1,9 +1,13 @@
 const mongoose = require("mongoose");
 
-const Item = new mongoose.Schema({
+const ItemSchema = new mongoose.Schema({
   title: {
     type: String,
     required: [true, "Please provide a title"],
+  },
+  price: {
+    type: Number,
+    required: [true, "Please provide a price"],
   },
   description: {
     type: String,
