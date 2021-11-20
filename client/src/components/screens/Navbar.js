@@ -61,6 +61,24 @@ const Navbar = ({ history }) => {
     };
     handleCurrentUserIdFetching();
   }, [history]);
+
+  document.addEventListener("click", (e) => {
+    const isDropdownButton = e.target.matches("[data-dropdown-button]");
+
+    if (!isDropdownButton && e.target.closest("[data-dropdown") != null) return;
+
+    let currentDropdown;
+
+    if (isDropdownButton) {
+      currentDropdown = e.target.closest("[data-dropdown");
+      currentDropdown.classList.toggle("active");
+    }
+
+    document.querySelectorAll("[data-dropdown].active").forEach((dropdown) => {
+      if (dropdown === currentDropdown) return;
+      dropdown.classList.remove("active");
+    });
+  });
   return (
     <>
       <nav className="flex flex-col">
@@ -78,7 +96,6 @@ const Navbar = ({ history }) => {
               {user.deliveryAdress.city + " " + user.deliveryAdress.zipCode}
             </span>
           </h3>
-          {error}
           <div className="flex flex-grow">
             <div className="bg-white shadow-md rounded-lg w-[100%] flex justify-around h-12">
               <select
@@ -96,10 +113,25 @@ const Navbar = ({ history }) => {
             </div>
           </div>
           <div className="flex gap-2 flex-shrink relative items-start">
-            <h3 className="text-medium text-white">
-              Bonjour {userInfo["firstName"]} <br />{" "}
-              <span className="font-bold">Compte et listes</span>
-            </h3>
+            <div>
+              <h3 className="text-medium text-white">
+                Bonjour {userInfo["firstName"]} <br />{" "}
+              </h3>
+              <div className="dropdown" data-dropdown>
+                <button
+                  className="link opacity-[1] text-white"
+                  data-dropdown-button
+                >
+                  Compte et listes
+                </button>
+                <div className="dropdown-menu z-20">
+                  <a className="text-black" href="/">
+                    dropdown Content
+                  </a>
+                </div>
+              </div>
+            </div>
+
             <div className="bg-white absolute p-12 top-[50px] invisible group-hover:visible">
               <ul>
                 <li>test</li>
@@ -114,7 +146,7 @@ const Navbar = ({ history }) => {
           </div>
         </div>
         <div className=" bg-main-blue w-screen flex justify-evenly items-center gap-8 p-3">
-          <ul className="flex justify-around items-center flex-grow">
+          <ul className="flex justify-around items-center flex-grow z-10">
             {tags.map((tag) => {
               return (
                 <li

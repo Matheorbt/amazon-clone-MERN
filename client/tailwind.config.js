@@ -3,6 +3,9 @@ module.exports = {
   purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   darkMode: "class",
   theme: {
+    width: {
+      "fit-content": "fit-content",
+    },
     colors: {
       "main-orange": "#D87310",
       "secondary-orange": "#F3A847",

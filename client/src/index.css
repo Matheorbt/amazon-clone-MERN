@@ -28,6 +28,35 @@
   }
 
   .card-container {
-    @apply flex-col gap-4 shadow-md p-8 rounded-lg bg-white z-10;
+    @apply flex-col gap-6 shadow-md p-8 rounded-lg bg-white z-10 cursor-pointer transition-shadow;
   }
+}
+
+.dropdown.active > .link,
+.link:hover {
+  opacity: 0.8;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  left: 0px;
+  top: calc(100% + 0.25rem);
+  background-color: white;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
+  pointer-events: none;
+}
+
+.dropdown.active > .link + .dropdown-menu {
+  opacity: 1;
+  transform: translateY(0px);
+  pointer-events: auto;
 }

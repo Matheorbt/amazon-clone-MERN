@@ -17,6 +17,25 @@ exports.list = async (req, res, next) => {
   }
 };
 
+exports.fetchItemByID = async (req, res, next) => {
+  const itemID = req.params.itemID;
+
+  try {
+    const item = await Item.findOne({ _id: itemID });
+
+    res.status(201).json({
+      success: true,
+      message: "Item fetched successfuly",
+      item: item,
+    });
+  } catch (error) {
+    res.status(500).json({
+      succes: false,
+      error: error.message,
+    });
+  }
+};
+
 exports.remove = async (req, res, next) => {
   const { email, password } = req.body;
 

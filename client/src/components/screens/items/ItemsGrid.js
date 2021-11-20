@@ -6,7 +6,6 @@ import ItemCard from "./ItemCard";
 
 const ItemsGrid = () => {
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [itemsList, setItemsList] = useState([""]);
 
   useEffect(() => {
@@ -31,17 +30,18 @@ const ItemsGrid = () => {
       }
     };
     fetchItemList();
-  });
-
+  }, []);
   return (
     <>
-      <ul className="flex">
+      <ul className="grid grid-cols-5 m-8">
         {itemsList.map((item) => (
-          <ItemCard item={item} />
+          <li>
+            {console.log(item["_id"])}
+            <ItemCard key={item["_id"]} item={item} />
+          </li>
         ))}
       </ul>
       {error && <span className="text-warning font-bold">{error}</span>}
-      {success && <span className="text-success font-bold">{success}</span>}
     </>
   );
 };

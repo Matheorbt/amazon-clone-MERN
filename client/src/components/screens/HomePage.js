@@ -44,7 +44,6 @@ const HomePage = ({ history }) => {
     <>
       <Navbar />
       <ItemsGrid />
-      <Account />
       <div className="flex flex-col justify-center items-center w-full ">
         <button onClick={() => logoutHandler()} className="btn-warning">
           Log out
