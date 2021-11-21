@@ -220,12 +220,8 @@ const RegisterScreen = ({ history }) => {
           </Link>
         </span>
       </form>
-      <footer className="fixed bottom-0 w-screen flex">
-        <img
-          alt="footer visual"
-          src={FooterImage}
-          className="fixed bottom-0 w-screen z-[-1]"
-        />
+      <footer className="fixed bottom-0 w-screen flexz-[-1] left-0 ba">
+        <img alt="footer visual w-[100%]" src={FooterImage} />
       </footer>
     </div>
   );

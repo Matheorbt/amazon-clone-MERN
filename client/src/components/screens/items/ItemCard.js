@@ -21,9 +21,9 @@ const ItemCard = ({ item }) => {
           {tags
             ? tags.map((tag) => (
                 <li key={tag}>
-                  <p className="p-[0.2rem] border-solid border-2 border-light-blue-500 rounded-lg">
+                  <span className="p-[0.2rem] border-solid border-2 border-light-blue-500 rounded-lg">
                     {tag}
-                  </p>
+                  </span>
                 </li>
               ))
             : null}

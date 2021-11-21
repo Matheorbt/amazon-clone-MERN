@@ -103,11 +103,11 @@ const LoginScreen = ({ history }) => {
           </Link>
         </span>
       </form>
-      <footer className="fixed bottom-0 w-screen flex">
+      <footer className="fixed bottom-0 w-screen flexz-[-1] left-0">
         <img
-          alt="footer visual"
+          alt="footer visual w-[100%]"
           src={FooterImage}
-          className="fixed bottom-0 w-screen z-[-1]"
+          className="w-screen"
         />
       </footer>
     </div>
