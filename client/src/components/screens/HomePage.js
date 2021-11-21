@@ -40,9 +40,10 @@ const HomePage = ({ history }) => {
     console.clear();
     history.push("/login");
   };
+
   return (
     <>
-      <Navbar />
+      <Navbar history={history} />
       <ItemsGrid />
       <div className="flex flex-col justify-center items-center w-full ">
         <button onClick={() => logoutHandler()} className="btn-warning">

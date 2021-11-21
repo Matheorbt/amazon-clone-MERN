@@ -1,12 +1,14 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import ReactLoading from "react-loading";
 
 import ItemCard from "./ItemCard";
 
 const ItemsGrid = () => {
   const [error, setError] = useState("");
   const [itemsList, setItemsList] = useState([""]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchItemList = async () => {
@@ -22,6 +24,7 @@ const ItemsGrid = () => {
         const itemListRaw = JSON.stringify(data);
         const itemList = JSON.parse(itemListRaw);
         setItemsList(itemList.itemsList);
+        setLoading(false);
       } catch (error) {
         setError("Error while trying to retrieve items");
         setTimeout(() => {
@@ -33,15 +36,23 @@ const ItemsGrid = () => {
   }, []);
   return (
     <>
-      <ul className="grid grid-cols-5 m-8">
-        {itemsList.map((item) => (
-          <li>
-            {console.log(item["_id"])}
-            <ItemCard key={item["_id"]} item={item} />
-          </li>
-        ))}
-      </ul>
-      {error && <span className="text-warning font-bold">{error}</span>}
+      {loading ? (
+        <div className="flex justify-center items-center">
+          <ReactLoading type="bubbles" color="#232F3F" height={50} width={50} />
+        </div>
+      ) : (
+        <div>
+          <ul className="grid grid-cols-5 m-8">
+            {itemsList.map((item) => (
+              <li>
+                {console.log(item["_id"])}
+                <ItemCard key={item["_id"]} item={item} />
+              </li>
+            ))}
+          </ul>
+          {error && <span className="text-warning font-bold">{error}</span>}
+        </div>
+      )}
     </>
   );
 };

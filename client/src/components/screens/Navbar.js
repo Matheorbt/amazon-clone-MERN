@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 import logo from "../../assets/logo/Amazon-logo_white.svg";
 
@@ -14,6 +15,8 @@ const Navbar = ({ history }) => {
   const [country, setCountry] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [userInfo, setUserInfo] = useState([""]);
+
+  const [dropdownToggled, setDropdownToggled] = useState(false);
 
   const tags = [
     "Tous",
@@ -62,28 +65,21 @@ const Navbar = ({ history }) => {
     handleCurrentUserIdFetching();
   }, [history]);
 
-  document.addEventListener("click", (e) => {
-    const isDropdownButton = e.target.matches("[data-dropdown-button]");
+  const logoutHandler = () => {
+    localStorage.removeItem("authToken");
+    console.clear();
+    history.push("/login");
+  };
 
-    if (!isDropdownButton && e.target.closest("[data-dropdown") != null) return;
-
-    let currentDropdown;
-
-    if (isDropdownButton) {
-      currentDropdown = e.target.closest("[data-dropdown");
-      currentDropdown.classList.toggle("active");
-    }
-
-    document.querySelectorAll("[data-dropdown].active").forEach((dropdown) => {
-      if (dropdown === currentDropdown) return;
-      dropdown.classList.remove("active");
-    });
-  });
   return (
     <>
       <nav className="flex flex-col">
         <div className="bg-secondary-blue w-screen flex justify-evenly items-center gap-8 p-5">
-          <img src={logo} alt="logo" className="min-w-[90px] w-[5%]" />
+          <span className="min-w-[90px] w-[5%]">
+            <Link to="/homepage" className="flex-shrink">
+              <img src={logo} alt="logo" />
+            </Link>
+          </span>
           <h3 className="text-medium text-white">
             Livrer au{" "}
             <span className="font-bold">
@@ -117,29 +113,72 @@ const Navbar = ({ history }) => {
               <h3 className="text-medium text-white">
                 Bonjour {userInfo["firstName"]} <br />{" "}
               </h3>
-              <div className="dropdown" data-dropdown>
+              <div className="dropdown">
                 <button
                   className="link opacity-[1] text-white"
-                  data-dropdown-button
+                  onClick={() => setDropdownToggled(!dropdownToggled)}
                 >
                   Compte et listes
                 </button>
-                <div className="dropdown-menu z-20">
-                  <a className="text-black" href="/">
-                    dropdown Content
-                  </a>
+                <div
+                  className={
+                    dropdownToggled
+                      ? "dropdown-menu z-20"
+                      : "dropdown-menu z-20 hidden"
+                  }
+                >
+                  <div className="flex gap-5 divide-x divide-black p-3">
+                    <div className="flex-col gap-2 p-3">
+                      <h3 className="font-bold">Votre compte</h3>
+                      <ul className="flex-col gap-2">
+                        <li>
+                          <a
+                            href="/homepage"
+                            className="hover:opacity-50 transition-opacity"
+                          >
+                            Vos informations
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/homepage"
+                            className="hover:opacity-50 transition-opacity"
+                          >
+                            Vos commandes
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/homepage"
+                            className="hover:opacity-50 transition-opacity"
+                          >
+                            Votre liste d'envie
+                          </a>
+                        </li>
+                        <li className="text-warning">
+                          <button onClick={() => logoutHandler()}>
+                            Déconnexion
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="flex-col w-fit-content p-3">
+                      <h3 className="font-bold">Votre listes d'envies</h3>
+                      <ul className="w-fit-content">
+                        <li>(Nom des listes d'envies du user)</li>
+                      </ul>
+                    </div>
+                    <div className="flex-col p-3">
+                      <h3 className="font-bold">Acheter à nouveau</h3>
+                      <ul>
+                        <li>(Liste des 5 derniers commandes)</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white absolute p-12 top-[50px] invisible group-hover:visible">
-              <ul>
-                <li>test</li>
-                <li>test</li>
-                <li>test</li>
-                <li>test</li>
-              </ul>
-            </div>
             <h3 className="font-bold text-white hover:opacity-70 cursor-pointer transition-all">
               Panier
             </h3>
