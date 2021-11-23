@@ -28,7 +28,7 @@ const ItemCard = ({ item, history }) => {
   }, [history]);
   return (
     <Link to={"/item/" + _id}>
-      <div className="flex card-container w-fit-content hover:shadow gap-3 max-w-sm">
+      <div className="flex card-container transition-shadow w-fit-content hover:shadow gap-3 max-w-sm">
         <img
           className="max-w-xs w-[30%] min-w-[150px]"
           src={thumbnail}

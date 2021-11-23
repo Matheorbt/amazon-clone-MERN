@@ -44,8 +44,7 @@ const ItemsGrid = () => {
         <div>
           <ul className="grid grid-cols-4 m-8">
             {itemsList.map((item) => (
-              <li>
-                {console.log(item["_id"])}
+              <li key={item["_id"]}>
                 <ItemCard key={item["_id"]} item={item} />
               </li>
             ))}

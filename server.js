@@ -15,6 +15,7 @@ app.use("/api/auth", require("./routes/auth"));
 app.use("/api/private", require("./routes/private"));
 app.use("/api/profile", require("./routes/profile"));
 app.use("/api/items", require("./routes/items"));
+app.use("/api/cart", require("./routes/cart"));
 
 //Error Handler Must be last Middleware
 app.use(errorHandler);
