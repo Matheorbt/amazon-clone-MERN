@@ -28,8 +28,12 @@ const ItemCard = ({ item, history }) => {
   }, [history]);
   return (
     <Link to={"/item/" + _id}>
-      <div className="flex card-container w-fit-content hover:shadow-none gap-3">
-        <img src={thumbnail} alt={title} />
+      <div className="flex card-container w-fit-content hover:shadow gap-3 max-w-sm">
+        <img
+          className="max-w-xs w-[30%] min-w-[150px]"
+          src={thumbnail}
+          alt={title}
+        />
         <span className="font-bold">{title}</span>
         <p className="italic">{trimmedDescription}...</p>
         <p className="font-medium">
@@ -50,8 +54,6 @@ const ItemCard = ({ item, history }) => {
               ))
             : null}
         </ul>
-        <br />
-        {rating + "/5"}
       </div>
     </Link>
   );

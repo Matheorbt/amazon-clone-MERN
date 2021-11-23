@@ -42,7 +42,7 @@ const ItemsGrid = () => {
         </div>
       ) : (
         <div>
-          <ul className="grid grid-cols-5 m-8">
+          <ul className="grid grid-cols-4 m-8">
             {itemsList.map((item) => (
               <li>
                 {console.log(item["_id"])}

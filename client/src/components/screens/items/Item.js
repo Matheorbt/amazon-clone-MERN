@@ -9,13 +9,13 @@ const Item = ({ history }) => {
   const [error, setError] = useState("");
   const [item, setItem] = useState([""]);
   const [loading, setLoading] = useState(true);
+  const [thumbnail, setThumbnail] = useState("");
+  const [images, setImages] = useState([""]);
 
   const { itemID } = useParams();
 
   useEffect(() => {
-    if (!localStorage.getItem("authToken")) {
-      history.push("/login");
-    }
+    console.log("useffect trigger");
     const fetchItemByID = async () => {
       const config = {
         headers: {
@@ -24,6 +24,10 @@ const Item = ({ history }) => {
         },
       };
 
+      if (!localStorage.getItem("authToken")) {
+        history.push("/login");
+      }
+
       try {
         const { data } = await axios.get(
           "/api/items/fetchItemByID/" + itemID,
@@ -31,6 +35,8 @@ const Item = ({ history }) => {
         );
         setItem(data.item);
         setLoading(false);
+        setThumbnail(item.thumbnail);
+        setImages([...item.images, item.thumbnail]);
       } catch (error) {
         setError("Error while trying to retrieve item by ID");
         setTimeout(() => {
@@ -39,8 +45,7 @@ const Item = ({ history }) => {
       }
     };
     fetchItemByID();
-  }, []);
-  console.log(item);
+  }, [loading]);
   return (
     <>
       <Navbar />
@@ -50,13 +55,17 @@ const Item = ({ history }) => {
         </div>
       ) : (
         <section className="flex m-8 gap-2 items-start justify-center">
-          <div className="flex">
+          <div className="flex items-center gap-5">
             <ul>
-              {item.images
-                ? item.images.map((image) => (
-                    <li>
+              {images
+                ? images.map((image) => (
+                    <li key={image} onClick={() => setThumbnail(image)}>
                       <img
-                        className="w-[150px]"
+                        className={
+                          image !== thumbnail
+                            ? "w-[100px] p-3"
+                            : "w-[125px] border-2 border-black"
+                        }
                         src={image}
                         alt={item.title}
                       ></img>
@@ -65,17 +74,21 @@ const Item = ({ history }) => {
                 : null}
             </ul>
             <div>
-              <img src={item.thumbnail} alt={item.title} />
+              <img
+                src={thumbnail}
+                alt={item.title}
+                className="min-w-[250px] w-[25rem] max-w-[350px]"
+              />
             </div>
           </div>
-          <div className="flex-col gap-2">
+          <div className="flex flex-col gap-5">
             <h1 className="font-bold text-lg">{item.title}</h1>
             <p>{item.description}</p>
             <ul className="flex gap-2">
               {item.tags
                 ? item.tags.map((tag) => (
-                    <li>
-                      <span className="p-[0.2rem] border-solid border-2 border-light-blue-500 rounded-lg">
+                    <li key={tag}>
+                      <span className="p-[0.5rem] rounded-lg shadow-lg">
                         {tag}
                       </span>
                     </li>
@@ -90,7 +103,49 @@ const Item = ({ history }) => {
             ) : (
               <p>Only: {item.quantityleft} left !</p>
             )}
-            <br />
+            <div>
+              <i
+                className={
+                  item.rating >= 1
+                    ? "fa fa-star text-[1.5rem] text-secondary-orange"
+                    : "fa fa-star"
+                }
+                aria-hidden="true"
+              ></i>
+              <i
+                className={
+                  item.rating >= 2
+                    ? "fa fa-star text-[1.5rem] text-secondary-orange"
+                    : "fa fa-star"
+                }
+                aria-hidden="true"
+              ></i>
+              <i
+                className={
+                  item.rating >= 3
+                    ? "fa fa-star text-[1.5rem] text-secondary-orange"
+                    : "fa fa-star"
+                }
+                aria-hidden="true"
+              ></i>
+              <i
+                className={
+                  item.rating >= 4
+                    ? "fa fa-star text-[1.5rem] text-secondary-orange"
+                    : "fa fa-star"
+                }
+                aria-hidden="true"
+              ></i>
+              <i
+                className={
+                  item.rating >= 5
+                    ? "fa fa-star text-[1.5rem] text-secondary-orange"
+                    : "fa fa-star text-[1.5rem] text-white"
+                }
+                aria-hidden="true"
+              ></i>
+            </div>
+
             <span>Rating:{item.rating}/5</span>
           </div>
         </section>
