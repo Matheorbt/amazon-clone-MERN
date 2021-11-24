@@ -1,11 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
+const { protect } = require("../middleware/auth");
+
 const { list, addItemByID, removeItemByID } = require("../controllers/cart");
 
-router.route("/list").post(list);
+router.route("/list").post(protect, list);
 
-router.route("/addItemByID").post(addItemByID);
+router.route("/addItemByID/:itemID").get(protect, addItemByID);
 
-router.route("/removeItemByID").post(removeItemByID);
+router.route("/removeItemByID/:itemID").post(protect, removeItemByID);
+
 module.exports = router;

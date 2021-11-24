@@ -1,3 +1,4 @@
+const Item = require("../models/Item");
 const User = require("../models/User");
 const ErrorResponse = require("../utils/errorResponse");
 
@@ -19,9 +20,15 @@ exports.list = async (req, res, next) => {
 
 exports.addItemByID = async (req, res, next) => {
   const itemID = req.params.itemID;
+  const userID = req.user._id.toString();
 
   try {
     const item = await Item.findOne({ _id: itemID });
+    const user = await User.findOne({ _id: userID });
+
+    user.shoppingBag.push(item);
+
+    await user.save();
 
     res.status(201).json({
       success: true,

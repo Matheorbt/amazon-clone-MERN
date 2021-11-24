@@ -15,6 +15,10 @@ const Item = ({ history }) => {
   const { itemID } = useParams();
 
   useEffect(() => {
+    if (!localStorage.getItem("authToken")) {
+      history.push("/login");
+    }
+
     const fetchItemByID = async () => {
       const config = {
         headers: {
@@ -45,6 +49,31 @@ const Item = ({ history }) => {
     };
     fetchItemByID();
   }, [loading]);
+
+  const handleAddItemToCart = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    };
+    try {
+      const { data } = await axios.get(
+        "/api/cart/addItemByID/" + itemID,
+        config
+      );
+    } catch (error) {
+      setError("Error while trying to add item to cart");
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+    }
+  };
+
+  const handleAddItemToList = () => {
+    window.alert("add item to list");
+  };
+
   return (
     <>
       <Navbar />
@@ -53,8 +82,8 @@ const Item = ({ history }) => {
           <ReactLoading type="bubbles" color="#232F3F" height={50} width={50} />
         </div>
       ) : (
-        <div>
-          <section className="flex m-8 gap-5 items-start justify-center">
+        <div className="flex m-8">
+          <section className="flex gap-5 items-start justify-center">
             <div className="flex items-center gap-5">
               <ul>
                 {images
@@ -147,11 +176,11 @@ const Item = ({ history }) => {
               </div>
             </div>
           </section>
-          <div>
-            <button onClick={() => window.alert("Ajouter au panier")}>
+          <div className="flex flex-col gap-3 shadow-md rounded-lg p-3">
+            <button className="btn-secondary" onClick={handleAddItemToCart}>
               Ajouter au panier
             </button>
-            <button onClick={() => window.alert("Ajouter à une liste d'envie")}>
+            <button className="btn-primary" onClick={handleAddItemToList}>
               Ajouter à une liste d'envie
             </button>
           </div>

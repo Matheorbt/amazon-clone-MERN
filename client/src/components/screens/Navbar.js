@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import CartItem from "./cart/CartItem";
 
 import logo from "../../assets/logo/Amazon-logo_white.svg";
 
@@ -16,7 +17,10 @@ const Navbar = ({ history }) => {
   const [zipCode, setZipCode] = useState("");
   const [userInfo, setUserInfo] = useState([""]);
 
+  const [loading, setLoading] = useState(true);
+
   const [dropdownToggled, setDropdownToggled] = useState(false);
+  const [dropdownCartToggled, setDropdownCartToggled] = useState(false);
 
   const tags = [
     "Tous",
@@ -55,6 +59,7 @@ const Navbar = ({ history }) => {
         const userInfosRaw = JSON.stringify(data.data);
         const userInfos = JSON.parse(userInfosRaw);
         setUserInfo(userInfos);
+        setLoading(false);
       } catch (error) {
         setError("Error while trying to retrieve user infos");
         setTimeout(() => {
@@ -63,7 +68,7 @@ const Navbar = ({ history }) => {
       }
     };
     handleCurrentUserIdFetching();
-  }, [history]);
+  }, [history, loading]);
 
   const logoutHandler = () => {
     localStorage.removeItem("authToken");
@@ -115,7 +120,7 @@ const Navbar = ({ history }) => {
               </h3>
               <div className="dropdown">
                 <button
-                  className="link opacity-[1] text-white"
+                  className="link opacity-[1] text-white  font-bold"
                   onClick={() => setDropdownToggled(!dropdownToggled)}
                 >
                   Compte et listes
@@ -179,9 +184,38 @@ const Navbar = ({ history }) => {
               </div>
             </div>
 
-            <h3 className="font-bold text-white hover:opacity-70 cursor-pointer transition-all">
-              Panier
-            </h3>
+            <div className="dropdown">
+              <button
+                className="link opacity-[1] text-white font-bold"
+                onClick={() => setDropdownCartToggled(!dropdownCartToggled)}
+              >
+                Panier
+              </button>
+              <div
+                className={
+                  dropdownCartToggled
+                    ? "dropdown-menu z-20"
+                    : "dropdown-menu z-20 hidden"
+                }
+              >
+                <div className="flex gap-5 divide-x divide-black p-3">
+                  <div className="flex-col gap-2 p-3">
+                    <h3 className="font-bold">Votre panier</h3>
+                    {user["shoppingBag"] ? (
+                      <ul className="flex-col gap-2">
+                        {userInfo["shoppingBag"].map((cartItem) => (
+                          <li key={cartItem}>
+                            <CartItem item={cartItem} />
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <span>Votre panier est vide</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div className=" bg-main-blue w-screen flex justify-evenly items-center gap-8 p-3">

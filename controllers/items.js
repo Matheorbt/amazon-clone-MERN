@@ -2,6 +2,7 @@ const Item = require("../models/Item");
 const ErrorResponse = require("../utils/errorResponse");
 
 exports.list = async (req, res, next) => {
+  console.log(req.user);
   try {
     const items = await Item.find();
     res.status(201).json({
