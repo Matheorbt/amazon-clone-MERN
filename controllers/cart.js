@@ -26,6 +26,7 @@ exports.addItemByID = async (req, res, next) => {
     const item = await Item.findOne({ _id: itemID });
     const user = await User.findOne({ _id: userID });
 
+    //Push the "item" element to the "shoppingBag" array of "user"
     user.shoppingBag.push(item);
 
     await user.save();

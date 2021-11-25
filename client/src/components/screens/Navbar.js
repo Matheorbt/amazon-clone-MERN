@@ -8,13 +8,7 @@ import logo from "../../assets/logo/Amazon-logo_white.svg";
 
 const Navbar = ({ history }) => {
   const [error, setError] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [city, setCity] = useState("");
-  const [streetName, setStreetName] = useState("");
-  const [streetIndex, setStreetIndex] = useState("");
-  const [country, setCountry] = useState("");
-  const [zipCode, setZipCode] = useState("");
+
   const [userInfo, setUserInfo] = useState([""]);
 
   const [loading, setLoading] = useState(true);
@@ -32,21 +26,8 @@ const Navbar = ({ history }) => {
     "Electronique",
   ];
 
-  const user = {
-    username: "matheorbt",
-    firstName: "Mathéo",
-    lastName: "Robert",
-    deliveryAdress: {
-      city: "Lyon",
-      zipCode: "69007",
-      streetName: "Salomon Reinach",
-      streetIndex: "33",
-      country: "France",
-    },
-  };
-
   useEffect(() => {
-    const handleCurrentUserIdFetching = async () => {
+    const getCurrentUser = async () => {
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -67,7 +48,7 @@ const Navbar = ({ history }) => {
         }, 5000);
       }
     };
-    handleCurrentUserIdFetching();
+    getCurrentUser();
   }, [history, loading]);
 
   const logoutHandler = () => {
@@ -88,13 +69,30 @@ const Navbar = ({ history }) => {
           <h3 className="text-medium text-white">
             Livrer au{" "}
             <span className="font-bold">
-              {user.deliveryAdress.streetIndex +
-                " " +
-                user.deliveryAdress.streetName}
+              {userInfo.deliveryInformation ? (
+                userInfo.deliveryInformation.streetIndex
+              ) : (
+                <span>Loading...</span>
+              )}{" "}
+              {userInfo.deliveryInformation ? (
+                userInfo.deliveryInformation.streetName
+              ) : (
+                <span>Loading...</span>
+              )}
             </span>{" "}
             <br /> à{" "}
             <span className="font-bold">
-              {user.deliveryAdress.city + " " + user.deliveryAdress.zipCode}
+              {userInfo.deliveryInformation ? (
+                userInfo.deliveryInformation.city
+              ) : (
+                <span>Loading...</span>
+              )}{" "}
+              {""}
+              {userInfo.deliveryInformation ? (
+                userInfo.deliveryInformation.zipCode
+              ) : (
+                <span>Loading...</span>
+              )}
             </span>
           </h3>
           <div className="flex flex-grow">
@@ -116,7 +114,7 @@ const Navbar = ({ history }) => {
           <div className="flex gap-2 flex-shrink relative items-start">
             <div>
               <h3 className="text-medium text-white">
-                Bonjour {userInfo["firstName"]} <br />{" "}
+                Bonjour {userInfo.firstName} <br />{" "}
               </h3>
               <div className="dropdown">
                 <button
@@ -201,7 +199,7 @@ const Navbar = ({ history }) => {
                 <div className="flex gap-5 divide-x divide-black p-3">
                   <div className="flex-col gap-2 p-3">
                     <h3 className="font-bold">Votre panier</h3>
-                    {user["shoppingBag"] ? (
+                    {userInfo.shoppingBag ? (
                       <ul className="flex-col gap-2">
                         {userInfo["shoppingBag"].map((cartItem) => (
                           <li key={cartItem}>
