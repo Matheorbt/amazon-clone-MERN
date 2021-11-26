@@ -2,9 +2,12 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const Account = () => {
+import Navbar from "../Navbar";
+
+const PersonnalInformation = ({ history }) => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
@@ -16,22 +19,14 @@ const Account = () => {
   const [country, setCountry] = useState("");
   const [zipCode, setZipCode] = useState("");
 
-  const [firstNameModification, setFirstNameModification] = useState("");
-  const [emailModification, setEmailModification] = useState("");
-  const [lastNameModification, setLastNameModification] = useState("");
-
-  const [cityModification, setCityModification] = useState("");
-  const [streetNameModification, setStreetNameModification] = useState("");
-  const [streetIndexModification, setStreetIndexModification] = useState("");
-  const [countryModification, setCountryModification] = useState("");
-  const [zipCodeModification, setZipCodeModification] = useState("");
-
   const [userInfo, setUserInfo] = useState([""]);
-  const [userDeliveryInfo, setUserDeliveryInfo] = useState([""]);
-  const [userID, setUserID] = useState("");
 
   useEffect(() => {
-    const handleCurrentUserIdFetching = async () => {
+    if (!localStorage.getItem("authToken")) {
+      history.push("/login");
+    }
+
+    const getCurrentUser = async () => {
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -43,25 +38,37 @@ const Account = () => {
         const { data } = await axios.get("/api/profile/info", config);
         const userInfosRaw = JSON.stringify(data.data);
         const userInfos = JSON.parse(userInfosRaw);
-        const userDeliveryInformationRaw = JSON.stringify(
-          data.data["deliveryInformation"]
-        );
-        const userDeliveryInformation = JSON.parse(userDeliveryInformationRaw);
-
         setUserInfo(userInfos);
-        setUserDeliveryInfo(userDeliveryInformation);
+        setLoading(false);
+        setCity(
+          userInfo.deliveryInformation
+            ? userInfo.deliveryInformation.city
+            : null
+        );
+        setCountry(
+          userInfo.deliveryInformation
+            ? userInfo.deliveryInformation.country
+            : null
+        );
+        setStreetIndex(
+          userInfo.deliveryInformation
+            ? userInfo.deliveryInformation.streetIndex
+            : null
+        );
+        setStreetName(
+          userInfo.deliveryInformation
+            ? userInfo.deliveryInformation.streetName
+            : null
+        );
+        setZipCode(
+          userInfo.deliveryInformation
+            ? userInfo.deliveryInformation.zipCode
+            : null
+        );
 
-        setUserID(userInfo["_id"]);
-
-        setFirstName(userInfo["firstName"]);
-        setLastName(userInfo["lastName"]);
-        setEmail(userInfo["email"]);
-
-        setCity(userDeliveryInfo["city"]);
-        setCountry(userDeliveryInfo["country"]);
-        setStreetName(userDeliveryInfo["streetName"]);
-        setStreetIndex(userDeliveryInfo["streetIndex"]);
-        setZipCode(userDeliveryInfo["zipCode"]);
+        setFirstName(userInfo.firstName);
+        setLastName(userInfo.lastName);
+        setEmail(userInfo.email);
       } catch (error) {
         setError("Error while trying to retrieve user infos");
         setTimeout(() => {
@@ -69,8 +76,8 @@ const Account = () => {
         }, 5000);
       }
     };
-    handleCurrentUserIdFetching();
-  }, [userInfo, userDeliveryInfo]);
+    getCurrentUser();
+  }, [history, loading]);
 
   const profileModificationHandler = async (e) => {
     e.preventDefault();
@@ -84,15 +91,14 @@ const Account = () => {
       const { data } = await axios.put(
         "/api/profile/update",
         {
-          emailModification,
-          lastNameModification,
-          firstNameModification,
-          zipCodeModification,
-          streetIndexModification,
-          streetNameModification,
-          cityModification,
-          countryModification,
-          userID,
+          email,
+          lastName,
+          firstName,
+          zipCode,
+          streetIndex,
+          streetName,
+          city,
+          country,
         },
         config
       );
@@ -110,6 +116,7 @@ const Account = () => {
 
   return (
     <>
+      <Navbar history={history} />
       <div className="flex w-screen justify-around">
         <form
           onSubmit={profileModificationHandler}
@@ -131,8 +138,8 @@ const Account = () => {
                   id="email"
                   placeholder="Enter email"
                   autoComplete="email"
-                  defaultValue={email}
-                  onChange={(e) => setEmailModification(e.target.value)}
+                  defaultValue={userInfo.email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div className="form-group">
@@ -141,10 +148,10 @@ const Account = () => {
                   type="text"
                   required
                   id="firstName"
-                  defaultValue={firstName}
+                  defaultValue={userInfo.firstName}
                   placeholder="Enter First name"
                   autoComplete="given-name"
-                  onChange={(e) => setFirstNameModification(e.target.value)}
+                  onChange={(e) => setFirstName(e.target.value)}
                 />
               </div>
 
@@ -156,8 +163,8 @@ const Account = () => {
                   id="lastName"
                   placeholder="Enter Last name"
                   autoComplete="family-name"
-                  defaultValue={lastName}
-                  onChange={(e) => setLastNameModification(e.target.value)}
+                  defaultValue={userInfo.lastName}
+                  onChange={(e) => setLastName(e.target.value)}
                 />
               </div>
             </section>
@@ -171,9 +178,13 @@ const Account = () => {
                   id="country"
                   name="Country"
                   className="form-select"
-                  defaultValue={country}
+                  defaultValue={
+                    userInfo.deliveryInformation
+                      ? userInfo.deliveryInformation.country
+                      : null
+                  }
                   autoComplete="country-name"
-                  onChange={(e) => setCountryModification(e.target.value)}
+                  onChange={(e) => setCountry(e.target.value)}
                 >
                   <option value="Afghanistan">Afghanistan</option>
                   <option value="Åland Islands">Åland Islands</option>
@@ -497,9 +508,13 @@ const Account = () => {
                   // required
                   id="city"
                   placeholder="Enter City"
-                  autoComplete="current-password"
-                  defaultValue={city}
-                  onChange={(e) => setCityModification(e.target.value)}
+                  autoComplete="home city"
+                  defaultValue={
+                    userInfo.deliveryInformation
+                      ? userInfo.deliveryInformation.city
+                      : null
+                  }
+                  onChange={(e) => setCity(e.target.value)}
                 />
               </div>
               <div className="form-group">
@@ -510,8 +525,12 @@ const Account = () => {
                   id="streetNumber"
                   placeholder="Enter Street number"
                   autoComplete="address-line1"
-                  defaultValue={streetIndex}
-                  onChange={(e) => setStreetIndexModification(e.target.value)}
+                  defaultValue={
+                    userInfo.deliveryInformation
+                      ? userInfo.deliveryInformation.streetIndex
+                      : null
+                  }
+                  onChange={(e) => setStreetIndex(e.target.value)}
                 />
               </div>
 
@@ -523,8 +542,12 @@ const Account = () => {
                   id="streetName"
                   placeholder="Enter Street name"
                   autoComplete="on"
-                  defaultValue={streetName}
-                  onChange={(e) => setStreetNameModification(e.target.value)}
+                  defaultValue={
+                    userInfo.deliveryInformation
+                      ? userInfo.deliveryInformation.streetName
+                      : null
+                  }
+                  onChange={(e) => setStreetName(e.target.value)}
                 />
               </div>
 
@@ -536,8 +559,12 @@ const Account = () => {
                   id="zipCode"
                   placeholder="Enter zip code"
                   autoComplete="postal-code"
-                  defaultValue={zipCode}
-                  onChange={(e) => setZipCodeModification(e.target.value)}
+                  defaultValue={
+                    userInfo.deliveryInformation
+                      ? userInfo.deliveryInformation.zipCode
+                      : null
+                  }
+                  onChange={(e) => setZipCode(e.target.value)}
                 />
               </div>
             </section>
@@ -551,4 +578,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default PersonnalInformation;

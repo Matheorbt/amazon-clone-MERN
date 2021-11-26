@@ -3,14 +3,11 @@ import React from "react";
 import axios from "axios";
 
 import Navbar from "./Navbar";
-import Items from "./items/ItemsGrid";
-import Account from "./Account";
 import ItemsGrid from "./items/ItemsGrid";
 
 const HomePage = ({ history }) => {
   const [error, setError] = useState("");
   const [privateData, setPrivateData] = useState("");
-  const [username, setUsername] = useState("");
 
   useEffect(() => {
     if (!localStorage.getItem("authToken")) {

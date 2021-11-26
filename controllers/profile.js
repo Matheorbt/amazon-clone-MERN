@@ -24,9 +24,10 @@ exports.update = async (req, res, next) => {
     streetName,
     city,
     country,
-    userID,
   } = req.body;
-  console.log(req.body);
+  console.log(streetIndex);
+  const userID = req.user._id;
+
   if (!email || !lastName || !firstName) {
     return next(
       new ErrorResponse(
@@ -46,11 +47,11 @@ exports.update = async (req, res, next) => {
     user.email = email;
     user.lastName = lastName;
     user.firstName = firstName;
-    user.zipCode = zipCode;
-    user.streetIndex = streetIndex;
-    user.streetName = streetName;
-    user.city = city;
-    user.country = country;
+    user.deliveryInformation.zipCode = zipCode;
+    user.deliveryInformation.streetIndex = streetIndex;
+    user.deliveryInformation.streetName = streetName;
+    user.deliveryInformation.city = city;
+    user.deliveryInformation.country = country;
 
     await user.save();
 

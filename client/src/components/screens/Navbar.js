@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+
 import CartItem from "./cart/CartItem";
 
 import logo from "../../assets/logo/Amazon-logo_white.svg";
@@ -135,12 +136,9 @@ const Navbar = ({ history }) => {
                       <h3 className="font-bold">Votre compte</h3>
                       <ul className="flex-col gap-2">
                         <li>
-                          <a
-                            href="/homepage"
-                            className="hover:opacity-50 transition-opacity"
-                          >
+                          <Link to="/account/personnalinformation">
                             Vos informations
-                          </a>
+                          </Link>
                         </li>
                         <li>
                           <a
