@@ -107,9 +107,10 @@ const RegisterScreen = ({ history }) => {
   return (
     <div className="flex flex-col justify-center items-center w-full h-screen">
       <img
-        className="min-w-[250px] w-[15%] fixed top-0"
+        className="min-w-[250px] w-[15%] fixed top-0 hover:cursor-pointer"
         src={AmazonLogo}
         alt="amazon logo"
+        onClick={() => history.push("/landing")}
       />
       <form onSubmit={registerHandler} action="" className="form-auth">
         <h3 className="text-2xl font-bold">Register</h3>
@@ -220,7 +221,7 @@ const RegisterScreen = ({ history }) => {
           </Link>
         </span>
       </form>
-      <footer className="fixed bottom-0 w-screen flexz-[-1] left-0 ba">
+      <footer className="fixed bottom-0 w-screen flex z-[-1] left-0 ba">
         <img alt="footer visual w-[100%]" src={FooterImage} />
       </footer>
     </div>

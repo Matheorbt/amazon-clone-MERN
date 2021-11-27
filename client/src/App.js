@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PrivateRoute from "./components/routing/PrivateRoute";
 
 //Screens
+import Landing from "./components/screens/landing_page/Landing";
 import LoginScreen from "./components/screens/auth/LoginScreen";
 import RegisterScreen from "./components/screens/auth/RegisterScreen";
 import ForgotPasswordScreen from "./components/screens/auth/ForgotPasswordScreen";
@@ -17,6 +18,8 @@ const App = () => {
   return (
     <Router>
       <Switch>
+        <Route exact path="/" component={Landing} />
+        <Route exact path="/landing" component={Landing} />
         <PrivateRoute exact path="/item/:itemID" component={Item} />
         <PrivateRoute exact path="/homepage" component={HomePage} />
         <PrivateRoute
@@ -24,7 +27,7 @@ const App = () => {
           path="/account/personnalinformation"
           component={PersonnalInformation}
         />
-        <PrivateRoute exact path="/" component={LoginScreen} />
+
         <Route exact path="/login" component={LoginScreen} />
         <Route exact path="/register" component={RegisterScreen} />
         <Route exact path="/forgotpassword" component={ForgotPasswordScreen} />
