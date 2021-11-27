@@ -7,12 +7,12 @@ const {
   remove,
   add,
   update,
-  fetchItemByID,
+  fetchitembyid,
 } = require("../controllers/items");
 
 router.route("/list").get(protect, list);
 
-router.route("/fetchItemByID/:itemID").get(protect, fetchItemByID);
+router.route("/fetchitembyid/:itemID").get(protect, fetchitembyid);
 
 router.route("/remove").delete(protect, remove);
 

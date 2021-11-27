@@ -18,7 +18,7 @@ exports.list = async (req, res, next) => {
   }
 };
 
-exports.addItemByID = async (req, res, next) => {
+exports.additembyid = async (req, res, next) => {
   const itemID = req.params.itemID;
   const userID = req.user._id.toString();
 
@@ -44,26 +44,50 @@ exports.addItemByID = async (req, res, next) => {
   }
 };
 
-exports.removeItemByID = async (req, res, next) => {
-  const { email, password } = req.body;
+exports.removeitembyid = async (req, res, next) => {
+  const itemID = req.params.itemID;
+  const userID = req.user._id.toString();
 
-  if (!email || !password) {
-    return next(new ErrorResponse("Please provide an email and password", 400));
-  }
   try {
-    const user = await User.findOne({ email }).select("+password");
-    if (!user) {
-      return next(new ErrorResponse("Invalid credentials", 401));
-    }
+    const item = await Item.findOne({ _id: itemID });
+    const user = await User.findOne({ _id: userID });
 
-    const isMatch = await user.matchPasswords(password);
+    //Pull the "item" element to the "shoppingBag" array of "user"
+    user.shoppingBag.pull(item);
 
-    if (!isMatch) {
-      return next(new ErrorResponse("Invalid credentials", 401));
-    }
+    await user.save();
 
-    sendToken(user, 200, res);
+    res.status(201).json({
+      success: true,
+      message: "Item fetched successfuly",
+      item: item,
+    });
   } catch (error) {
-    next(error);
+    res.status(500).json({
+      succes: false,
+      error: error.message,
+    });
+  }
+};
+
+exports.clear = async (req, res, next) => {
+  const userID = req.user._id.toString();
+  try {
+    const user = await User.findOne({ _id: userID });
+
+    //Remove all the element from the array
+    user.shoppingBag = new Array();
+
+    await user.save();
+
+    res.status(201).json({
+      success: true,
+      message: "Cart clearded successfuly",
+    });
+  } catch (error) {
+    res.status(500).json({
+      succes: false,
+      error: error.message,
+    });
   }
 };

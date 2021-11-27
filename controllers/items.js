@@ -17,7 +17,7 @@ exports.list = async (req, res, next) => {
   }
 };
 
-exports.fetchItemByID = async (req, res, next) => {
+exports.fetchitembyid = async (req, res, next) => {
   const itemID = req.params.itemID;
 
   try {

@@ -5,7 +5,6 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 
 //Screens
 import LoginScreen from "./components/screens/auth/LoginScreen";
-import Navbar from "./components/screens/Navbar";
 import RegisterScreen from "./components/screens/auth/RegisterScreen";
 import ForgotPasswordScreen from "./components/screens/auth/ForgotPasswordScreen";
 import ResetPasswordScreen from "./components/screens/auth/ResetPasswordScreen";

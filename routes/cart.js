@@ -3,12 +3,19 @@ const router = express.Router();
 
 const { protect } = require("../middleware/auth");
 
-const { list, addItemByID, removeItemByID } = require("../controllers/cart");
+const {
+  list,
+  additembyid,
+  removeitembyid,
+  clear,
+} = require("../controllers/cart");
 
 router.route("/list").post(protect, list);
 
-router.route("/addItemByID/:itemID").get(protect, addItemByID);
+router.route("/additembyid/:itemID").get(protect, additembyid);
 
-router.route("/removeItemByID/:itemID").post(protect, removeItemByID);
+router.route("/removeitembyid/:itemID").post(protect, removeitembyid);
+
+router.route("/clear").delete(protect, clear);
 
 module.exports = router;

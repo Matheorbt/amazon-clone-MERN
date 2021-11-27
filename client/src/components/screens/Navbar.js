@@ -12,6 +12,8 @@ const Navbar = ({ history }) => {
 
   const [userInfo, setUserInfo] = useState([""]);
 
+  const [totalCart, setTotalCart] = useState(0);
+
   const [loading, setLoading] = useState(true);
 
   const [dropdownToggled, setDropdownToggled] = useState(false);
@@ -42,6 +44,16 @@ const Navbar = ({ history }) => {
         const userInfos = JSON.parse(userInfosRaw);
         setUserInfo(userInfos);
         setLoading(false);
+        setTotalCart(0);
+        userInfo.shoppingBag
+          ? userInfo.shoppingBag.map((cartItem) =>
+              setTotalCart(
+                totalCart +
+                  cartItem.price -
+                  (cartItem.price / 100) * cartItem.sale
+              )
+            )
+          : setTotalCart(0);
       } catch (error) {
         setError("Error while trying to retrieve user infos");
         setTimeout(() => {
@@ -50,7 +62,25 @@ const Navbar = ({ history }) => {
       }
     };
     getCurrentUser();
-  }, [history, loading]);
+  }, [history, loading, userInfo.shoppingBag]);
+
+  const handleEmptyCart = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    };
+
+    try {
+      const { data } = await axios.delete("/api/cart/clear", config);
+    } catch (error) {
+      setError("Error while trying to clear the cart");
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+    }
+  };
 
   const logoutHandler = () => {
     localStorage.removeItem("authToken");
@@ -197,17 +227,31 @@ const Navbar = ({ history }) => {
                 <div className="flex gap-5 divide-x divide-black p-3">
                   <div className="flex-col gap-2 p-3">
                     <h3 className="font-bold">Votre panier</h3>
+                    {totalCart ? <h3>Total: {totalCart}</h3> : null}
                     {userInfo.shoppingBag ? (
-                      <ul className="flex-col gap-2">
-                        {userInfo["shoppingBag"].map((cartItem) => (
-                          <li key={cartItem}>
-                            <CartItem item={cartItem} />
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <span>Votre panier est vide</span>
-                    )}
+                      userInfo.shoppingBag.length > 0 ? (
+                        <button
+                          className="text-warning"
+                          onClick={handleEmptyCart}
+                        >
+                          Empty cart
+                        </button>
+                      ) : null
+                    ) : null}
+
+                    {userInfo.shoppingBag ? (
+                      userInfo.shoppingBag.length > 0 ? (
+                        <ul className="flex flex-col gap-2 overflow-y-scroll max-h-[21rem]">
+                          {userInfo["shoppingBag"].map((cartItem) => (
+                            <li key={cartItem._id}>
+                              <CartItem item={cartItem} />
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <span>Votre panier est vide</span>
+                      )
+                    ) : null}
                   </div>
                 </div>
               </div>
