@@ -7,7 +7,7 @@ const ItemCard = ({ item, history }) => {
     thumbnail,
     price,
     sale,
-    quantityleft,
+    quantityLeft,
     rating,
     tags,
     _id,
@@ -40,10 +40,10 @@ const ItemCard = ({ item, history }) => {
           {price - (price / 100) * sale}€{" "}
           {sale ? <span className="italic opacity-60">-{sale}%</span> : null}
         </p>
-        {!quantityleft ? (
+        {!quantityLeft ? (
           <span className="text-warning font-bold">Out of stock</span>
         ) : (
-          <p>Only: {quantityleft} left !</p>
+          <p>Only: {quantityLeft} left !</p>
         )}
         <ul className="flex gap-2">
           {tags

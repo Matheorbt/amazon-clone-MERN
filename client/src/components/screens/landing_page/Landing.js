@@ -59,7 +59,7 @@ const HomePage = ({ history }) => {
           Amazon
         </a>
       </h1>
-      <p className="m-8">
+      <p className="m-8 text-lg font-semibold">
         It is a project realized in X months aiming at reproducing some
         functionalities of the Amazon online sales platform like:
         <br />

@@ -7,6 +7,7 @@ import Navbar from "../Navbar";
 
 const Item = ({ history }) => {
   const [error, setError] = useState("");
+  const [cartError, setCartError] = useState("");
   const [item, setItem] = useState([""]);
   const [loading, setLoading] = useState(true);
   const [thumbnail, setThumbnail] = useState("");
@@ -51,6 +52,13 @@ const Item = ({ history }) => {
   }, [loading]);
 
   const handleAddItemToCart = async () => {
+    if (item.quantityLeft === 0) {
+      setCartError("No item left");
+      setTimeout(() => {
+        setCartError("");
+      }, 5000);
+      return;
+    }
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -71,6 +79,13 @@ const Item = ({ history }) => {
   };
 
   const handleDirectBuy = () => {
+    if (item.quantityLeft === 0) {
+      setCartError("No item left");
+      setTimeout(() => {
+        setCartError("");
+      }, 5000);
+      return;
+    }
     window.alert("add item to list");
   };
 
@@ -130,10 +145,10 @@ const Item = ({ history }) => {
                     : null}
                 </ul>
 
-                {!item.quantityleft ? (
+                {!item.quantityLeft ? (
                   <span className="text-warning">Out of stock</span>
                 ) : (
-                  <p>Only: {item.quantityleft} left !</p>
+                  <p>Only: {item.quantityLeft} left !</p>
                 )}
                 <div className="flex gap-2">
                   <i
@@ -183,11 +198,12 @@ const Item = ({ history }) => {
               <p className="font-medium text-lg text-warning">
                 {item.price - (item.price / 100) * item.sale}€
               </p>
+              <span className="font-semibold text-warning">{cartError}</span>
               <button className="btn-secondary" onClick={handleAddItemToCart}>
-                Ajouter au panier
+                Add to cart
               </button>
               <button className="btn-primary" onClick={handleDirectBuy}>
-                Acheter
+                Buy now
               </button>
               <p>
                 <span className="opacity-70">Expédié par</span> new field db
