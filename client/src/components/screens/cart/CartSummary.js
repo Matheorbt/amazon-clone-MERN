@@ -16,6 +16,8 @@ const CartSummary = ({ history }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let tempTotalCart = 0;
+
     const getCurrentUser = async () => {
       const config = {
         headers: {
@@ -30,16 +32,13 @@ const CartSummary = ({ history }) => {
         const userInfos = JSON.parse(userInfosRaw);
         setUserInfo(userInfos);
         setLoading(false);
-        setTotalCart(0);
         userInfo.shoppingBag
-          ? userInfo.shoppingBag.map((cartItem) =>
-              setTotalCart(
-                totalCart +
-                  cartItem.price -
-                  (cartItem.price / 100) * cartItem.sale
-              )
-            )
-          : setTotalCart(0);
+          ? userInfo.shoppingBag.forEach((cartItem) => {
+              tempTotalCart +=
+                cartItem.price - (cartItem.price / 100) * cartItem.sale;
+            })
+          : (tempTotalCart = 0);
+        setTotalCart(tempTotalCart);
       } catch (error) {
         setError("Error while trying to retrieve user infos");
         setTimeout(() => {
@@ -79,7 +78,7 @@ const CartSummary = ({ history }) => {
         <>
           <div className="flex gap-5 divide-x divide-black p-3  w-[100%]">
             <div className="flex-col gap-2 p-3  w-[100%]">
-              <h3 className="font-bold">Votre panier</h3>
+              <h3 className="font-bold">Your cart</h3>
               {totalCart ? <h3>Total: {totalCart}</h3> : null}
               {userInfo.shoppingBag ? (
                 userInfo.shoppingBag.length > 0 ? (
@@ -99,7 +98,7 @@ const CartSummary = ({ history }) => {
                     ))}
                   </ul>
                 ) : (
-                  <span>Votre panier est vide</span>
+                  <span className="text-center">Your cart is empty</span>
                 )
               ) : null}
             </div>

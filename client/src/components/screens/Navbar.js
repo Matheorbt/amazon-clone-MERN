@@ -31,6 +31,7 @@ const Navbar = ({ history }) => {
 
   useEffect(() => {
     let tempTotalCart = 0;
+
     const getCurrentUser = async () => {
       const config = {
         headers: {
@@ -95,8 +96,8 @@ const Navbar = ({ history }) => {
               <img src={logo} alt="logo" />
             </Link>
           </span>
-          <h3 className="text-medium text-white">
-            Livrer au{" "}
+          <h3 className="text-medium text-white hidden lg:block">
+            Deliver to{" "}
             <span className="font-bold">
               {userInfo.deliveryInformation ? (
                 userInfo.deliveryInformation.streetIndex
@@ -109,7 +110,7 @@ const Navbar = ({ history }) => {
                 <span>Loading...</span>
               )}
             </span>{" "}
-            <br /> à{" "}
+            <br /> at{" "}
             <span className="font-bold">
               {userInfo.deliveryInformation ? (
                 userInfo.deliveryInformation.city
@@ -136,36 +137,36 @@ const Navbar = ({ history }) => {
               </select>
               <input type="text" className=" flex-grow" />
               <button className="bg-secondary-orange h-[100%] rounded-r-md px-3 flex-shrink">
-                Rechercher
+                Search
               </button>
             </div>
           </div>
           <div className="flex gap-2 flex-shrink relative items-start">
-            <div>
+            <div className="hidden lg:block">
               <h3 className="text-medium text-white">
-                Bonjour {userInfo.firstName} <br />{" "}
+                Hello {userInfo.firstName} <br />{" "}
               </h3>
               <div className="dropdown">
                 <button
                   className="link opacity-[1] text-white  font-bold"
                   onClick={() => setDropdownToggled(!dropdownToggled)}
                 >
-                  Compte et listes
+                  Account and lists
                 </button>
                 <div
                   className={
                     dropdownToggled
                       ? "dropdown-menu z-20"
-                      : "dropdown-menu z-20 hidden"
+                      : "dropdown-menu z-20 hiddenDropdown"
                   }
                 >
-                  <div className="flex gap-5 divide-x divide-black p-3">
+                  <div className="flex gap-5 min-w-[150px] divide-x divide-black p-3">
                     <div className="flex-col gap-2 p-3">
-                      <h3 className="font-bold">Votre compte</h3>
+                      <h3 className="font-bold">Your account</h3>
                       <ul className="flex-col gap-2">
                         <li>
                           <Link to="/account/personnalinformation">
-                            Vos informations
+                            Your informations
                           </Link>
                         </li>
                         <li>
@@ -173,7 +174,7 @@ const Navbar = ({ history }) => {
                             href="/homepage"
                             className="hover:opacity-50 transition-opacity"
                           >
-                            Vos commandes
+                            Your orders
                           </a>
                         </li>
                         <li>
@@ -181,7 +182,7 @@ const Navbar = ({ history }) => {
                             href="/homepage"
                             className="hover:opacity-50 transition-opacity"
                           >
-                            Votre liste d'envie
+                            Your wish list
                           </a>
                         </li>
                         <li className="text-warning">
@@ -191,14 +192,14 @@ const Navbar = ({ history }) => {
                         </li>
                       </ul>
                     </div>
-                    <div className="flex-col w-fit-content p-3">
-                      <h3 className="font-bold">Votre listes d'envies</h3>
+                    <div className="flex-col min-w-[150px] p-3">
+                      <h3 className="font-bold">Your wish list</h3>
                       <ul className="w-fit-content">
                         <li>(Nom des listes d'envies du user)</li>
                       </ul>
                     </div>
-                    <div className="flex-col p-3">
-                      <h3 className="font-bold">Acheter à nouveau</h3>
+                    <div className="flex-col min-w-[150px] p-3">
+                      <h3 className="font-bold">Buy again</h3>
                       <ul>
                         <li>(Liste des 5 derniers commandes)</li>
                       </ul>
@@ -213,17 +214,17 @@ const Navbar = ({ history }) => {
                 className="link opacity-[1] text-white font-bold"
                 onClick={() => setDropdownCartToggled(!dropdownCartToggled)}
               >
-                Panier
+                Cart
               </button>
               <div
                 className={
                   dropdownCartToggled
                     ? "dropdown-menu z-20"
-                    : "dropdown-menu z-20 hidden"
+                    : "dropdown-menu z-20 hiddenDropdown"
                 }
               >
                 <div className="flex gap-5 divide-x divide-black p-3">
-                  <div className="flex-col gap-2 p-3">
+                  <div className="flex-col min-w-[150px] gap-2 p-3">
                     <h3 className="font-bold">Your cart</h3>
                     <Link to="/cart">
                       <span className="font-bold">Access your cart</span>
@@ -251,7 +252,7 @@ const Navbar = ({ history }) => {
                           ))}
                         </ul>
                       ) : (
-                        <span>Votre panier est vide</span>
+                        <span className="text-warning">Your cart is empty</span>
                       )
                     ) : null}
                   </div>
