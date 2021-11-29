@@ -6,6 +6,7 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 //Screens
 import Landing from "./components/screens/landing_page/Landing";
 import CartSummary from "./components/screens/cart/CartSummary";
+import Checkout from "./components/screens/cart/Checkout";
 import LoginScreen from "./components/screens/auth/LoginScreen";
 import RegisterScreen from "./components/screens/auth/RegisterScreen";
 import ForgotPasswordScreen from "./components/screens/auth/ForgotPasswordScreen";
@@ -22,6 +23,7 @@ const App = () => {
         <Route exact path="/" component={Landing} />
         <Route exact path="/landing" component={Landing} />
         <PrivateRoute exact path="/cart" component={CartSummary} />
+        <PrivateRoute exact path="/checkout" component={Checkout} />
         <PrivateRoute exact path="/item/:itemID" component={Item} />
         <PrivateRoute exact path="/homepage" component={HomePage} />
         <PrivateRoute

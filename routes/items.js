@@ -18,6 +18,6 @@ router.route("/remove").delete(protect, remove);
 
 router.route("/add").post(protect, add);
 
-router.route("/update").put(protect, update);
+router.route("/update").post(protect, update);
 
 module.exports = router;

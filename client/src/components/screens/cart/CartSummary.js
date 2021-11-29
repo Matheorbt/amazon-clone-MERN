@@ -90,13 +90,21 @@ const CartSummary = ({ history }) => {
 
               {userInfo.shoppingBag ? (
                 userInfo.shoppingBag.length > 0 ? (
-                  <ul className="flex flex-col gap-2 w-[100%]">
-                    {userInfo["shoppingBag"].map((cartItem) => (
-                      <li key={cartItem._id}>
-                        <CartSummaryItem item={cartItem} />
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="flex flex-col content-center shrink-0">
+                    <ul className="flex flex-col gap-2 w-[100%]">
+                      {userInfo["shoppingBag"].map((cartItem) => (
+                        <li key={cartItem._id}>
+                          <CartSummaryItem history={history} item={cartItem} />
+                        </li>
+                      ))}
+                    </ul>
+                    <button
+                      className="btn-primary"
+                      onClick={() => history.push("/checkout")}
+                    >
+                      Go to checkout
+                    </button>
+                  </div>
                 ) : (
                   <span className="text-center">Your cart is empty</span>
                 )

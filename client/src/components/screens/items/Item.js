@@ -66,8 +66,8 @@ const Item = ({ history }) => {
       },
     };
     try {
-      const { data } = await axios.get(
-        "/api/cart/addItemByID/" + itemID,
+      const { data } = await axios.post(
+        "/api/cart/additembyid/" + itemID,
         config
       );
     } catch (error) {

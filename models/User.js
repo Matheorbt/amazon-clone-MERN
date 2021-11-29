@@ -14,7 +14,11 @@ const UserSchema = new mongoose.Schema({
   },
   shoppingBag: {
     type: Array,
-    default: [""],
+    default: [],
+  },
+  previousOrder: {
+    type: Array,
+    default: [],
   },
   deliveryInformation: {
     city: {

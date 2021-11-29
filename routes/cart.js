@@ -8,14 +8,17 @@ const {
   additembyid,
   removeitembyid,
   clear,
+  checkout,
 } = require("../controllers/cart");
 
-router.route("/list").post(protect, list);
+router.route("/list").get(protect, list);
 
-router.route("/additembyid/:itemID").get(protect, additembyid);
+router.route("/additembyid/:itemID").post(protect, additembyid);
 
-router.route("/removeitembyid/:itemID").post(protect, removeitembyid);
+router.route("/removeitembyid/:itemID").delete(protect, removeitembyid);
 
 router.route("/clear").delete(protect, clear);
+
+router.route("/checkout").post(protect, checkout);
 
 module.exports = router;
