@@ -4,13 +4,11 @@ const Item = require("./Item");
 
 const OrderSchema = new mongoose.Schema({
   Item: {
-    type: mongoose.Schema.ObjectId,
-    ref: "Item",
+    type: Array,
     required: [true, "Please provide at least one item"],
   },
   User: {
-    type: mongoose.Schema.ObjectId,
-    ref: "User",
+    type: String,
     required: [true, "Please provide at least one user"],
   },
 });

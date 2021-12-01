@@ -66,7 +66,7 @@ const Item = ({ history }) => {
       },
     };
     try {
-      const { data } = await axios.post(
+      const { data } = await axios.get(
         "/api/cart/additembyid/" + itemID,
         config
       );

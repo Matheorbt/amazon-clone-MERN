@@ -13,7 +13,7 @@ const {
 
 router.route("/list").get(protect, list);
 
-router.route("/additembyid/:itemID").post(protect, additembyid);
+router.route("/additembyid/:itemID").get(protect, additembyid);
 
 router.route("/removeitembyid/:itemID").delete(protect, removeitembyid);
 

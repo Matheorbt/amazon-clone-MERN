@@ -3,6 +3,7 @@ import React from "react";
 import axios from "axios";
 
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 import ItemsGrid from "./items/ItemsGrid";
 
 const HomePage = ({ history }) => {
@@ -20,13 +21,13 @@ const HomePage = ({ history }) => {
 
   return (
     <>
-      <Navbar history={history} />
       <ItemsGrid />
       <div className="flex flex-col justify-center items-center w-full ">
         <button onClick={() => logoutHandler()} className="btn-warning">
           Log out
         </button>
       </div>
+      <Footer />
     </>
   );
 };

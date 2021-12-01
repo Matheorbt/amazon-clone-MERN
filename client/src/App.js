@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PrivateRoute from "./components/routing/PrivateRoute";
 
 //Screens
+import Navbar from "./components/screens/Navbar";
 import Landing from "./components/screens/landing_page/Landing";
 import CartSummary from "./components/screens/cart/CartSummary";
 import Checkout from "./components/screens/cart/Checkout";
@@ -15,10 +16,12 @@ import NotFound from "./components/screens/misc/NotFound";
 import HomePage from "./components/screens/HomePage";
 import Item from "./components/screens/items/Item";
 import PersonnalInformation from "./components/screens/account/PersonnalInformation";
+import PreviousOrder from "./components/screens/account/PreviousOrder";
 
 const App = () => {
   return (
     <Router>
+      <Navbar />
       <Switch>
         <Route exact path="/" component={Landing} />
         <Route exact path="/landing" component={Landing} />
@@ -31,7 +34,7 @@ const App = () => {
           path="/account/personnalinformation"
           component={PersonnalInformation}
         />
-
+        <PrivateRoute exact path="/account/orders" component={PreviousOrder} />
         <Route exact path="/login" component={LoginScreen} />
         <Route exact path="/register" component={RegisterScreen} />
         <Route exact path="/forgotpassword" component={ForgotPasswordScreen} />

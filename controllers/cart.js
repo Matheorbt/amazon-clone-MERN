@@ -24,6 +24,7 @@ exports.checkout = async (req, res, next) => {
   const userID = req.user._id.toString();
 
   try {
+    const user = await User.findById(userID);
     const order = await Order.create({
       Item: idsList,
       User: userID,

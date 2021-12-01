@@ -77,8 +77,12 @@ const CartSummary = ({ history }) => {
   return (
     <>
       <Navbar />
-      {totalCart}
-      <button onClick={hanldeCheckout}>Confirm order</button>
+      <div className="flex flex-col">
+        <span className="font-bold">Total {totalCart}€</span>
+        <button className="btn-primary" onClick={hanldeCheckout}>
+          Confirm order
+        </button>
+      </div>
     </>
   );
 };
