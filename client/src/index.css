@@ -32,6 +32,10 @@
   }
 }
 
+* {
+  scroll-behavior: smooth;
+}
+
 .dropdown.active > .link,
 .link:hover {
   opacity: 0.8;

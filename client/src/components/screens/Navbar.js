@@ -96,6 +96,7 @@ const Navbar = ({ history }) => {
       pathname === "/register" ||
       pathname === "/forgotpassword" ||
       pathname === "/landing" ||
+      pathname === "/" ||
       pathname === "/resetpassword" ? null : (
         <nav className="flex flex-col">
           <div className="bg-secondary-blue w-screen flex justify-evenly items-center gap-8 p-5">
@@ -170,17 +171,20 @@ const Navbar = ({ history }) => {
                   >
                     <div className="flex gap-5 min-w-[150px] divide-x divide-black p-3">
                       <div className="flex-col gap-2 p-3">
-                        <h3 className="font-bold">Your account</h3>
+                        <h3 className="font-bold text-lg">Your account</h3>
                         <ul className="flex-col gap-2">
                           <li>
-                            <Link to="/account/personnalinformation">
+                            <a
+                              href="/account/personnalinformation"
+                              className="hover:opacity-70 transition-opacity text-base"
+                            >
                               Your informations
-                            </Link>
+                            </a>
                           </li>
                           <li>
                             <a
                               href="/account/orders"
-                              className="hover:opacity-50 transition-opacity"
+                              className="hover:opacity-70 transition-opacity"
                             >
                               Your orders
                             </a>
@@ -188,7 +192,7 @@ const Navbar = ({ history }) => {
                           <li>
                             <a
                               href="/homepage"
-                              className="hover:opacity-50 transition-opacity"
+                              className="hover:opacity-70 transition-opacity"
                             >
                               Your wish list
                             </a>
@@ -201,13 +205,13 @@ const Navbar = ({ history }) => {
                         </ul>
                       </div>
                       <div className="flex-col min-w-[150px] p-3">
-                        <h3 className="font-bold">Your wish list</h3>
+                        <h3 className="font-bold text-lg">Your wish list</h3>
                         <ul className="w-fit-content">
                           <li>(Nom des listes d'envies du user)</li>
                         </ul>
                       </div>
-                      <div className="flex-col min-w-[150px] p-3">
-                        <h3 className="font-bold">Buy again</h3>
+                      <div className="flex-col min-w-[150px] p-3 ">
+                        <h3 className="font-bold  text-lg">Buy again</h3>
                         <ul>
                           <li>(Liste des 5 derniers commandes)</li>
                         </ul>
@@ -219,10 +223,16 @@ const Navbar = ({ history }) => {
 
               <div className="dropdown">
                 <button
-                  className="link opacity-[1] text-white font-bold"
+                  className="link opacity-[1] text-white font-bold relative"
                   onClick={() => setDropdownCartToggled(!dropdownCartToggled)}
                 >
-                  Cart
+                  <span className="text-main-blue absolute left-4 top-[0.15rem]">
+                    {userInfo.shoppingBag ? userInfo.shoppingBag.length : 0}
+                  </span>
+                  <i
+                    className="fa fa-shopping-cart text-[36px]"
+                    aria-hidden="true"
+                  ></i>
                 </button>
                 <div
                   className={
@@ -232,17 +242,23 @@ const Navbar = ({ history }) => {
                   }
                 >
                   <div className="flex gap-5 divide-x divide-black p-3">
-                    <div className="flex-col min-w-[150px] gap-2 p-3">
-                      <h3 className="font-bold">Your cart</h3>
-                      <Link to="/cart">
-                        <span className="font-bold">Access your cart</span>
-                      </Link>
-                      <br />
+                    <div className="flex-col min-w-[200px] gap-2 p-3">
+                      <h3 className="font-bold text-xl">Your cart</h3>
+                      <hr className="my-4" />
+                      {userInfo.shoppingBag ? (
+                        userInfo.shoppingBag.length > 0 ? (
+                          <Link to="/cart">
+                            <span className="font-semibold">
+                              Access your cart
+                            </span>
+                          </Link>
+                        ) : null
+                      ) : null}
                       {totalCart ? <h3>Total: {totalCart}</h3> : null}
                       {userInfo.shoppingBag ? (
                         userInfo.shoppingBag.length > 0 ? (
                           <button
-                            className="text-warning"
+                            className="text-warning font-semibold"
                             onClick={handleEmptyCart}
                           >
                             Empty cart
@@ -260,7 +276,7 @@ const Navbar = ({ history }) => {
                             ))}
                           </ul>
                         ) : (
-                          <span className="text-warning">
+                          <span className="text-warning font-semibold">
                             Your cart is empty
                           </span>
                         )

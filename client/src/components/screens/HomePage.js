@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import React from "react";
 import axios from "axios";
 
-import Navbar from "./Navbar";
-import Footer from "./Footer";
 import ItemsGrid from "./items/ItemsGrid";
 
 const HomePage = ({ history }) => {
@@ -21,13 +19,17 @@ const HomePage = ({ history }) => {
 
   return (
     <>
+      {/* <div className="grid grid-cols-3 grid-rows-3 gap-10">
+        <div className="bg-warning  row-start-1 row-end-3">1</div>
+        <div className="bg-success col-start-2">2</div>
+        <div className="bg-main-blue col-start-2 ">3</div>
+      </div> */}
       <ItemsGrid />
       <div className="flex flex-col justify-center items-center w-full ">
         <button onClick={() => logoutHandler()} className="btn-warning">
           Log out
         </button>
       </div>
-      <Footer />
     </>
   );
 };

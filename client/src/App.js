@@ -5,6 +5,8 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 
 //Screens
 import Navbar from "./components/screens/Navbar";
+import Footer from "./components/screens/Footer";
+
 import Landing from "./components/screens/landing_page/Landing";
 import CartSummary from "./components/screens/cart/CartSummary";
 import Checkout from "./components/screens/cart/Checkout";
@@ -21,30 +23,42 @@ import PreviousOrder from "./components/screens/account/PreviousOrder";
 const App = () => {
   return (
     <Router>
-      <Navbar />
-      <Switch>
-        <Route exact path="/" component={Landing} />
-        <Route exact path="/landing" component={Landing} />
-        <PrivateRoute exact path="/cart" component={CartSummary} />
-        <PrivateRoute exact path="/checkout" component={Checkout} />
-        <PrivateRoute exact path="/item/:itemID" component={Item} />
-        <PrivateRoute exact path="/homepage" component={HomePage} />
-        <PrivateRoute
-          exact
-          path="/account/personnalinformation"
-          component={PersonnalInformation}
-        />
-        <PrivateRoute exact path="/account/orders" component={PreviousOrder} />
-        <Route exact path="/login" component={LoginScreen} />
-        <Route exact path="/register" component={RegisterScreen} />
-        <Route exact path="/forgotpassword" component={ForgotPasswordScreen} />
-        <Route
-          exact
-          path="/passwordreset/:resetToken"
-          component={ResetPasswordScreen}
-        />
-        <Route component={NotFound} />
-      </Switch>
+      <div className="flex flex-col gap-10">
+        <Navbar />
+
+        <Switch>
+          <Route exact path="/" component={Landing} />
+          <Route exact path="/landing" component={Landing} />
+          <PrivateRoute exact path="/cart" component={CartSummary} />
+          <PrivateRoute exact path="/checkout" component={Checkout} />
+          <PrivateRoute exact path="/item/:itemID" component={Item} />
+          <PrivateRoute exact path="/homepage" component={HomePage} />
+          <PrivateRoute
+            exact
+            path="/account/personnalinformation"
+            component={PersonnalInformation}
+          />
+          <PrivateRoute
+            exact
+            path="/account/orders"
+            component={PreviousOrder}
+          />
+          <Route exact path="/login" component={LoginScreen} />
+          <Route exact path="/register" component={RegisterScreen} />
+          <Route
+            exact
+            path="/forgotpassword"
+            component={ForgotPasswordScreen}
+          />
+          <Route
+            exact
+            path="/passwordreset/:resetToken"
+            component={ResetPasswordScreen}
+          />
+          <Route component={NotFound} />
+        </Switch>
+        <Footer />
+      </div>
     </Router>
   );
 };

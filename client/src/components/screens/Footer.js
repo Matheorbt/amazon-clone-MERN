@@ -19,6 +19,7 @@ const Footer = ({ history }) => {
       pathname === "/register" ||
       pathname === "/forgotpassword" ||
       pathname === "/landing" ||
+      pathname === "/" ||
       pathname === "/resetpassword" ? null : (
         <footer className="flex flex-col">
           <button
@@ -28,7 +29,7 @@ const Footer = ({ history }) => {
             Scroll to top
           </button>
           <section className="bg-main-blue flex flex-col content-center items-center gap-4">
-            <div className="flex justify-between w-[100%] px-8">
+            <div className="flex flex-col lg:flex-row justify-between w-[100%] px-8 my-4">
               <div className="flex flex-col gap-4">
                 <h1 className="font-semibold text-white">
                   Pour mieux nous connaître
@@ -66,9 +67,13 @@ const Footer = ({ history }) => {
                 </ul>
               </div>
             </div>
-            <section className="flex flex-col content-center items-center gap-4">
-              <img src={logo} alt="temporary" className="max-w-lg" />
-              <ul className="flex gap-2 text-white">
+            <section className="flex flex-col content-center items-center gap-4 my-4">
+              <img
+                src={logo}
+                alt="temporary"
+                className="max-w-lg w-[30%] min-w-[250px]"
+              />
+              <ul className="flex flex-col lg:flex-row gap-2 text-white">
                 <li className="language">Australie</li>
                 <li className="language">Allemagne</li>
                 <li className="language">Brésil</li>
@@ -91,84 +96,75 @@ const Footer = ({ history }) => {
             </section>
           </section>
           <section className="bg-secondary-blue flex flex-col">
-            <div className="flex">
-              <div className="category-showcase">
-                <h2 className="text-white">Amazon Music</h2>
-                <a className="text-white" href={"/"}>
+            <div className="flex flex-col m-20 lg:flex-row">
+              <div className="flex flex-col">
+                <h2 className="text-white text-sm">Amazon Music</h2>
+                <a className="text-white opacity-70 text-sm" href={"/"}>
                   Écoutez des millions de chansons
                 </a>
               </div>
-              <div className="category-showcase">
-                <h2 className="text-white">AbeBooks</h2>
-                <a className="text-white" href={"/"}>
+              <div className="flex flex-col">
+                <h2 className="text-white text-sm">AbeBooks</h2>
+                <a className="text-white opacity-70 text-sm" href={"/"}>
                   Livres, art & articles de collection
                 </a>
               </div>
-              <div className="category-showcase">
-                <h2 className="text-white">Amazon Web Services</h2>
-                <a className="text-white" href={"/"}>
+              <div className="flex flex-col">
+                <h2 className="text-white text-sm">Amazon Web Services</h2>
+                <a className="text-white opacity-70 text-sm" href={"/"}>
                   Services de Cloud Computing Flexibles
                 </a>
               </div>
-              <div className="category-showcase">
-                <h2 className="text-white">Audible</h2>
-                <a className="text-white" href={"/"}>
+              <div className="flex flex-col">
+                <h2 className="text-white text-sm">Audible</h2>
+                <a className="text-white opacity-70 text-sm" href={"/"}>
                   Livres audio télécharger
                 </a>
               </div>
-              <div className="category-showcase">
-                <h2 className="text-white">Book Depository</h2>
-                <a className="text-white" href={"/"}>
+              <div className="flex flex-col">
+                <h2 className="text-white text-sm">Book Depository</h2>
+                <a className="text-white opacity-70 text-sm" href={"/"}>
                   Livres expédiés dans le monde entier
                 </a>
               </div>
-              <div className="category-showcase">
-                <h2 className="text-white">Kindle Direct Publishing</h2>
-                <a className="text-white" href={"/"}>
+              <div className="flex flex-col">
+                <h2 className="text-white text-sm">Kindle Direct Publishing</h2>
+                <a className="text-white opacity-70 text-sm" href={"/"}>
                   Auto-publiez facilement vos livres au format numérique
                 </a>
               </div>
-              <div className="category-showcase">
-                <h2 className="text-white">Offres</h2>
-                <a className="text-white" href={"/"}>
+              <div className="flex flex-col">
+                <h2 className="text-white text-sm">Offres</h2>
+                <a className="text-white opacity-70 text-sm" href={"/"}>
                   Bonnes affaires
                 </a>
               </div>
-              <div className="category-showcase">
-                <h2 className="text-white">Shopbop</h2>
-                <a className="text-white" href={"/"}>
+              <div className="flex flex-col">
+                <h2 className="text-white text-sm">Shopbop</h2>
+                <a className="text-white opacity-70 text-sm" href={"/"}>
                   Vêtements de Marque & Mode
                 </a>
               </div>
-              <div className="category-showcase">
-                <h2 className="text-white">Amazon Advertising</h2>
-                <a className="text-white" href={"/"}>
+              <div className="flex flex-col">
+                <h2 className="text-white text-sm">Amazon Advertising</h2>
+                <a className="text-white opacity-70 text-sm" href={"/"}>
                   Ciblez, attirez et fidélisez vos clients
                 </a>
               </div>
-              <div className="category-showcase">
-                <h2 className="text-white">Amazon Business</h2>
-                <a className="text-white" href={"/"}>
+              <div className="flex flex-col">
+                <h2 className="text-white text-sm">Amazon Business</h2>
+                <a className="text-white opacity-70 text-sm" href={"/"}>
                   Paiement 30 jours. Hors TVA. Pour les professionnels.
                 </a>
               </div>
-              <div className="category-showcase">
-                <h2 className="text-white">Amazon Second Chance</h2>
-                <a className="text-white" href={"/"}>
+              <div className="flex flex-col">
+                <h2 className="text-white text-sm">Amazon Second Chance</h2>
+                <a className="text-white opacity-70 text-sm" href={"/"}>
                   Transmettez, échangez, donnez une seconde vie à vos objets
                 </a>
               </div>
             </div>
-            <div className="law-container">
-              <a className="text-white" href={"/"}>
-                Conditions générales de vente
-              </a>
-              <a className="text-white" href={"/"}>
-                Conditions générales de vente
-              </a>
-              <a className="text-white" href={"/"}>
-                Conditions générales de vente
-              </a>
+            <div className="flex flex-col items-center mb-2">
               <a className="text-white" href={"/"}>
                 Conditions générales de vente
               </a>
