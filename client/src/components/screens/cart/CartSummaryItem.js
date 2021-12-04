@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const CartItem = ({ history, item }) => {
-  const { title, thumbnail, price, sale, quantityleft, _id } = {
+  const { title, thumbnail, price, sale, quantityLeft, _id } = {
     ...item,
   };
   const [error, setError] = useState("");
@@ -46,10 +46,10 @@ const CartItem = ({ history, item }) => {
                 <span className="italic opacity-60">-{sale}%</span>
               ) : null}
             </p>
-            {!quantityleft ? (
+            {!quantityLeft ? (
               <span className="text-warning font-bold">Out of stock</span>
             ) : (
-              <p>Only: {quantityleft} left !</p>
+              <p>Only: {quantityLeft} left !</p>
             )}
           </div>
         </div>

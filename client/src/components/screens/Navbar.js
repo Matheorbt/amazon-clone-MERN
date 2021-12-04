@@ -177,6 +177,9 @@ const Navbar = ({ history }) => {
                             <a
                               href="/account/personnalinformation"
                               className="hover:opacity-70 transition-opacity text-base"
+                              onClick={() =>
+                                setDropdownToggled(!dropdownToggled)
+                              }
                             >
                               Your informations
                             </a>
@@ -185,6 +188,9 @@ const Navbar = ({ history }) => {
                             <a
                               href="/account/orders"
                               className="hover:opacity-70 transition-opacity"
+                              onClick={() =>
+                                setDropdownToggled(!dropdownToggled)
+                              }
                             >
                               Your orders
                             </a>
@@ -193,6 +199,9 @@ const Navbar = ({ history }) => {
                             <a
                               href="/homepage"
                               className="hover:opacity-70 transition-opacity"
+                              onClick={() =>
+                                setDropdownToggled(!dropdownToggled)
+                              }
                             >
                               Your wish list
                             </a>
@@ -241,13 +250,18 @@ const Navbar = ({ history }) => {
                       : "dropdown-menu z-20 hiddenDropdown"
                   }
                 >
-                  <div className="flex gap-5 divide-x divide-black p-3">
+                  <div className="flex gap-5 divide-black p-3">
                     <div className="flex-col min-w-[200px] gap-2 p-3">
                       <h3 className="font-bold text-xl">Your cart</h3>
                       <hr className="my-4" />
                       {userInfo.shoppingBag ? (
                         userInfo.shoppingBag.length > 0 ? (
-                          <Link to="/cart">
+                          <Link
+                            to="/cart"
+                            onClick={() =>
+                              setDropdownCartToggled(!dropdownCartToggled)
+                            }
+                          >
                             <span className="font-semibold">
                               Access your cart
                             </span>
@@ -269,7 +283,7 @@ const Navbar = ({ history }) => {
                       {userInfo.shoppingBag ? (
                         userInfo.shoppingBag.length > 0 ? (
                           <ul className="flex flex-col gap-2 overflow-y-scroll max-h-[21rem]">
-                            {userInfo["shoppingBag"].map((cartItem) => (
+                            {userInfo.shoppingBag.map((cartItem) => (
                               <li key={cartItem._id}>
                                 <CartItem item={cartItem} />
                               </li>

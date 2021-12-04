@@ -2,8 +2,6 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import Navbar from "../Navbar";
-
 const PersonnalInformation = ({ history }) => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -116,7 +114,6 @@ const PersonnalInformation = ({ history }) => {
 
   return (
     <>
-      <Navbar history={history} />
       <div className="flex w-screen justify-around">
         <form
           onSubmit={profileModificationHandler}

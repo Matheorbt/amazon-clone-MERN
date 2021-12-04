@@ -41,7 +41,7 @@ const ItemsGrid = () => {
           <ReactLoading type="bubbles" color="#232F3F" height={50} width={50} />
         </div>
       ) : (
-        <div>
+        <div className="min-h-screen">
           <ul className="place-items-center grid gap-y-8 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-2">
             {itemsList.map((item) => (
               <li key={item["_id"]}>

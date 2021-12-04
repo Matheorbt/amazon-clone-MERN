@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const PreviousOrderItem = ({ history, itemID }) => {
-  console.log(itemID);
   const [error, setError] = useState("");
   const [item, setItem] = useState([""]);
   const [loading, setLoading] = useState([""]);
+
   useEffect(() => {
     if (!localStorage.getItem("authToken")) {
       history.push("/login");
@@ -30,6 +30,7 @@ const PreviousOrderItem = ({ history, itemID }) => {
           config
         );
         setItem(data.item);
+        console.log(item);
         setLoading(false);
       } catch (error) {
         setError("Error while trying to retrieve item by ID");
@@ -61,11 +62,6 @@ const PreviousOrderItem = ({ history, itemID }) => {
                 <span className="italic opacity-60">-{item.sale}%</span>
               ) : null}
             </p>
-            {!item.quantityleft ? (
-              <span className="text-warning font-bold">Out of stock</span>
-            ) : (
-              <p>Only: {item.quantityleft} left !</p>
-            )}
           </div>
         </div>
       </div>
