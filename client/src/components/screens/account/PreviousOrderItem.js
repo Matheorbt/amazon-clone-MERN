@@ -44,7 +44,7 @@ const PreviousOrderItem = ({ history, itemID }) => {
 
   return (
     <>
-      <div className="flex items-start justify-between gap-8 shadow-md p-8 rounded-lg bg-white cursor-pointer flex-grow transition-shadow m-3 hover:shadow">
+      <div className="flex items-start justify-between gap-8  bg-white cursor-pointer flex-grow">
         <div
           className="flex flex-grow"
           onClick={() => history.push("/item/" + itemID)}

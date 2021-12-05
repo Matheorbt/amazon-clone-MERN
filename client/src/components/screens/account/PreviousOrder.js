@@ -3,6 +3,7 @@ import axios from "axios";
 import ReactLoading from "react-loading";
 
 import PreviousOrderItem from "./PreviousOrderItem";
+import Navbar from "../Navbar";
 
 const PreviousOrder = ({ history }) => {
   const [error, setError] = useState("");
@@ -38,6 +39,7 @@ const PreviousOrder = ({ history }) => {
 
   return (
     <>
+      <Navbar />
       {loading ? (
         <div className="w-[100%] flex items-center justify-center">
           <ReactLoading type="bubbles" color="#232F3F" height={50} width={50} />
@@ -59,10 +61,22 @@ const PreviousOrder = ({ history }) => {
                   </div>
                 ) : null
               ) : null}
-              <ul className="bg-warning">
-                {userInfo.previousOrder
-                  ? userInfo.previousOrder.map((item) =>
-                      item.Item.length > 1 ? (
+
+              {userInfo.previousOrder
+                ? userInfo.previousOrder.map((item) => (
+                    <ul className="flex flex-col items-start justify-between gap-8 shadow-md p-8 rounded-lg bg-white cursor-pointer flex-grow transition-shadow m-3 hover:shadow">
+                      <span className="font-bold">
+                        Date de commande{" "}
+                        {item.Date.split("-")[2].split("T")[0] +
+                          "/" +
+                          item.Date.split("-")[1] +
+                          "/" +
+                          item.Date.split("-")[0]}
+                      </span>
+                      <span>
+                        Order ID: <span className="font-bold">{item._id}</span>
+                      </span>
+                      {item.Item.length > 1 ? (
                         item.Item.map((itemId) => (
                           <li>
                             <PreviousOrderItem
@@ -78,10 +92,10 @@ const PreviousOrder = ({ history }) => {
                             itemID={item.Item}
                           />
                         </li>
-                      )
-                    )
-                  : null}
-              </ul>
+                      )}
+                    </ul>
+                  ))
+                : null}
             </div>
           </div>
         </>

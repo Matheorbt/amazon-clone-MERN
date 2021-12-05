@@ -121,7 +121,7 @@ const RegisterScreen = ({ history }) => {
             onClick={handleBack}
             className="font-bold  flex justify-start items-center gap-2"
           >
-            <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+            <i className="fa fa-arrow-left" aria-hidden="true"></i> Back
           </button>
         )}
 

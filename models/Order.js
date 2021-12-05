@@ -11,6 +11,11 @@ const OrderSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide at least one user"],
   },
+  Date: {
+    type: Date,
+    default: new Date(),
+    required: true,
+  },
 });
 
 const Order = mongoose.model("Order", OrderSchema);

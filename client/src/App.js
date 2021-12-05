@@ -4,12 +4,12 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PrivateRoute from "./components/routing/PrivateRoute";
 
 //Screens
-import Navbar from "./components/screens/Navbar";
 import Footer from "./components/screens/Footer";
 
 import Landing from "./components/screens/landing_page/Landing";
 import CartSummary from "./components/screens/cart/CartSummary";
 import Checkout from "./components/screens/cart/Checkout";
+import OrderConfirmation from "./components/screens/cart/OrderConfirmation";
 import LoginScreen from "./components/screens/auth/LoginScreen";
 import RegisterScreen from "./components/screens/auth/RegisterScreen";
 import ForgotPasswordScreen from "./components/screens/auth/ForgotPasswordScreen";
@@ -24,13 +24,16 @@ const App = () => {
   return (
     <Router>
       <div className="flex flex-col gap-10">
-        <Navbar />
-
         <Switch>
           <Route exact path="/" component={Landing} />
           <Route exact path="/landing" component={Landing} />
           <PrivateRoute exact path="/cart" component={CartSummary} />
           <PrivateRoute exact path="/checkout" component={Checkout} />
+          <PrivateRoute
+            exact
+            path="/confirmorder/:orderID"
+            component={OrderConfirmation}
+          />
           <PrivateRoute exact path="/item/:itemID" component={Item} />
           <PrivateRoute exact path="/homepage" component={HomePage} />
           <PrivateRoute

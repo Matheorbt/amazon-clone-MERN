@@ -25,7 +25,7 @@ exports.update = async (req, res, next) => {
     city,
     country,
   } = req.body;
-  console.log(streetIndex);
+
   const userID = req.user._id;
 
   if (!email || !lastName || !firstName) {

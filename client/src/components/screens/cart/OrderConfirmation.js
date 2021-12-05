@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useParams } from "react-router";
 
 import Navbar from "../Navbar";
 
-const CartSummary = ({ history }) => {
+const OrderConfirmation = ({ history }) => {
+  const { orderID } = useParams();
+
   const [error, setError] = useState("");
 
   const [userInfo, setUserInfo] = useState([""]);
@@ -66,7 +69,6 @@ const CartSummary = ({ history }) => {
         },
         config
       );
-      history.push("/confirmorder/" + data.order._id.toString());
     } catch (error) {
       setError("Error while trying to attempt checkout");
       setTimeout(() => {
@@ -78,27 +80,11 @@ const CartSummary = ({ history }) => {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col min-h-screen">
-        <span className="font-bold">Total {totalCart}€</span>
-        {userInfo.shoppingBag ? (
-          userInfo.shoppingBag.length > 0 ? (
-            <div className="flex flex-col content-center shrink-0">
-              <ul className="flex flex-col gap-2 w-[100%]">
-                {userInfo.shoppingBag.map((cartItem) => (
-                  <li key={cartItem._id}>
-                    <div>{cartItem.title}</div>
-                  </li>
-                ))}
-              </ul>
-              <button className="btn-primary" onClick={hanldeCheckout}>
-                Confirm order
-              </button>
-            </div>
-          ) : null
-        ) : null}
+      <div className="flex flex-col content-center items-center min-h-screen font-bold">
+        Merci pour votre commande n {orderID}
       </div>
     </>
   );
 };
 
-export default CartSummary;
+export default OrderConfirmation;

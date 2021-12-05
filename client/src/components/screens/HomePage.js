@@ -3,6 +3,7 @@ import React from "react";
 import axios from "axios";
 
 import ItemsGrid from "./items/ItemsGrid";
+import Navbar from "./Navbar";
 
 const HomePage = ({ history }) => {
   useEffect(() => {
@@ -24,6 +25,7 @@ const HomePage = ({ history }) => {
         <div className="bg-success col-start-2">2</div>
         <div className="bg-main-blue col-start-2 ">3</div>
       </div> */}
+      <Navbar />
       <ItemsGrid />
       <div className="flex flex-col justify-center items-center w-full ">
         <button onClick={() => logoutHandler()} className="btn-warning">

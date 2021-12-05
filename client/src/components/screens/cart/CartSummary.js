@@ -4,6 +4,7 @@ import axios from "axios";
 import ReactLoading from "react-loading";
 
 import CartSummaryItem from "../cart/CartSummaryItem.js";
+import Navbar from "../Navbar.js";
 
 const CartSummary = ({ history }) => {
   const [error, setError] = useState("");
@@ -68,6 +69,7 @@ const CartSummary = ({ history }) => {
 
   return (
     <>
+      <Navbar />
       {loading ? (
         <div className="w-[100%] flex items-center justify-center">
           <ReactLoading type="bubbles" color="#232F3F" height={50} width={50} />

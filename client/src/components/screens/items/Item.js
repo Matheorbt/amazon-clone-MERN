@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import ReactLoading from "react-loading";
 
+import Navbar from "../Navbar";
+
 const Item = ({ history }) => {
   const [error, setError] = useState("");
   const [cartError, setCartError] = useState("");
@@ -93,6 +95,7 @@ const Item = ({ history }) => {
 
   return (
     <>
+      <Navbar />
       {loading ? (
         <div className="w-[100%] flex items-center justify-center">
           <ReactLoading type="bubbles" color="#232F3F" height={50} width={50} />

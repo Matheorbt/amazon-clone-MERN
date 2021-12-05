@@ -38,7 +38,7 @@ exports.checkout = async (req, res, next) => {
     res.status(201).json({
       success: true,
       message: "Order creation successful",
-      itemsList: order,
+      order: order,
     });
   } catch (error) {
     console.log(error.message);

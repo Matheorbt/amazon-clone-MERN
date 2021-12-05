@@ -46,7 +46,7 @@ const HomePage = ({ history }) => {
 
       <h1>
         All rights reserved to Amazon{" "}
-        <i class="fa fa-copyright" aria-hidden="true"></i>
+        <i className="fa fa-copyright" aria-hidden="true"></i>
       </h1>
       <br />
       <h1 className="text-xl font-bold">
