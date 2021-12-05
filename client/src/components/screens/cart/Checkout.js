@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import Navbar from "../Navbar";
+import CartSummaryItem from "./CartSummaryItem";
 
 const CartSummary = ({ history }) => {
   const [error, setError] = useState("");
@@ -86,7 +87,7 @@ const CartSummary = ({ history }) => {
               <ul className="flex flex-col gap-2 w-[100%]">
                 {userInfo.shoppingBag.map((cartItem) => (
                   <li key={cartItem._id}>
-                    <div>{cartItem.title}</div>
+                    <CartSummaryItem item={cartItem} />
                   </li>
                 ))}
               </ul>
