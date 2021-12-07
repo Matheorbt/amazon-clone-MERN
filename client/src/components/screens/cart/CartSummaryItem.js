@@ -41,7 +41,7 @@ const CartItem = ({ history, item }) => {
           <div className="flex flex-col">
             <span className="font-bold">{title}</span>
             <p className="font-medium">
-              {price - (price / 100) * sale}€{" "}
+              {Math.floor(price - (price / 100) * sale)}€{" "}
               {sale ? (
                 <span className="italic opacity-60">-{sale}%</span>
               ) : null}

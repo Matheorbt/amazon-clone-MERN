@@ -51,8 +51,9 @@ const Navbar = ({ history }) => {
         setLoading(false);
         userInfo.shoppingBag
           ? userInfo.shoppingBag.forEach((cartItem) => {
-              tempTotalCart +=
-                cartItem.price - (cartItem.price / 100) * cartItem.sale;
+              tempTotalCart += Math.floor(
+                cartItem.price - (cartItem.price / 100) * cartItem.sale
+              );
             })
           : (tempTotalCart = 0);
         setTotalCart(tempTotalCart);
@@ -76,6 +77,7 @@ const Navbar = ({ history }) => {
 
     try {
       const { data } = await axios.delete("/api/cart/clear", config);
+      this.forceUpdate();
     } catch (error) {
       setError("Error while trying to clear the cart");
       setTimeout(() => {

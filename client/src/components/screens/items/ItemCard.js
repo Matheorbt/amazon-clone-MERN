@@ -8,7 +8,6 @@ const ItemCard = ({ item, history }) => {
     price,
     sale,
     quantityLeft,
-    rating,
     tags,
     _id,
     description,
@@ -28,16 +27,16 @@ const ItemCard = ({ item, history }) => {
   }, [history]);
   return (
     <Link to={"/item/" + _id}>
-      <div className="flex card-container transition-shadow w-fit-content hover:shadow gap-3 max-w-sm">
+      <div className="flex justify-around max-w-sm h-full card-container transition-shadow hover:shadow gap-3">
         <img
-          className="max-w-xs w-[30%] min-w-[150px]"
+          className="max-h-20 w-[30%] min-w-[150px] self-center"
           src={thumbnail}
           alt={title}
         />
         <span className="font-bold">{title}</span>
         <p className="italic">{trimmedDescription}...</p>
         <p className="font-medium">
-          {price - (price / 100) * sale}€{" "}
+          {Math.floor(price - (price / 100) * sale)}€{" "}
           {sale ? <span className="italic opacity-60">-{sale}%</span> : null}
         </p>
         {!quantityLeft ? (

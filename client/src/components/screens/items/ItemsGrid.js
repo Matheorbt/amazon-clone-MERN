@@ -44,7 +44,7 @@ const ItemsGrid = () => {
         <div className="min-h-screen">
           <ul className="place-items-center grid gap-y-8 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-2">
             {itemsList.map((item) => (
-              <li key={item["_id"]}>
+              <li key={item["_id"]} className="h-full w-full">
                 <ItemCard key={item["_id"]} item={item} />
               </li>
             ))}

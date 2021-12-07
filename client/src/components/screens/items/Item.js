@@ -102,7 +102,7 @@ const Item = ({ history }) => {
         </div>
       ) : (
         <>
-          <div className="flex m-8">
+          <div className="flex m-8 justify-between">
             <section className="flex gap-5 items-start justify-center">
               <div className="flex items-center gap-5">
                 <ul>
@@ -196,7 +196,7 @@ const Item = ({ history }) => {
             </section>
             <div className="flex flex-col gap-3 shadow-md rounded-lg p-3">
               <p className="font-medium text-lg text-warning">
-                {item.price - (item.price / 100) * item.sale}€
+                {Math.floor(item.price - (item.price / 100) * item.sale)}€
               </p>
               <span className="font-semibold text-warning">{cartError}</span>
               <button className="btn-secondary" onClick={handleAddItemToCart}>

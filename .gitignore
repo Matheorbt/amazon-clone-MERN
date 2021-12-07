@@ -12,6 +12,8 @@ node_modules/
 # production
 /build
 
+Data_sample.json
+
 # misc
 config.env
 .DS_Store
