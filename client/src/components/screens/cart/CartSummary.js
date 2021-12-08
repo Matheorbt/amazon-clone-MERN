@@ -77,13 +77,18 @@ const CartSummary = ({ history }) => {
         </div>
       ) : (
         <>
-          <div className="flex gap-5 divide-x divide-black p-3 w-[100%] min-h-screen">
-            <div className="flex-col gap-2 p-3  w-[100%]">
-              <h3 className="font-bold">Your cart</h3>
-              {totalCart ? <h3>Total: {totalCart}</h3> : null}
+          <div className="flex gap-5 p-6 w-[100%] min-h-screen">
+            <div className="flex flex-col gap-5 w-[100%]">
+              <h3 className="font-bold text-4xl">Your cart</h3>
+              {totalCart ? (
+                <h3 className="font-bold">Total: {totalCart}€</h3>
+              ) : null}
               {userInfo.shoppingBag ? (
                 userInfo.shoppingBag.length > 0 ? (
-                  <button className="text-warning" onClick={handleEmptyCart}>
+                  <button
+                    className="btn-warning w-fit-content"
+                    onClick={handleEmptyCart}
+                  >
                     Empty cart
                   </button>
                 ) : null
@@ -91,7 +96,7 @@ const CartSummary = ({ history }) => {
 
               {userInfo.shoppingBag ? (
                 userInfo.shoppingBag.length > 0 ? (
-                  <div className="flex flex-col content-center shrink-0">
+                  <div className="flex flex-col gap-4 content-center shrink-0">
                     <ul className="flex flex-col gap-2 w-[100%]">
                       {userInfo.shoppingBag.map((cartItem) => (
                         <li key={cartItem._id}>
@@ -100,7 +105,7 @@ const CartSummary = ({ history }) => {
                       ))}
                     </ul>
                     <button
-                      className="btn-primary"
+                      className="btn-primary  w-fit-content self-center"
                       onClick={() => history.push("/checkout")}
                     >
                       Go to checkout

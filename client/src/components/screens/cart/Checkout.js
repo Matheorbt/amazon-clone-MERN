@@ -80,11 +80,12 @@ const CartSummary = ({ history }) => {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col gap-5 p-5 w-[100%] min-h-screen">
+        <h3 className="font-bold text-4xl">Checkout</h3>
         <span className="font-bold">Total {totalCart}€</span>
         {userInfo.shoppingBag ? (
           userInfo.shoppingBag.length > 0 ? (
-            <div className="flex flex-col content-center shrink-0">
+            <div className="flex flex-col gap-4 content-center shrink-0">
               <ul className="flex flex-col gap-2 w-[100%]">
                 {userInfo.shoppingBag.map((cartItem) => (
                   <li key={cartItem._id}>
@@ -92,7 +93,10 @@ const CartSummary = ({ history }) => {
                   </li>
                 ))}
               </ul>
-              <button className="btn-primary" onClick={hanldeCheckout}>
+              <button
+                className="btn-primary w-fit-content self-center"
+                onClick={hanldeCheckout}
+              >
                 Confirm order
               </button>
             </div>

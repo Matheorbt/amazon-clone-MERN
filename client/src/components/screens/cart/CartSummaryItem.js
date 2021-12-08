@@ -28,13 +28,13 @@ const CartItem = ({ history, item }) => {
   };
   return (
     <>
-      <div className="flex items-start justify-between gap-8 shadow-md p-8 rounded-lg bg-white cursor-pointer flex-grow transition-shadow m-3 hover:shadow">
+      <div className="flex items-start justify-between gap-8 shadow-md p-8 rounded-lg bg-white cursor-pointer flex-grow transition-shadow hover:shadow">
         <div
-          className="flex flex-grow"
+          className="flex flex-grow gap-4"
           onClick={() => history.push("/item/" + _id)}
         >
           <img
-            className="max-w-[200px] w-[30%] min-w-[150px]"
+            className="max-w-[200px] max-h-[200px]"
             src={thumbnail}
             alt={title}
           />
@@ -54,7 +54,7 @@ const CartItem = ({ history, item }) => {
           </div>
         </div>
         <button onClick={handleRemoveCartItem}>
-          <span className="text-warning font-bold">Remove item</span>
+          <span className="btn-warning">Remove item</span>
         </button>
       </div>
     </>

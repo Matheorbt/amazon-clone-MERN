@@ -81,8 +81,8 @@ const OrderConfirmation = ({ history }) => {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col content-center items-center min-h-screen font-bold">
-        Merci pour votre commande n {orderID}
+      <div className="flex justify-center items-start min-h-screen font-bold">
+        <span>Merci pour votre commande n°{orderID}</span>
       </div>
     </>
   );

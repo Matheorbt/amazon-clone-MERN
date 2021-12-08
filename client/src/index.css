@@ -16,15 +16,15 @@
   }
 
   .btn-primary {
-    @apply bg-main-blue text-white p-2 shadow-md transition-all rounded hover:shadow-none cursor-pointer;
+    @apply bg-main-blue text-white py-2 px-6 shadow-md transition-all rounded hover:shadow-none cursor-pointer;
   }
 
   .btn-warning {
-    @apply bg-warning text-white p-2 shadow-md transition-all rounded hover:shadow-none cursor-pointer;
+    @apply bg-warning text-white py-2 px-6 shadow-md transition-all rounded hover:shadow-none cursor-pointer;
   }
 
   .btn-secondary {
-    @apply bg-main-orange text-white p-2 shadow-md transition-all rounded hover:shadow-none cursor-pointer;
+    @apply bg-main-orange text-white py-2 px-6 shadow-md transition-all rounded hover:shadow-none cursor-pointer;
   }
 
   .card-container {

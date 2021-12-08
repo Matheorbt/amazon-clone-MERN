@@ -29,7 +29,7 @@ const ItemCard = ({ item, history }) => {
     <Link to={"/item/" + _id}>
       <div className="flex justify-around max-w-sm h-full card-container transition-shadow hover:shadow gap-3">
         <img
-          className="max-h-20 w-[30%] min-w-[150px] self-center"
+          className="w-[30%] min-w-[150px] self-center"
           src={thumbnail}
           alt={title}
         />
