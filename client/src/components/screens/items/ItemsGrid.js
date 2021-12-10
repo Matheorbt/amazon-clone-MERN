@@ -25,7 +25,7 @@ const ItemsGrid = () => {
 
   const [filterMaximumPrice, setFilterMaximumPrice] = useState(0);
   const [filterMinimumPrice, setFilterMinimumPrice] = useState(0);
-  const [tagFilter, setTagFilter] = useState("");
+  const [tagFilter, setTagFilter] = useState([]);
 
   useEffect(() => {
     const fetchItemList = async () => {
@@ -51,6 +51,7 @@ const ItemsGrid = () => {
     };
     fetchItemList();
   }, [filterMaximumPrice, filterMinimumPrice]);
+
   return (
     <>
       {loading ? (
@@ -59,33 +60,82 @@ const ItemsGrid = () => {
         </div>
       ) : (
         <div className="min-h-screen">
-          <div className="flex gap-2 p-4 rounded-lg shadow-xl bg-white m-4">
-            <div className="flex flex-col gap-2">
-              <label>Prix maximum:{filterMaximumPrice}</label>
-              <input
-                type="number"
-                onChange={(e) => setFilterMaximumPrice(e.target.value)}
-                className="border border-black"
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <label>Prix minimum:{filterMinimumPrice}</label>
-              <input
-                type="number"
-                onChange={(e) => setFilterMinimumPrice(e.target.value)}
-                className="border border-black"
-              />
-            </div>
-            {tagList.map((tag) => (
-              <button onClick={() => setTagFilter(tag)}>{tag}</button>
-            ))}
-            <div className="flex flex-col gap-2">
-              <label>Tag:{tagFilter}</label>
-              <input
-                type="text"
-                onChange={(e) => setTagFilter(e.target.value)}
-                className="border border-black"
-              />
+          <div className="flex flex-col gap-2 justify-start items-start p-4 rounded-lg shadow-xl bg-white m-4">
+            <button
+              className="btn-warning"
+              onClick={() => {
+                setFilterMaximumPrice(0);
+                setFilterMinimumPrice(0);
+                setTagFilter([]);
+              }}
+            >
+              Clear filter
+            </button>
+            <div class="flex flex-col gap-2">
+              <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2">
+                  <label>Prix maximum:{filterMaximumPrice}</label>
+                  <input
+                    type="number"
+                    value={filterMaximumPrice}
+                    onChange={(e) => setFilterMaximumPrice(e.target.value)}
+                    className="border border-black"
+                    min={filterMinimumPrice + 1}
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label>Prix minimum:{filterMinimumPrice}</label>
+                  <input
+                    type="number"
+                    value={filterMinimumPrice}
+                    onChange={(e) => setFilterMinimumPrice(e.target.value)}
+                    className="border border-black"
+                    max={filterMaximumPrice - 1}
+                    min={0}
+                  />
+                </div>
+              </div>
+              <ul className="flex gap-2">
+                {tagList.map((tag) => (
+                  <li>
+                    <button
+                      className="p-2 rounded-lg shadow-md transition-shadow hover:shadow h-fit-content"
+                      onClick={() => {
+                        tagFilter.includes(tag)
+                          ? setTagFilter(
+                              tagFilter.filter((item) => item !== tag)
+                            )
+                          : setTagFilter([...tagFilter, tag]);
+                      }}
+                    >
+                      {tagFilter.includes(tag) ? (
+                        <div>
+                          {tag} <i class="fa fa-times" aria-hidden="true"></i>
+                        </div>
+                      ) : (
+                        tag
+                      )}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="flex flex-col gap-2">
+                <div className="flex">
+                  Tag:{" "}
+                  <ul className="flex">
+                    {tagFilter.length
+                      ? tagFilter.map((tag, index) =>
+                          index === tagFilter.length ? (
+                            <li>{tag}</li>
+                          ) : (
+                            <li>{tag},</li>
+                          )
+                        )
+                      : null}
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
           <ul className="place-items-center grid gap-y-8 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-2">
@@ -100,7 +150,9 @@ const ItemsGrid = () => {
                   Math.floor(value.price - (value.price / 100) * value.sale) >=
                   (filterMinimumPrice ? filterMinimumPrice : 0)
               )
-              .filter((value) => value.tags.includes(tagFilter))
+              // .filter((value) =>
+              //   tagFilter.includes(value.tags.map((tag) => tag))
+              // )
               .map((item) => (
                 <li key={item["_id"]} className="h-full w-full">
                   <ItemCard key={item["_id"]} item={item} />

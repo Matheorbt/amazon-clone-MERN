@@ -3,9 +3,6 @@ module.exports = {
   purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   darkMode: "class",
   theme: {
-    width: {
-      "fit-content": "fit-content",
-    },
     colors: {
       "main-orange": "#D87310",
       "secondary-orange": "#F3A847",
@@ -20,7 +17,14 @@ module.exports = {
     fontFamily: {
       body: ["PT Sans", "sans-serif"],
     },
-    extend: {},
+    extend: {
+      width: {
+        "fit-content": "fit-content",
+      },
+      height: {
+        "fit-content": "fit-content",
+      },
+    },
   },
   variants: {
     extend: {
