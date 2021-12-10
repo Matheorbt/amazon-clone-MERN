@@ -1,12 +1,46 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const CartItem = ({ history, item }) => {
+const CartItem = ({ itemID, history, quantity }) => {
+  const [item, setItem] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  console.log(itemID);
+  useEffect(() => {
+    const fetchItemByID = async () => {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      };
+
+      if (!localStorage.getItem("authToken")) {
+        history.push("/login");
+      }
+
+      try {
+        const { data } = await axios.get(
+          "/api/items/fetchitembyid/" + itemID,
+          config
+        );
+        setItem(data.item);
+        setLoading(false);
+      } catch (error) {
+        setError("Error while trying to retrieve item by ID");
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+      }
+    };
+    fetchItemByID();
+  }, [loading]);
+
   const { title, thumbnail, price, sale, quantityLeft, _id } = {
     ...item,
   };
-  const [error, setError] = useState("");
+
   const handleRemoveCartItem = async () => {
     const config = {
       headers: {
@@ -52,6 +86,16 @@ const CartItem = ({ history, item }) => {
               <p>Only: {quantityLeft} left !</p>
             )}
           </div>
+        </div>
+        <div className="flex gap-4 items-center">
+          Quantity:
+          <button className="btn-primary">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </button>
+          {quantity}
+          <button className="btn-primary">
+            <i class="fa fa-minus" aria-hidden="true"></i>
+          </button>
         </div>
         <button onClick={handleRemoveCartItem}>
           <span className="btn-warning">Remove item</span>

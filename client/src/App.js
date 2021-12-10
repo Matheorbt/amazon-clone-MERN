@@ -23,7 +23,7 @@ import PreviousOrder from "./components/screens/account/PreviousOrder";
 const App = () => {
   return (
     <Router>
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-4">
         <Switch>
           <Route exact path="/" component={Landing} />
           <Route exact path="/landing" component={Landing} />

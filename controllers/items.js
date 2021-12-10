@@ -22,12 +22,19 @@ exports.fetchitembyid = async (req, res, next) => {
 
   try {
     const item = await Item.findOne({ _id: itemID });
-
-    res.status(201).json({
-      success: true,
-      message: "Item fetched successfuly",
-      item: item,
-    });
+    console.log(item);
+    if (!item) {
+      res.status(500).json({
+        succes: false,
+        error: error.message,
+      });
+    } else {
+      res.status(201).json({
+        success: true,
+        message: "Item fetched successfuly",
+        item: item,
+      });
+    }
   } catch (error) {
     res.status(500).json({
       succes: false,

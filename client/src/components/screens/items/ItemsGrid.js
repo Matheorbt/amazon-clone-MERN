@@ -23,6 +23,8 @@ const ItemsGrid = () => {
   const [itemsList, setItemsList] = useState([""]);
   const [loading, setLoading] = useState(true);
 
+  const [filterDropdown, setFilterDropdown] = useState(false);
+
   const [filterMaximumPrice, setFilterMaximumPrice] = useState(0);
   const [filterMinimumPrice, setFilterMinimumPrice] = useState(0);
   const [tagFilter, setTagFilter] = useState([]);
@@ -59,8 +61,25 @@ const ItemsGrid = () => {
           <ReactLoading type="bubbles" color="#232F3F" height={50} width={50} />
         </div>
       ) : (
-        <div className="min-h-screen">
-          <div className="flex flex-col gap-2 justify-start items-start p-4 rounded-lg shadow-xl bg-white m-4">
+        <div className="w-full min-h-screen">
+          <button
+            class="mx-10 my-5"
+            onClick={() => setFilterDropdown(!filterDropdown)}
+          >
+            Apply filter{" "}
+            {filterDropdown ? (
+              <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            ) : (
+              <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            )}
+          </button>
+          <div
+            className={
+              filterDropdown
+                ? "scale-x-100 flex flex-col gap-2 justify-start items-start p-4 rounded-lg shadow-xl bg-white my-4 mx-10"
+                : "hidden"
+            }
+          >
             <button
               className="btn-warning"
               onClick={() => {
@@ -154,7 +173,7 @@ const ItemsGrid = () => {
               //   tagFilter.includes(value.tags.map((tag) => tag))
               // )
               .map((item) => (
-                <li key={item["_id"]} className="h-full w-full">
+                <li key={item["_id"]} className="h-full">
                   <ItemCard key={item["_id"]} item={item} />
                 </li>
               ))}

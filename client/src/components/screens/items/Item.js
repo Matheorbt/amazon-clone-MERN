@@ -8,6 +8,7 @@ import Navbar from "../Navbar";
 const Item = ({ history }) => {
   const [error, setError] = useState("");
   const [cartError, setCartError] = useState("");
+  const [cartSuccess, setCartSuccess] = useState("");
   const [item, setItem] = useState([""]);
   const [loading, setLoading] = useState(true);
   const [thumbnail, setThumbnail] = useState("");
@@ -70,6 +71,10 @@ const Item = ({ history }) => {
         "/api/cart/additembyid/" + itemID,
         config
       );
+      setCartSuccess("Item added to cart successfuly !");
+      setTimeout(() => {
+        setCartSuccess("");
+      }, 5000);
     } catch (error) {
       setError("Error while trying to add item to cart");
       setTimeout(() => {
@@ -78,7 +83,7 @@ const Item = ({ history }) => {
     }
   };
 
-  const handleDirectBuy = () => {
+  const handleDirectBuy = async () => {
     if (item.quantityLeft === 0) {
       setCartError("No item left");
       setTimeout(() => {
@@ -86,7 +91,25 @@ const Item = ({ history }) => {
       }, 5000);
       return;
     }
-    window.alert("add item to list");
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    };
+    try {
+      const { data } = await axios.get(
+        "/api/cart/additembyid/" + itemID,
+        config
+      );
+      history.push("/checkout");
+    } catch (error) {
+      setError("Error while trying to add item to cart");
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+    }
   };
 
   const handleWishListAdd = () => {
@@ -199,6 +222,9 @@ const Item = ({ history }) => {
                 {Math.floor(item.price - (item.price / 100) * item.sale)}€
               </p>
               <span className="font-semibold text-warning">{cartError}</span>
+              <span className="font-semibold text-success max-w-full">
+                {cartSuccess}
+              </span>
               <button className="btn-secondary" onClick={handleAddItemToCart}>
                 Add to cart
               </button>

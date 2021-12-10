@@ -51,7 +51,7 @@ const CartSummary = ({ history }) => {
   const hanldeCheckout = async () => {
     let idsList = [];
     userInfo.shoppingBag.forEach((item) => {
-      idsList.push(item._id);
+      idsList.push(item.item);
     });
     const config = {
       headers: {
@@ -89,7 +89,11 @@ const CartSummary = ({ history }) => {
               <ul className="flex flex-col gap-2 w-[100%]">
                 {userInfo.shoppingBag.map((cartItem) => (
                   <li key={cartItem._id}>
-                    <CartSummaryItem item={cartItem} />
+                    <CartSummaryItem
+                      quantity={cartItem.quantity}
+                      history={history}
+                      itemID={cartItem.item}
+                    />
                   </li>
                 ))}
               </ul>

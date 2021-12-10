@@ -49,14 +49,6 @@ const Navbar = ({ history }) => {
         const userInfos = JSON.parse(userInfosRaw);
         setUserInfo(userInfos);
         setLoading(false);
-        userInfo.shoppingBag
-          ? userInfo.shoppingBag.forEach((cartItem) => {
-              tempTotalCart += Math.floor(
-                cartItem.price - (cartItem.price / 100) * cartItem.sale
-              );
-            })
-          : (tempTotalCart = 0);
-        setTotalCart(tempTotalCart);
       } catch (error) {
         setError("Error while trying to retrieve user infos");
         setTimeout(() => {
@@ -66,6 +58,15 @@ const Navbar = ({ history }) => {
     };
     getCurrentUser();
   }, [history, loading, userInfo.shoppingBag]);
+
+  // userInfo.shoppingBag
+  //   ? userInfo.shoppingBag.forEach((cartItem) => {
+  //       tempTotalCart += Math.floor(
+  //         cartItem.price - (cartItem.price / 100) * cartItem.sale
+  //       );
+  //     })
+  //   : (tempTotalCart = 0);
+  // setTotalCart(tempTotalCart);
 
   const handleEmptyCart = async () => {
     const config = {
@@ -95,7 +96,7 @@ const Navbar = ({ history }) => {
   return (
     <>
       <nav className="flex flex-col">
-        <div className="bg-secondary-blue w-screen flex justify-evenly items-center gap-8 p-5">
+        <div className="bg-secondary-blue max-w-screen flex justify-evenly items-center gap-8 p-5">
           <span className="min-w-[90px] w-[5%]">
             <Link to="/homepage" className="flex-shrink">
               <img src={logo} alt="logo" />
@@ -244,38 +245,44 @@ const Navbar = ({ history }) => {
                   <div className="flex-col min-w-[200px] gap-2 p-3">
                     <h3 className="font-bold text-xl">Your cart</h3>
                     <hr className="my-4" />
-                    {userInfo.shoppingBag ? (
-                      userInfo.shoppingBag.length > 0 ? (
-                        <Link
-                          to="/cart"
-                          onClick={() =>
-                            setDropdownCartToggled(!dropdownCartToggled)
-                          }
-                        >
-                          <span className="font-semibold">
-                            Access your cart
-                          </span>
-                        </Link>
-                      ) : null
-                    ) : null}
-                    {totalCart ? <h3>Total: {totalCart}</h3> : null}
-                    {userInfo.shoppingBag ? (
-                      userInfo.shoppingBag.length > 0 ? (
-                        <button
-                          className="text-warning font-semibold"
-                          onClick={handleEmptyCart}
-                        >
-                          Empty cart
-                        </button>
-                      ) : null
-                    ) : null}
-
+                    <div className="flex flex-col">
+                      {userInfo.shoppingBag ? (
+                        userInfo.shoppingBag.length > 0 ? (
+                          <Link
+                            to="/cart"
+                            onClick={() =>
+                              setDropdownCartToggled(!dropdownCartToggled)
+                            }
+                          >
+                            <span className="font-semibold">
+                              Access your cart
+                            </span>
+                          </Link>
+                        ) : null
+                      ) : null}
+                      {totalCart ? <h3>Total: {totalCart}</h3> : null}
+                      {userInfo.shoppingBag ? (
+                        userInfo.shoppingBag.length > 0 ? (
+                          <button
+                            className="text-warning font-semibold"
+                            onClick={handleEmptyCart}
+                          >
+                            Empty cart
+                          </button>
+                        ) : null
+                      ) : null}
+                    </div>
                     {userInfo.shoppingBag ? (
                       userInfo.shoppingBag.length > 0 ? (
                         <ul className="flex flex-col gap-2 overflow-y-scroll max-h-[21rem]">
                           {userInfo.shoppingBag.map((cartItem) => (
-                            <li key={cartItem._id}>
-                              <CartItem item={cartItem} />
+                            <li key={cartItem.item}>
+                              {console.log(cartItem.item)}
+                              <CartItem
+                                quantity={cartItem.quantity}
+                                history={history}
+                                itemID={cartItem.item}
+                              />
                             </li>
                           ))}
                         </ul>
@@ -291,7 +298,7 @@ const Navbar = ({ history }) => {
             </div>
           </div>
         </div>
-        <div className=" bg-main-blue w-screen flex justify-evenly items-center gap-8 p-3">
+        <div className="bg-main-blue max-w-screen flex justify-evenly items-center gap-8 p-3">
           <ul className="flex justify-around items-center flex-grow z-10">
             {tags.map((tag) => {
               return (

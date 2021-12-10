@@ -6,6 +6,8 @@ const PreviousOrderItem = ({ history, itemID }) => {
   const [error, setError] = useState("");
   const [item, setItem] = useState([""]);
   const [loading, setLoading] = useState(true);
+  console.log(itemID);
+  console.log("item id =" + typeof itemID);
 
   useEffect(() => {
     if (!localStorage.getItem("authToken")) {
@@ -30,6 +32,7 @@ const PreviousOrderItem = ({ history, itemID }) => {
           config
         );
         setItem(data.item);
+        console.log(item);
         setLoading(false);
       } catch (error) {
         setError("Error while trying to retrieve item by ID");

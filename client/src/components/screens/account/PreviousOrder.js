@@ -89,7 +89,7 @@ const PreviousOrder = ({ history }) => {
                         <li>
                           <PreviousOrderItem
                             history={history}
-                            itemID={item.Item}
+                            itemID={item.Item[0]}
                           />
                         </li>
                       )}

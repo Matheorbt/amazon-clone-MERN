@@ -99,8 +99,12 @@ const CartSummary = ({ history }) => {
                   <div className="flex flex-col gap-4 content-center shrink-0">
                     <ul className="flex flex-col gap-2 w-[100%]">
                       {userInfo.shoppingBag.map((cartItem) => (
-                        <li key={cartItem._id}>
-                          <CartSummaryItem history={history} item={cartItem} />
+                        <li key={cartItem.item}>
+                          <CartSummaryItem
+                            quantity={cartItem.quantity}
+                            history={history}
+                            itemID={cartItem.item}
+                          />
                         </li>
                       ))}
                     </ul>

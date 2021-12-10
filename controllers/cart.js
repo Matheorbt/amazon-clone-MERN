@@ -52,19 +52,29 @@ exports.checkout = async (req, res, next) => {
 exports.additembyid = async (req, res, next) => {
   const itemID = req.params.itemID;
   const userID = req.user._id.toString();
+  let dupe = 0;
 
   try {
     const item = await Item.findOne({ _id: itemID });
     const user = await User.findOne({ _id: userID });
 
-    //Push the "item" element to the "shoppingBag" array of "user"
-    user.shoppingBag.push(item);
+    user.shoppingBag.map((cartItem, index) =>
+      cartItem.item.toString() === itemID
+        ? ((user.shoppingBag[index].quantity += 1), (dupe = 1))
+        : null
+    );
+    dupe === 0
+      ? user.shoppingBag.push({
+          quantity: 1,
+          item: item,
+        })
+      : null;
 
     await user.save();
 
     res.status(201).json({
       success: true,
-      message: "Item fetched successfuly",
+      message: "Item added successfuly",
       item: item,
     });
   } catch (error) {
