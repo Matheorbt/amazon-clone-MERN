@@ -171,7 +171,7 @@ const Navbar = ({ history }) => {
                   value={searchTitle}
                   onChange={(e) => setSearchTitle(e.target.value)}
                   type="text"
-                  className=" flex-grow"
+                  className="flex-grow px-3"
                 />
                 <button className="bg-secondary-orange h-[100%] rounded-r-md px-3 flex-shrink">
                   Search
@@ -179,20 +179,29 @@ const Navbar = ({ history }) => {
               </div>
               {searchTitle ? (
                 <div className="flex flex-col dropdown-menu absolute mt-1 z-50 bg-white w-full rounded-lg p-4">
-                  {itemsList
-                    .filter((value) =>
-                      value.title
-                        .toLowerCase()
-                        .includes(searchTitle.toLowerCase())
-                    )
-                    .map((item) => (
-                      <Link
-                        className="w-full p-2 rounded-lg transition-colors hover:bg-gray-300 "
-                        to={"/item/" + item._id}
-                      >
-                        {item.title}
-                      </Link>
-                    ))}
+                  {itemsList.filter((value) =>
+                    value.title
+                      .toLowerCase()
+                      .includes(searchTitle.toLowerCase())
+                  ).length > 0 ? (
+                    itemsList
+                      .filter((value) =>
+                        value.title
+                          .toLowerCase()
+                          .includes(searchTitle.toLowerCase())
+                      )
+                      .map((item) => (
+                        <Link
+                          onClick={() => window.location.reload()}
+                          className="w-full p-2 rounded-lg transition-colors hover:bg-gray-300 "
+                          to={"/item/" + item._id}
+                        >
+                          {item.title}
+                        </Link>
+                      ))
+                  ) : (
+                    <span>No item found</span>
+                  )}
                 </div>
               ) : (
                 <div className="absolute mt-2 z-50 bg-white w-full rounded-lg p-4 hiddenDropdown">
