@@ -2,12 +2,10 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import ReactLoading from "react-loading";
 
-const PreviousOrderItem = ({ history, itemID }) => {
+const PreviousOrderItem = ({ history, itemID, quantity }) => {
   const [error, setError] = useState("");
   const [item, setItem] = useState([""]);
   const [loading, setLoading] = useState(true);
-  console.log(itemID);
-  console.log("item id =" + typeof itemID);
 
   useEffect(() => {
     if (!localStorage.getItem("authToken")) {
@@ -32,7 +30,6 @@ const PreviousOrderItem = ({ history, itemID }) => {
           config
         );
         setItem(data.item);
-        console.log(item);
         setLoading(false);
       } catch (error) {
         setError("Error while trying to retrieve item by ID");
@@ -64,11 +61,17 @@ const PreviousOrderItem = ({ history, itemID }) => {
             <div className="flex flex-col">
               <span className="font-bold">{item.title}</span>
               <p className="font-medium">
-                {item.price - (item.price / 100) * item.sale}€{" "}
+                {Math.floor(
+                  (item.price - (item.price / 100) * item.sale) * quantity
+                )}
+                €{" "}
                 {item.sale ? (
                   <span className="italic opacity-60">-{item.sale}%</span>
                 ) : null}
               </p>
+              {quantity > 1 ? (
+                <span className="font-bold">Quantity: {quantity}</span>
+              ) : null}
             </div>
           </div>
         </div>

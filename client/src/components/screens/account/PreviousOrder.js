@@ -77,11 +77,12 @@ const PreviousOrder = ({ history }) => {
                         Order ID: <span className="font-bold">{item._id}</span>
                       </span>
                       {item.Item.length > 1 ? (
-                        item.Item.map((itemId) => (
+                        item.Item.map((item) => (
                           <li>
                             <PreviousOrderItem
                               history={history}
-                              itemID={itemId}
+                              itemID={item.item}
+                              quantity={item.quantity}
                             />
                           </li>
                         ))
@@ -89,7 +90,8 @@ const PreviousOrder = ({ history }) => {
                         <li>
                           <PreviousOrderItem
                             history={history}
-                            itemID={item.Item[0]}
+                            itemID={item.item[0]}
+                            quantity={item.quantity}
                           />
                         </li>
                       )}

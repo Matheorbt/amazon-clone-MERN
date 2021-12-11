@@ -277,7 +277,6 @@ const Navbar = ({ history }) => {
                         <ul className="flex flex-col gap-2 overflow-y-scroll max-h-[21rem]">
                           {userInfo.shoppingBag.map((cartItem) => (
                             <li key={cartItem.item}>
-                              {console.log(cartItem.item)}
                               <CartItem
                                 quantity={cartItem.quantity}
                                 history={history}

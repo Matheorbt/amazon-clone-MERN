@@ -20,13 +20,19 @@ exports.list = async (req, res, next) => {
 };
 
 exports.checkout = async (req, res, next) => {
-  const { idsList } = req.body;
   const userID = req.user._id.toString();
 
   try {
     const user = await User.findById(userID);
+
+    if (!user) {
+      res.status(404).json({
+        succes: false,
+        error: error.message,
+      });
+    }
     const order = await Order.create({
-      Item: idsList,
+      Item: user.shoppingBag,
       User: userID,
     });
 
@@ -41,7 +47,6 @@ exports.checkout = async (req, res, next) => {
       order: order,
     });
   } catch (error) {
-    console.log(error.message);
     res.status(500).json({
       succes: false,
       error: error.message,

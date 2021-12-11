@@ -12,10 +12,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide a last name"],
   },
-  // shoppingBag: {
-  //   type: Array,
-  //   default: [],
-  // },
   shoppingBag: [
     {
       quantity: Number,

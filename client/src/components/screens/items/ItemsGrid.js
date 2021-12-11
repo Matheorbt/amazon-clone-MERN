@@ -44,6 +44,7 @@ const ItemsGrid = () => {
         const itemList = JSON.parse(itemListRaw);
         setItemsList(itemList.itemsList);
         setLoading(false);
+        sortByPrice();
       } catch (error) {
         setError("Error while trying to retrieve items");
         setTimeout(() => {
@@ -54,6 +55,27 @@ const ItemsGrid = () => {
     fetchItemList();
   }, [filterMaximumPrice, filterMinimumPrice]);
 
+  const sortByPrice = () => {
+    let temp = 0;
+    let sorted = 0;
+    let newArray = [...itemsList];
+
+    while (sorted === 0) {
+      for (let i = 0; i < newArray.length; i++) {
+        if (newArray[i].price < newArray[i + 1].price) {
+          temp = newArray[i];
+          newArray[i] = newArray[i + 1];
+          newArray[i + 1] = temp;
+          sorted = 0;
+        } else {
+          sorted = 1;
+        }
+      }
+    }
+    console.log(newArray);
+    setItemsList(newArray);
+  };
+
   return (
     <>
       {loading ? (
@@ -63,14 +85,14 @@ const ItemsGrid = () => {
       ) : (
         <div className="w-full min-h-screen">
           <button
-            class="mx-10 my-5"
+            className="mx-10 my-5"
             onClick={() => setFilterDropdown(!filterDropdown)}
           >
             Apply filter{" "}
             {filterDropdown ? (
-              <i class="fa fa-chevron-down" aria-hidden="true"></i>
+              <i className="fa fa-chevron-down" aria-hidden="true"></i>
             ) : (
-              <i class="fa fa-chevron-right" aria-hidden="true"></i>
+              <i className="fa fa-chevron-right" aria-hidden="true"></i>
             )}
           </button>
           <div
@@ -90,7 +112,7 @@ const ItemsGrid = () => {
             >
               Clear filter
             </button>
-            <div class="flex flex-col gap-2">
+            <div className="flex flex-col gap-2">
               <div className="flex flex-col gap-2">
                 <div className="flex flex-col gap-2">
                   <label>Prix maximum:{filterMaximumPrice}</label>
@@ -129,7 +151,8 @@ const ItemsGrid = () => {
                     >
                       {tagFilter.includes(tag) ? (
                         <div>
-                          {tag} <i class="fa fa-times" aria-hidden="true"></i>
+                          {tag}{" "}
+                          <i className="fa fa-times" aria-hidden="true"></i>
                         </div>
                       ) : (
                         tag

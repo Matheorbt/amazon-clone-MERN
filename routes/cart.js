@@ -19,6 +19,6 @@ router.route("/removeitembyid/:itemID").delete(protect, removeitembyid);
 
 router.route("/clear").delete(protect, clear);
 
-router.route("/checkout").post(protect, checkout);
+router.route("/checkout").get(protect, checkout);
 
 module.exports = router;

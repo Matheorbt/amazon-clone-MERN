@@ -3,10 +3,6 @@ const User = require("./User");
 const Item = require("./Item");
 
 const OrderSchema = new mongoose.Schema({
-  Item: {
-    type: Array,
-    required: [true, "Please provide at least one item"],
-  },
   User: {
     type: String,
     required: [true, "Please provide at least one user"],
@@ -16,6 +12,15 @@ const OrderSchema = new mongoose.Schema({
     default: new Date(),
     required: true,
   },
+  Item: [
+    {
+      quantity: Number,
+      item: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Item",
+      },
+    },
+  ],
 });
 
 const Order = mongoose.model("Order", OrderSchema);

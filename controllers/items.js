@@ -22,7 +22,6 @@ exports.fetchitembyid = async (req, res, next) => {
 
   try {
     const item = await Item.findOne({ _id: itemID });
-    console.log(item);
     if (!item) {
       res.status(500).json({
         succes: false,
