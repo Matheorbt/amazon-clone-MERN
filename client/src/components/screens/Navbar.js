@@ -13,7 +13,10 @@ const Navbar = ({ history }) => {
 
   const [error, setError] = useState("");
 
+  const [searchTitle, setSearchTitle] = useState("");
+
   const [userInfo, setUserInfo] = useState([""]);
+  const [itemsList, setItemsList] = useState([""]);
 
   const [totalCart, setTotalCart] = useState(0);
 
@@ -56,6 +59,28 @@ const Navbar = ({ history }) => {
         }, 5000);
       }
     };
+    const fetchItemList = async () => {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      };
+
+      try {
+        const { data } = await axios.get("/api/items/list", config);
+        const itemListRaw = JSON.stringify(data);
+        const itemList = JSON.parse(itemListRaw);
+        setItemsList(itemList.itemsList);
+        setLoading(false);
+      } catch (error) {
+        setError("Error while trying to retrieve items");
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+      }
+    };
+    fetchItemList();
     getCurrentUser();
   }, [history, loading, userInfo.shoppingBag]);
 
@@ -132,19 +157,48 @@ const Navbar = ({ history }) => {
             </span>
           </h3>
           <div className="flex flex-grow">
-            <div className="bg-white shadow-md rounded-lg w-[100%] flex justify-around h-12">
-              <select
-                name="tag dropdown"
-                id="tag-research"
-                className="bg-[#DADADA] rounded-l-md px-3 flex-shrink"
-              >
-                <option value="default">Chercher par tag</option>
-                <option>Test</option>
-              </select>
-              <input type="text" className=" flex-grow" />
-              <button className="bg-secondary-orange h-[100%] rounded-r-md px-3 flex-shrink">
-                Search
-              </button>
+            <div className="relative w-full">
+              <div className="bg-white shadow-md rounded-lg w-[100%] flex justify-around h-12">
+                <select
+                  name="tag dropdown"
+                  id="tag-research"
+                  className="bg-[#DADADA] rounded-l-md px-3 flex-shrink"
+                >
+                  <option value="default">Chercher par tag</option>
+                  <option>Test</option>
+                </select>
+                <input
+                  value={searchTitle}
+                  onChange={(e) => setSearchTitle(e.target.value)}
+                  type="text"
+                  className=" flex-grow"
+                />
+                <button className="bg-secondary-orange h-[100%] rounded-r-md px-3 flex-shrink">
+                  Search
+                </button>
+              </div>
+              {searchTitle ? (
+                <div className="flex flex-col dropdown-menu absolute mt-1 z-50 bg-white w-full rounded-lg p-4">
+                  {itemsList
+                    .filter((value) =>
+                      value.title
+                        .toLowerCase()
+                        .includes(searchTitle.toLowerCase())
+                    )
+                    .map((item) => (
+                      <Link
+                        className="w-full p-2 rounded-lg transition-colors hover:bg-gray-300 "
+                        to={"/item/" + item._id}
+                      >
+                        {item.title}
+                      </Link>
+                    ))}
+                </div>
+              ) : (
+                <div className="absolute mt-2 z-50 bg-white w-full rounded-lg p-4 hiddenDropdown">
+                  {searchTitle}
+                </div>
+              )}
             </div>
           </div>
           <div className="flex gap-2 flex-shrink relative items-start">

@@ -36,7 +36,7 @@ const HomePage = ({ history }) => {
   };
 
   return (
-    <main className="flex flex-col items-center justify-start min-h-screen">
+    <main className="flex flex-col gap-4 items-center justify-start min-h-screen mx-4">
       <img
         className="min-w-[250px] w-[15%] cursor-pointer"
         src={AmazonLogo}
@@ -59,22 +59,7 @@ const HomePage = ({ history }) => {
           Amazon
         </a>
       </h1>
-      <p className="m-8 text-lg font-semibold">
-        It is a project realized in X months aiming at reproducing some
-        functionalities of the Amazon online sales platform like:
-        <br />
-        -The creation of an account
-        <br />
-        -The possibility to access a list of items by applying a certain filter
-        <br />
-        -Manage your profile information
-        <br />
-        -Managing a shopping cart and "wish list
-        <br />
-        -Suggest products according to the user's search history
-        <br />
-        -etc... (expand)
-      </p>
+
       <div className="flex gap-4">
         <Link to="/login">
           <span className="btn-primary">Access the platform</span>
