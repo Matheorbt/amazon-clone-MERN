@@ -4,7 +4,7 @@ import axios from "axios";
 
 import ItemsGrid from "./items/ItemsGrid";
 import Navbar from "./Navbar";
-
+import Carousel from "../misc/Carousel";
 const HomePage = ({ history }) => {
   useEffect(() => {
     if (!localStorage.getItem("authToken")) {
@@ -26,9 +26,10 @@ const HomePage = ({ history }) => {
         <div className="bg-main-blue col-start-2 ">3</div>
       </div> */}
       <Navbar />
+      <Carousel />
       <ItemsGrid />
       <div className="flex flex-col justify-center items-center w-full ">
-        <button onClick={() => logoutHandler()} className="btn-warning">
+        <button onClick={() => logoutHandler()} className="btn-warning my-2">
           Log out
         </button>
       </div>

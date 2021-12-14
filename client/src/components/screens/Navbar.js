@@ -19,6 +19,7 @@ const Navbar = ({ history }) => {
   const [itemsList, setItemsList] = useState([""]);
 
   const [totalCart, setTotalCart] = useState(0);
+  const [totalItemCart, setTotalItemCart] = useState(0);
 
   const [loading, setLoading] = useState(true);
 
@@ -37,6 +38,7 @@ const Navbar = ({ history }) => {
 
   useEffect(() => {
     let tempTotalCart = 0;
+    let tempTotalItemCart = 0;
 
     const getCurrentUser = async () => {
       const config = {
@@ -80,8 +82,19 @@ const Navbar = ({ history }) => {
         }, 5000);
       }
     };
+    userInfo.shoppingBag
+      ? userInfo.shoppingBag.length > 1
+        ? userInfo.shoppingBag.map(
+            (cartItem) =>
+              (tempTotalItemCart = tempTotalItemCart + cartItem.quantity)
+          )
+        : userInfo.shoppingBag.length > 0
+        ? (tempTotalItemCart = userInfo.shoppingBag[0].quantity)
+        : (tempTotalItemCart = 0)
+      : (tempTotalItemCart = 0);
     fetchItemList();
     getCurrentUser();
+    setTotalItemCart(tempTotalItemCart);
   }, [history, loading, userInfo.shoppingBag]);
 
   // userInfo.shoppingBag
@@ -192,8 +205,7 @@ const Navbar = ({ history }) => {
                       )
                       .map((item) => (
                         <Link
-                          onClick={() => window.location.reload()}
-                          className="w-full p-2 rounded-lg transition-colors hover:bg-gray-300 "
+                          className="w-full p-2 rounded-lg transition-colors hover:bg-gray-300"
                           to={"/item/" + item._id}
                         >
                           {item.title}
@@ -290,7 +302,7 @@ const Navbar = ({ history }) => {
                 onClick={() => setDropdownCartToggled(!dropdownCartToggled)}
               >
                 <span className="text-main-blue absolute left-4 top-[0.15rem]">
-                  {userInfo.shoppingBag ? userInfo.shoppingBag.length : 0}
+                  {userInfo.shoppingBag ? totalItemCart : 0}
                 </span>
                 <i
                   className="fa fa-shopping-cart text-[36px]"
@@ -327,7 +339,7 @@ const Navbar = ({ history }) => {
                       {userInfo.shoppingBag ? (
                         userInfo.shoppingBag.length > 0 ? (
                           <button
-                            className="text-warning font-semibold"
+                            className="text-warning font-semibold w-fit-content"
                             onClick={handleEmptyCart}
                           >
                             Empty cart

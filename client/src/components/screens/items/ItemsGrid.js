@@ -44,7 +44,6 @@ const ItemsGrid = () => {
         const itemList = JSON.parse(itemListRaw);
         setItemsList(itemList.itemsList);
         setLoading(false);
-        sortByPrice();
       } catch (error) {
         setError("Error while trying to retrieve items");
         setTimeout(() => {
@@ -55,31 +54,10 @@ const ItemsGrid = () => {
     fetchItemList();
   }, [filterMaximumPrice, filterMinimumPrice]);
 
-  const sortByPrice = () => {
-    let temp = 0;
-    let sorted = 0;
-    let newArray = [...itemsList];
-
-    while (sorted === 0) {
-      for (let i = 0; i < newArray.length; i++) {
-        if (newArray[i].price < newArray[i + 1].price) {
-          temp = newArray[i];
-          newArray[i] = newArray[i + 1];
-          newArray[i + 1] = temp;
-          sorted = 0;
-        } else {
-          sorted = 1;
-        }
-      }
-    }
-    console.log(newArray);
-    setItemsList(newArray);
-  };
-
   return (
     <>
       {loading ? (
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center min-h-screen">
           <ReactLoading type="bubbles" color="#232F3F" height={50} width={50} />
         </div>
       ) : (
@@ -138,7 +116,7 @@ const ItemsGrid = () => {
               </div>
               <ul className="flex gap-2">
                 {tagList.map((tag) => (
-                  <li>
+                  <li key={tag}>
                     <button
                       className="p-2 rounded-lg shadow-md transition-shadow hover:shadow h-fit-content"
                       onClick={() => {
@@ -169,9 +147,9 @@ const ItemsGrid = () => {
                     {tagFilter.length
                       ? tagFilter.map((tag, index) =>
                           index === tagFilter.length ? (
-                            <li>{tag}</li>
+                            <li key={tag}>{tag}</li>
                           ) : (
-                            <li>{tag},</li>
+                            <li key={tag}>{tag},</li>
                           )
                         )
                       : null}

@@ -7,6 +7,8 @@ import CartSummaryItem from "./CartSummaryItem";
 const CartSummary = ({ history }) => {
   const [error, setError] = useState("");
 
+  const [promoCode, setPromoCode] = useState("");
+
   const [userInfo, setUserInfo] = useState([""]);
 
   const [totalCart, setTotalCart] = useState(0);
@@ -48,6 +50,10 @@ const CartSummary = ({ history }) => {
     getCurrentUser();
   }, [history, loading, userInfo.shoppingBag]);
 
+  const handlePromotion = () => {
+    window.alert("y");
+  };
+
   const hanldeCheckout = async () => {
     const config = {
       headers: {
@@ -88,6 +94,27 @@ const CartSummary = ({ history }) => {
                   </li>
                 ))}
               </ul>
+              <div className="form-group">
+                <label htmlFor="name">Promo code (optional):</label>
+                <input
+                  type="text"
+                  required
+                  id="email"
+                  placeholder="Enter promo code"
+                  autoComplete="no"
+                  value={promoCode}
+                  onChange={(e) => setPromoCode(e.target.value)}
+                  tabIndex={1}
+                />
+                {promoCode ? (
+                  <button
+                    className="btn-primary"
+                    onClick={() => handlePromotion()}
+                  >
+                    Apply code
+                  </button>
+                ) : null}
+              </div>
               <button
                 className="btn-primary w-fit-content self-center"
                 onClick={hanldeCheckout}

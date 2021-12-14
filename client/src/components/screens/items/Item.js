@@ -120,7 +120,7 @@ const Item = ({ history }) => {
     <>
       <Navbar />
       {loading ? (
-        <div className="w-[100%] flex items-center justify-center">
+        <div className="w-[100%] flex items-center justify-center min-h-screen">
           <ReactLoading type="bubbles" color="#232F3F" height={50} width={50} />
         </div>
       ) : (
