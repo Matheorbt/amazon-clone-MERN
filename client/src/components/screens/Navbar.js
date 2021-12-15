@@ -171,7 +171,7 @@ const Navbar = ({ history }) => {
           </h3>
           <div className="flex flex-grow">
             <div className="relative w-full">
-              <div className="bg-white shadow-md rounded-lg w-[100%] flex justify-around h-12">
+              <div className="bg-white shadow-md rounded-lg w-[100%] hidden h-12 lg:flex justify-around">
                 <select
                   name="tag dropdown"
                   id="tag-research"
@@ -223,7 +223,7 @@ const Navbar = ({ history }) => {
             </div>
           </div>
           <div className="flex gap-2 flex-shrink relative items-start">
-            <div className="hidden lg:block">
+            <div>
               <h3 className="text-medium text-white">
                 Hello {userInfo.firstName} <br />{" "}
               </h3>
@@ -371,20 +371,6 @@ const Navbar = ({ history }) => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="bg-main-blue max-w-screen flex justify-evenly items-center gap-8 p-3">
-          <ul className="flex justify-around items-center flex-grow z-10">
-            {tags.map((tag) => {
-              return (
-                <li
-                  key={tag}
-                  className="text-white hover:opacity-80 transition-all"
-                >
-                  <a href="/homepage">{tag}</a>
-                </li>
-              );
-            })}
-          </ul>
         </div>
       </nav>
     </>

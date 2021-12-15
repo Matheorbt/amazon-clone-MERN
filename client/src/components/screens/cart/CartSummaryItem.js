@@ -61,7 +61,7 @@ const CartItem = ({ itemID, history, quantity }) => {
   };
   return (
     <>
-      <div className="flex items-start justify-between gap-8 shadow-md p-8 rounded-lg bg-white cursor-pointer flex-grow transition-shadow hover:shadow">
+      <div className="flex flex-col items-start justify-between gap-8 shadow-md p-8 rounded-lg bg-white cursor-pointer flex-grow transition-shadow hover:shadow lg:flex lg:flex-row">
         <div
           className="flex flex-grow gap-4"
           onClick={() => history.push("/item/" + _id)}

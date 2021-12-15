@@ -125,10 +125,10 @@ const Item = ({ history }) => {
         </div>
       ) : (
         <>
-          <div className="flex m-8 justify-between">
-            <section className="flex gap-5 items-start justify-center">
-              <div className="flex items-center gap-5">
-                <ul>
+          <div className="flex-col m-8 justify-between lg:flex lg:flex-col">
+            <section className="flex flex-col gap-5 items-start justify-center lg:flex lg:flex-row">
+              <div className="flex flex-col items-center gap-5 lg:flex lg:flex-row">
+                <ul className="flex lg:flex lg:flex-col">
                   {images
                     ? images.map((image) => (
                         <li key={image} onClick={() => setThumbnail(image)}>
@@ -149,7 +149,7 @@ const Item = ({ history }) => {
                   <img
                     src={thumbnail}
                     alt={item.title}
-                    className="min-w-[250px] w-[25rem] max-w-[350px]"
+                    className="min-w-[250px] w-[25rem] max-w-[250px]"
                   />
                 </div>
               </div>

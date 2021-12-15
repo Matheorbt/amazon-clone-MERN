@@ -98,7 +98,7 @@ const ItemsGrid = () => {
                     type="number"
                     value={filterMaximumPrice}
                     onChange={(e) => setFilterMaximumPrice(e.target.value)}
-                    className="border border-black"
+                    className="border border-black w-full"
                     min={filterMinimumPrice + 1}
                   />
                 </div>
@@ -114,48 +114,9 @@ const ItemsGrid = () => {
                   />
                 </div>
               </div>
-              <ul className="flex gap-2">
-                {tagList.map((tag) => (
-                  <li key={tag}>
-                    <button
-                      className="p-2 rounded-lg shadow-md transition-shadow hover:shadow h-fit-content"
-                      onClick={() => {
-                        tagFilter.includes(tag)
-                          ? setTagFilter(
-                              tagFilter.filter((item) => item !== tag)
-                            )
-                          : setTagFilter([...tagFilter, tag]);
-                      }}
-                    >
-                      {tagFilter.includes(tag) ? (
-                        <div>
-                          {tag}{" "}
-                          <i className="fa fa-times" aria-hidden="true"></i>
-                        </div>
-                      ) : (
-                        tag
-                      )}
-                    </button>
-                  </li>
-                ))}
-              </ul>
+              <ul className="flex gap-2"></ul>
 
-              <div className="flex flex-col gap-2">
-                <div className="flex">
-                  Tag:{" "}
-                  <ul className="flex">
-                    {tagFilter.length
-                      ? tagFilter.map((tag, index) =>
-                          index === tagFilter.length ? (
-                            <li key={tag}>{tag}</li>
-                          ) : (
-                            <li key={tag}>{tag},</li>
-                          )
-                        )
-                      : null}
-                  </ul>
-                </div>
-              </div>
+              <div className="flex flex-col gap-2"></div>
             </div>
           </div>
           <ul className="place-items-center grid gap-y-8 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-2">
