@@ -49,9 +49,7 @@ const HomePage = ({ history }) => {
         <i className="fa fa-copyright" aria-hidden="true"></i>
       </h1>
       <br />
-      <h1 className="text-xl font-bold">
-        Welcome, thanks for giving a shoot to my project
-      </h1>
+      <h1 className="text-xl font-bold">Welcome,</h1>
       <br />
       <h1>
         This project is for training purposes only and is inspired by{" "}

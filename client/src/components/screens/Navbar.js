@@ -5,6 +5,8 @@ import { Link, useLocation } from "react-router-dom";
 
 import CartItem from "./cart/CartItem";
 
+import { getTotalCart } from "../../utils/getTotalCart.js";
+
 import logo from "../../assets/logo/Amazon-logo_white.svg";
 
 const Navbar = ({ history }) => {
@@ -82,29 +84,14 @@ const Navbar = ({ history }) => {
         }, 5000);
       }
     };
-    userInfo.shoppingBag
-      ? userInfo.shoppingBag.length > 1
-        ? userInfo.shoppingBag.map(
-            (cartItem) =>
-              (tempTotalItemCart = tempTotalItemCart + cartItem.quantity)
-          )
-        : userInfo.shoppingBag.length > 0
-        ? (tempTotalItemCart = userInfo.shoppingBag[0].quantity)
-        : (tempTotalItemCart = 0)
-      : (tempTotalItemCart = 0);
     fetchItemList();
     getCurrentUser();
+    userInfo.shoppingBag
+      ? (tempTotalCart = getTotalCart(userInfo.shoppingBag))
+      : (tempTotalItemCart = 0);
+    setTotalCart(tempTotalCart > 0 ? tempTotalCart : 0);
     setTotalItemCart(tempTotalItemCart);
   }, [history, loading, userInfo.shoppingBag]);
-
-  // userInfo.shoppingBag
-  //   ? userInfo.shoppingBag.forEach((cartItem) => {
-  //       tempTotalCart += Math.floor(
-  //         cartItem.price - (cartItem.price / 100) * cartItem.sale
-  //       );
-  //     })
-  //   : (tempTotalCart = 0);
-  // setTotalCart(tempTotalCart);
 
   const handleEmptyCart = async () => {
     const config = {
@@ -318,7 +305,10 @@ const Navbar = ({ history }) => {
               >
                 <div className="flex gap-5 divide-black p-3">
                   <div className="flex-col min-w-[200px] gap-2 p-3">
-                    <h3 className="font-bold text-xl">Your cart</h3>
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-bold text-xl">Your cart</h3>
+                      <h3 className="font-bold text-md">Total: {totalCart}€</h3>
+                    </div>
                     <hr className="my-4" />
                     <div className="flex flex-col">
                       {userInfo.shoppingBag ? (
