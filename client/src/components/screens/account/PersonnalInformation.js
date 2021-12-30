@@ -117,13 +117,13 @@ const PersonnalInformation = ({ history }) => {
   return (
     <>
       <Navbar />
-      <div className="flex w-screen justify-around">
+      <div className="flex justify-around">
         <form
           onSubmit={profileModificationHandler}
           action=""
           className="flex-column items-center justify-center flex-grow m-8 gap-7 w-[100%]"
         >
-          <div className="flex w-[100%] justify-around">
+          <div className="flex-col w-[100%] justify-around lg:flex lg:flex-row">
             <section className=" form-auth flex-grow m-8 gap-7">
               <h3 className="text-2xl font-bold">Personal information</h3>
               {error && <span className="text-warning font-bold">{error}</span>}

@@ -228,7 +228,7 @@ const Navbar = ({ history }) => {
                       : "dropdown-menu z-20 hiddenDropdown"
                   }
                 >
-                  <div className="flex gap-5 min-w-[150px] divide-x divide-black p-3">
+                  <div className="flex-col gap-5 min-w-[150px] p-3 lg:flex lg:flex-row ">
                     <div className="flex-col gap-2 p-3">
                       <h3 className="font-bold text-lg">Your account</h3>
                       <ul className="flex-col gap-2">

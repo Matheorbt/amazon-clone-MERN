@@ -8,6 +8,7 @@ const {
   add,
   update,
   fetchitembyid,
+  addcomment,
 } = require("../controllers/items");
 
 router.route("/list").get(protect, list);
@@ -19,5 +20,7 @@ router.route("/remove").delete(protect, remove);
 router.route("/add").post(protect, add);
 
 router.route("/update").post(protect, update);
+
+router.route("/addcomment/:itemID").get(protect, addcomment);
 
 module.exports = router;

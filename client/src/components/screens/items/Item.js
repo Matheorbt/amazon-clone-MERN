@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import ReactLoading from "react-loading";
+import Rating from "react-rating";
 
 import Navbar from "../Navbar";
 
@@ -9,10 +10,14 @@ const Item = ({ history }) => {
   const [error, setError] = useState("");
   const [cartError, setCartError] = useState("");
   const [cartSuccess, setCartSuccess] = useState("");
-  const [item, setItem] = useState([""]);
   const [loading, setLoading] = useState(true);
+
+  const [item, setItem] = useState([""]);
   const [thumbnail, setThumbnail] = useState("");
   const [images, setImages] = useState([""]);
+
+  const [commentContent, setCommentContent] = useState("");
+  const [commentRating, setCommentRating] = useState(0);
 
   const { itemID } = useParams();
 
@@ -28,10 +33,6 @@ const Item = ({ history }) => {
           Authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },
       };
-
-      if (!localStorage.getItem("authToken")) {
-        history.push("/login");
-      }
 
       try {
         const { data } = await axios.get(
@@ -116,22 +117,50 @@ const Item = ({ history }) => {
     window.alert("add item to list");
   };
 
+  const createComment = async (e) => {
+    e.preventDefault();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        commentRating: commentRating,
+        commentContent: commentContent,
+      },
+    };
+    try {
+      const { data } = await axios.get(
+        "/api/items/addcomment/" + itemID,
+        config
+      );
+    } catch (error) {
+      setError(error);
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+    }
+  };
+
   return (
-    <>
-      <Navbar />
+    <div className="min-h-screen">
+      <Navbar history={history} />
       {loading ? (
         <div className="w-[100%] flex items-center justify-center min-h-screen">
           <ReactLoading type="bubbles" color="#232F3F" height={50} width={50} />
         </div>
       ) : (
         <>
-          <div className="flex-col m-8 justify-between lg:flex lg:flex-col">
+          <div className="flex-col m-8 justify-between lg:flex lg:flex-row">
             <section className="flex flex-col gap-5 items-start justify-center lg:flex lg:flex-row">
               <div className="flex flex-col items-center gap-5 lg:flex lg:flex-row">
                 <ul className="flex lg:flex lg:flex-col">
                   {images
                     ? images.map((image) => (
-                        <li key={image} onClick={() => setThumbnail(image)}>
+                        <li
+                          className="cursor-pointer"
+                          key={image}
+                          onClick={() => setThumbnail(image)}
+                        >
                           <img
                             className={
                               image !== thumbnail
@@ -173,47 +202,15 @@ const Item = ({ history }) => {
                 ) : (
                   <p>Only: {item.quantityLeft} left !</p>
                 )}
-                <div className="flex gap-2">
-                  <i
-                    className={
-                      item.rating >= 1
-                        ? "fa fa-star text-[1.5rem] text-secondary-orange"
-                        : "fa fa-star text-[1.5rem] text-[#B5B5B5]"
-                    }
-                    aria-hidden="true"
-                  ></i>
-                  <i
-                    className={
-                      item.rating >= 2
-                        ? "fa fa-star text-[1.5rem] text-secondary-orange"
-                        : "fa fa-star text-[1.5rem] text-[#B5B5B5]"
-                    }
-                    aria-hidden="true"
-                  ></i>
-                  <i
-                    className={
-                      item.rating >= 3
-                        ? "fa fa-star text-[1.5rem] text-secondary-orange"
-                        : "fa fa-star text-[1.5rem] text-[#B5B5B5]"
-                    }
-                    aria-hidden="true"
-                  ></i>
-                  <i
-                    className={
-                      item.rating >= 4
-                        ? "fa fa-star text-[1.5rem] text-secondary-orange"
-                        : "fa fa-star text-[1.5rem] text-[#B5B5B5]"
-                    }
-                    aria-hidden="true"
-                  ></i>
-                  <i
-                    className={
-                      item.rating >= 5
-                        ? "fa fa-star text-[1.5rem] text-secondary-orange"
-                        : "fa fa-star text-[1.5rem] text-[#B5B5B5]"
-                    }
-                    aria-hidden="true"
-                  ></i>
+                <div className="flex justify-center gap-2 items-center">
+                  <Rating
+                    emptySymbol="fa fa-star-o fa-2x"
+                    fullSymbol="fa fa-star fa-2x"
+                    fractions={2}
+                    initialRating={Math.floor(item.rating)}
+                    readonly={true}
+                  />
+                  <span className="italic">{item.rating}</span>
                 </div>
               </div>
             </section>
@@ -241,12 +238,76 @@ const Item = ({ history }) => {
             </div>
           </div>
           <hr />
-          <div>Proposition d'autres produits</div>
-          <div>Avis sur le produit avec commentaire</div>
-          <div>Historique de navigation</div>
+          <div className="flex flex-col">
+            <div>Produits similaires</div>
+            <div className="flex flex-col gap-2 m-4">
+              <h1 className="font-bold text-2xl">Rédiger un commentaire</h1>
+              <form
+                onSubmit={createComment}
+                className="flex flex-col gap-4 shadow-md bg-white p-4"
+              >
+                <div className="form-group">
+                  <label htmlFor="name">Content:</label>
+                  <textarea
+                    type="text"
+                    required
+                    id="commentContent"
+                    placeholder="Enter content"
+                    autoComplete="no"
+                    onChange={(e) => setCommentContent(e.target.value)}
+                    tabIndex={1}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="rating">Select a rating:</label>
+                  <Rating
+                    emptySymbol="fa fa-star-o fa-2x"
+                    fullSymbol="fa fa-star fa-2x"
+                    fractions={2}
+                    onClick={(value) => setCommentRating(value)}
+                    tabIndex={2}
+                  />
+                </div>
+                <button className="btn-primary" type="submit" tabIndex={3}>
+                  Confirm
+                </button>
+              </form>
+            </div>
+            <ul className="flex justify-center items-center gap-2">
+              {item.comment.map((comment) => (
+                <li
+                  key={comment.user}
+                  className="flex flex-col bg-white mx-4 gap-6 shadow-md p-8 rounded-lg flex-grow my-4"
+                >
+                  <div className="flex justify-between">
+                    <div className="flex gap-2 items-center">
+                      <img
+                        src="https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/people19.png"
+                        alt="user profile"
+                        className="rounded-full"
+                        width={50}
+                      />
+                      <span className="font-bold">Jhon Doe</span>
+                    </div>
+                    <span className="font-bold">Le 2 décembre 2021</span>
+                  </div>
+                  <Rating
+                    emptySymbol="fa fa-star-o fa-2x"
+                    fullSymbol="fa fa-star fa-2x"
+                    fractions={2}
+                    initialRating={comment.rating}
+                    readonly={true}
+                  />
+                  <p className="shadow-inner p-2 rounded-md">
+                    {comment.content}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </>
       )}
-    </>
+    </div>
   );
 };
 

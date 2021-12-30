@@ -12,7 +12,6 @@ const ItemSchema = new mongoose.Schema({
   description: {
     type: String,
     required: [true, "Please provide a description"],
-    minlength: 100,
   },
   images: {
     type: Array,
@@ -46,9 +45,24 @@ const ItemSchema = new mongoose.Schema({
   company: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Company",
-    default: undefined,
-    required: [true, "Please provide a thumbnail"],
+    required: false,
   },
+  comment: [
+    {
+      rating: Number,
+      content: String,
+      date: {
+        type: Date,
+        default: new Date(),
+        required: true,
+      },
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+      },
+    },
+  ],
 });
 
 const Item = mongoose.model("Item", ItemSchema);

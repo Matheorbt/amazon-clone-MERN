@@ -25,7 +25,7 @@ const HomePage = ({ history }) => {
         <div className="bg-success col-start-2">2</div>
         <div className="bg-main-blue col-start-2 ">3</div>
       </div> */}
-      <Navbar />
+      <Navbar history={history} />
       <Carousel />
       <ItemsGrid />
       <div className="flex flex-col justify-center items-center w-full ">

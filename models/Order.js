@@ -3,16 +3,16 @@ const User = require("./User");
 const Item = require("./Item");
 
 const OrderSchema = new mongoose.Schema({
-  User: {
+  user: {
     type: String,
     required: [true, "Please provide at least one user"],
   },
-  Date: {
+  date: {
     type: Date,
     default: new Date(),
     required: true,
   },
-  Item: [
+  item: [
     {
       quantity: Number,
       item: {
