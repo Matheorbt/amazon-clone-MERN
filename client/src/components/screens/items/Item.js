@@ -51,7 +51,7 @@ const Item = ({ history }) => {
       }
     };
     fetchItemByID();
-  }, [loading]);
+  }, [loading, item.comment]);
 
   const handleAddItemToCart = async () => {
     if (item.quantityLeft === 0) {
@@ -264,7 +264,8 @@ const Item = ({ history }) => {
                     emptySymbol="fa fa-star-o fa-2x"
                     fullSymbol="fa fa-star fa-2x"
                     fractions={2}
-                    onClick={(value) => setCommentRating(value)}
+                    onClick={setCommentRating}
+                    initialRating={commentRating}
                     tabIndex={2}
                   />
                 </div>
@@ -273,11 +274,11 @@ const Item = ({ history }) => {
                 </button>
               </form>
             </div>
-            <ul className="flex justify-center items-center gap-2">
+            <ul className="flex flex-col justify-center items-stretch gap-2">
               {item.comment.map((comment) => (
                 <li
                   key={comment.user}
-                  className="flex flex-col bg-white mx-4 gap-6 shadow-md p-8 rounded-lg flex-grow my-4"
+                  className="flex flex-col bg-white gap-6 shadow-md p-8 rounded-lg m-4"
                 >
                   <div className="flex justify-between">
                     <div className="flex gap-2 items-center">
