@@ -38,7 +38,7 @@ const ForgotPasswordScreen = () => {
   return (
     <div className="flex flex-col justify-center items-center w-full h-screen">
       <img
-        className="min-w-[250px] w-[15%] fixed top-0"
+        className="min-w-[250px] w-[15%] fixed top-0 mt-4"
         src={AmazonLogo}
         alt="amazon logo"
       />

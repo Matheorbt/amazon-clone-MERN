@@ -38,7 +38,7 @@ const HomePage = ({ history }) => {
   return (
     <main className="flex flex-col gap-4 items-center justify-start min-h-screen mx-4">
       <img
-        className="min-w-[250px] w-[15%] cursor-pointer"
+        className="min-w-[250px] w-[15%] cursor-pointer mt-4"
         src={AmazonLogo}
         alt="amazon logo"
         onClick={() => history.push("/landing")}

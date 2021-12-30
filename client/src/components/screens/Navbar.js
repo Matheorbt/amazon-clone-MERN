@@ -7,7 +7,7 @@ import CartItem from "./cart/CartItem";
 
 import { getTotalCart } from "../../utils/getTotalCart.js";
 
-import logo from "../../assets/logo/Amazon-logo_white.svg";
+import logo from "../../assets/logo/Amazon-logo_white.png";
 
 const Navbar = ({ history }) => {
   const location = useLocation();

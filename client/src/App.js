@@ -6,7 +6,7 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 //Screens
 import Footer from "./components/screens/Footer";
 
-import Landing from "./components/screens/landing_page/Landing";
+import Landing from "./components/screens/landing/Landing";
 import CartSummary from "./components/screens/cart/CartSummary";
 import Checkout from "./components/screens/cart/Checkout";
 import OrderConfirmation from "./components/screens/cart/OrderConfirmation";

@@ -107,7 +107,7 @@ const RegisterScreen = ({ history }) => {
   return (
     <div className="flex flex-col justify-center items-center w-full h-screen">
       <img
-        className="min-w-[250px] w-[15%] fixed top-0 hover:cursor-pointer"
+        className="min-w-[250px] w-[15%] fixed top-0 hover:cursor-pointer mt-4"
         src={AmazonLogo}
         alt="amazon logo"
         onClick={() => history.push("/landing")}

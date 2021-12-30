@@ -19,6 +19,8 @@ const Item = ({ history }) => {
   const [commentContent, setCommentContent] = useState("");
   const [commentRating, setCommentRating] = useState(0);
 
+  const [itemRating, setItemRating] = useState(0);
+
   const { itemID } = useParams();
 
   useEffect(() => {
@@ -50,7 +52,16 @@ const Item = ({ history }) => {
         }, 5000);
       }
     };
+
+    const getAverageRating = () => {
+      let average = 0;
+
+      item.comment.map((comment) => (average += comment.rating));
+      average = average / item.comment.length;
+      setItemRating(Math.round(average * 10) / 10);
+    };
     fetchItemByID();
+    item.comment ? getAverageRating() : setItemRating(3);
   }, [loading, item.comment]);
 
   const handleAddItemToCart = async () => {
@@ -207,10 +218,12 @@ const Item = ({ history }) => {
                     emptySymbol="fa fa-star-o fa-2x"
                     fullSymbol="fa fa-star fa-2x"
                     fractions={2}
-                    initialRating={Math.floor(item.rating)}
+                    initialRating={itemRating ? itemRating : 2.5}
                     readonly={true}
                   />
-                  <span className="italic">{item.rating}</span>
+                  <span className="italic">
+                    {itemRating ? itemRating : 2.5}
+                  </span>
                 </div>
               </div>
             </section>
