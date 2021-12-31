@@ -1,5 +1,5 @@
 import React from "react";
-import { Swiper, SwiperSlide, Autoplay } from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
 import "swiper/swiper.min.css";
@@ -22,11 +22,9 @@ const Carousel = () => {
         slidesPerView={1}
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
-        onSwiper={(swiper) => console.log(swiper)}
-        onSlideChange={() => console.log("slide change")}
       >
-        {images.map((imageURL) => (
-          <SwiperSlide>
+        {images.map((imageURL, index) => (
+          <SwiperSlide key={index}>
             <img src={imageURL} alt={imageURL} className="width-full" />
           </SwiperSlide>
         ))}

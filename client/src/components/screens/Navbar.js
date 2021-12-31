@@ -63,6 +63,7 @@ const Navbar = ({ history }) => {
         }, 5000);
       }
     };
+
     const fetchItemList = async () => {
       const config = {
         headers: {
@@ -84,6 +85,7 @@ const Navbar = ({ history }) => {
         }, 5000);
       }
     };
+
     fetchItemList();
     getCurrentUser();
     userInfo.shoppingBag

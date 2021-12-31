@@ -5,12 +5,20 @@ const ErrorResponse = require("../utils/errorResponse");
 exports.list = async (req, res, next) => {
   try {
     const items = await Item.find();
+
+    if (!items) {
+      res.status(500).json({
+        succes: false,
+        error: error.message,
+      });
+    }
     res.status(201).json({
       success: true,
       message: "Item list fetch success",
       itemsList: items,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       succes: false,
       error: error.message,

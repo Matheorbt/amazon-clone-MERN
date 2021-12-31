@@ -52,6 +52,12 @@ const ItemsGrid = () => {
       }
     };
     fetchItemList();
+    return () => {
+      setError("");
+      setItemsList([""]);
+      setFilterMinimumPrice(0);
+      setFilterMaximumPrice(0);
+    };
   }, [filterMaximumPrice, filterMinimumPrice]);
 
   return (

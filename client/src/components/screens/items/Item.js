@@ -5,6 +5,7 @@ import ReactLoading from "react-loading";
 import Rating from "react-rating";
 
 import Navbar from "../Navbar";
+import ItemCard from "../items/ItemCard";
 
 const Item = ({ history }) => {
   const [error, setError] = useState("");
@@ -13,8 +14,11 @@ const Item = ({ history }) => {
   const [loading, setLoading] = useState(true);
 
   const [item, setItem] = useState([""]);
+  const [itemsList, setItemsList] = useState([""]);
   const [thumbnail, setThumbnail] = useState("");
   const [images, setImages] = useState([""]);
+
+  const [filteredList, setFilteredList] = useState([""]);
 
   const [commentContent, setCommentContent] = useState("");
   const [commentRating, setCommentRating] = useState(0);
@@ -46,6 +50,7 @@ const Item = ({ history }) => {
         setThumbnail(item.thumbnail);
         setImages([...item.images, item.thumbnail]);
       } catch (error) {
+        setLoading(true);
         setError("Error while trying to retrieve item by ID");
         setTimeout(() => {
           setError("");
@@ -60,9 +65,46 @@ const Item = ({ history }) => {
       average = average / item.comment.length;
       setItemRating(Math.round(average * 10) / 10);
     };
+
+    const fetchItemList = async () => {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      };
+
+      try {
+        const { data } = await axios.get("/api/items/list", config);
+        const itemListRaw = JSON.stringify(data);
+        const itemList = JSON.parse(itemListRaw);
+        setItemsList(itemList.itemsList);
+        setFilteredList(
+          itemsList.filter((itemListElement) =>
+            item.tags.some((f) => itemListElement.tags.includes(f))
+          )
+        );
+        setLoading(false);
+      } catch (error) {
+        setLoading(true);
+        setError("Error while trying to retrieve items");
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+      }
+    };
+    fetchItemList();
     fetchItemByID();
     item.comment ? getAverageRating() : setItemRating(3);
-  }, [loading, item.comment]);
+  }, [
+    item.comment,
+    item.thumbnail,
+    item.images,
+    item.tags,
+    history,
+    itemID,
+    setItemsList,
+  ]);
 
   const handleAddItemToCart = async () => {
     if (item.quantityLeft === 0) {
@@ -160,16 +202,16 @@ const Item = ({ history }) => {
           <ReactLoading type="bubbles" color="#232F3F" height={50} width={50} />
         </div>
       ) : (
-        <>
+        <div className="flex flex-col gap-5 mb-4">
           <div className="flex-col m-8 justify-between lg:flex lg:flex-row">
             <section className="flex flex-col gap-5 items-start justify-center lg:flex lg:flex-row">
               <div className="flex flex-col items-center gap-5 lg:flex lg:flex-row">
                 <ul className="flex lg:flex lg:flex-col">
                   {images
-                    ? images.map((image) => (
+                    ? images.map((image, index) => (
                         <li
                           className="cursor-pointer"
-                          key={image}
+                          key={image + index}
                           onClick={() => setThumbnail(image)}
                         >
                           <img
@@ -251,10 +293,37 @@ const Item = ({ history }) => {
             </div>
           </div>
           <hr />
-          <div className="flex flex-col">
-            <div>Produits similaires</div>
+          <div className="flex flex-col justify-center mx-4 scroll">
+            {filteredList.length > 1 ? (
+              <div>
+                <h1 className="font-bold text-xl">
+                  More items comporting the tags{" "}
+                  {item.tags.map((tag, index) => (
+                    <span key={tag + index}>
+                      "{tag}"{index + 1 === item.tags.length ? null : ","}
+                    </span>
+                  ))}
+                </h1>
+                <ul className="flex overflow-x-scroll gap-10">
+                  {filteredList.map((item) => (
+                    <li key={item["_id"]}>
+                      <ItemCard key={item["_id"]} item={item} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <div className="w-[100%] flex items-center justify-center min-h-screen">
+                <ReactLoading
+                  type="bubbles"
+                  color="#232F3F"
+                  height={50}
+                  width={50}
+                />
+              </div>
+            )}
             <div className="flex flex-col gap-2 m-4">
-              <h1 className="font-bold text-2xl">Rédiger un commentaire</h1>
+              <h1 className="font-bold text-2xl">Write a review</h1>
               <form
                 onSubmit={createComment}
                 className="flex flex-col gap-4 shadow-md bg-white p-4"
@@ -288,38 +357,44 @@ const Item = ({ history }) => {
               </form>
             </div>
             <ul className="flex flex-col justify-center items-stretch gap-2">
-              {item.comment.map((comment) => (
-                <li
-                  key={comment.user}
-                  className="flex flex-col bg-white gap-6 shadow-md p-8 rounded-lg m-4"
-                >
-                  <div className="flex justify-between">
-                    <div className="flex gap-2 items-center">
-                      <img
-                        src="https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/people19.png"
-                        alt="user profile"
-                        className="rounded-full"
-                        width={50}
-                      />
-                      <span className="font-bold">Jhon Doe</span>
+              {item.comment.length ? (
+                item.comment.map((comment, index) => (
+                  <li
+                    key={comment.user + index}
+                    className="flex flex-col bg-white gap-6 shadow-md p-8 rounded-lg m-4"
+                  >
+                    <div className="flex justify-between">
+                      <div className="flex gap-2 items-center">
+                        <img
+                          src="https://preview.keenthemes.com/metronic-v4/theme/assets/pages/media/profile/people19.png"
+                          alt="user profile"
+                          className="rounded-full"
+                          width={50}
+                        />
+                        <span className="font-bold">Jhon Doe</span>
+                      </div>
+                      <span className="font-bold">Le 2 décembre 2021</span>
                     </div>
-                    <span className="font-bold">Le 2 décembre 2021</span>
-                  </div>
-                  <Rating
-                    emptySymbol="fa fa-star-o fa-2x"
-                    fullSymbol="fa fa-star fa-2x"
-                    fractions={2}
-                    initialRating={comment.rating}
-                    readonly={true}
-                  />
-                  <p className="shadow-inner p-2 rounded-md">
-                    {comment.content}
-                  </p>
-                </li>
-              ))}
+                    <Rating
+                      emptySymbol="fa fa-star-o fa-2x"
+                      fullSymbol="fa fa-star fa-2x"
+                      fractions={2}
+                      initialRating={comment.rating}
+                      readonly={true}
+                    />
+                    <p className="shadow-inner p-2 rounded-md">
+                      {comment.content}
+                    </p>
+                  </li>
+                ))
+              ) : (
+                <span className="self-center font-bold text-xl">
+                  No comment yet
+                </span>
+              )}
             </ul>
           </div>
-        </>
+        </div>
       )}
     </div>
   );

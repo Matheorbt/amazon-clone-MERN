@@ -2,7 +2,6 @@ import axios from "axios";
 
 const getTotalCart = async ({ shoppingBag }) => {
   let totalCart = 0;
-  console.log(shoppingBag);
   //   shoppingBag.length > 1
   //     ? shoppingBag.map((item) => (totalCart += getItemTotal(item)))
   //     : getItemTotal(shoppingBag[0]);
