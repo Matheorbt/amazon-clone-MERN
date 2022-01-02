@@ -6,19 +6,6 @@ import ReactLoading from "react-loading";
 import ItemCard from "./ItemCard";
 
 const ItemsGrid = () => {
-  const tagList = [
-    "House",
-    "Nutrition",
-    "Workout",
-    "Health",
-    "House furniture",
-    "School",
-    "Art",
-    "Shoes",
-    "Mode",
-    "Kitchen",
-    "Plant",
-  ];
   const [error, setError] = useState("");
   const [itemsList, setItemsList] = useState([""]);
   const [loading, setLoading] = useState(true);
@@ -31,6 +18,7 @@ const ItemsGrid = () => {
 
   useEffect(() => {
     const fetchItemList = async () => {
+      console.log("ItemGrid - fetchItemList");
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -99,7 +87,7 @@ const ItemsGrid = () => {
             <div className="flex flex-col gap-2">
               <div className="flex flex-col gap-2">
                 <div className="flex flex-col gap-2">
-                  <label>Prix maximum:{filterMaximumPrice}</label>
+                  <label>Maximum price:</label>
                   <input
                     type="number"
                     value={filterMaximumPrice}
@@ -109,7 +97,7 @@ const ItemsGrid = () => {
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label>Prix minimum:{filterMinimumPrice}</label>
+                  <label>Minimum price:</label>
                   <input
                     type="number"
                     value={filterMinimumPrice}

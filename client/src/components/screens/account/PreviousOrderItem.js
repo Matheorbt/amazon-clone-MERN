@@ -39,7 +39,7 @@ const PreviousOrderItem = ({ history, itemID, quantity }) => {
       }
     };
     fetchItemByID();
-  }, [loading]);
+  }, [loading, history, itemID]);
 
   return (
     <>
@@ -49,6 +49,7 @@ const PreviousOrderItem = ({ history, itemID, quantity }) => {
         </div>
       ) : (
         <div className="flex items-start justify-between gap-8  bg-white cursor-pointer flex-grow">
+          {error}
           <div
             className="flex flex-grow gap-4"
             onClick={() => history.push("/item/" + itemID)}

@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import React from "react";
-import axios from "axios";
 
 import ItemsGrid from "./items/ItemsGrid";
 import Navbar from "./Navbar";

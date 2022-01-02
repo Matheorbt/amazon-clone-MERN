@@ -34,7 +34,7 @@ const CartItem = ({ itemID, history, quantity }) => {
       }
     };
     fetchItemByID();
-  }, [loading]);
+  }, [loading, history, itemID]);
 
   const { title, thumbnail, price, sale, quantityLeft, _id } = {
     ...item,
@@ -42,6 +42,7 @@ const CartItem = ({ itemID, history, quantity }) => {
 
   return (
     <Link to={"/item/" + _id}>
+      {error}
       <div className="flex card-container transition-shadow m-3 w-fit-content hover:shadow gap-3 max-w-sm">
         {quantity > 1 ? (
           <span className="font-bold self-end">{quantity}</span>

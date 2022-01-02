@@ -1,40 +1,10 @@
-import { useState, useEffect } from "react";
 import React from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 
 import AmazonLogo from "../../../assets/logo/Amazon-logo_black.png";
 import FooterImage from "../../../assets/footer/footer-visual.svg";
 
 const HomePage = ({ history }) => {
-  const [error, setError] = useState("");
-  const [privateData, setPrivateData] = useState("");
-
-  useEffect(() => {
-    const fetchPrivateData = async () => {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        },
-      };
-      try {
-        const { data } = await axios.get("/api/private", config);
-        setPrivateData(data.data);
-      } catch (error) {
-        localStorage.removeItem("authToken");
-        setError("You are not authorized please login");
-      }
-    };
-    fetchPrivateData();
-  }, [history]);
-
-  const logoutHandler = () => {
-    localStorage.removeItem("authToken");
-    console.clear();
-    history.push("/login");
-  };
-
   return (
     <main className="flex flex-col gap-4 items-center justify-start min-h-screen mx-4">
       <img

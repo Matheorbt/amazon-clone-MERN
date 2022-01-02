@@ -77,7 +77,7 @@ const PersonnalInformation = ({ history }) => {
       }
     };
     getCurrentUser();
-  }, [history, loading]);
+  }, [history, loading, userInfo]);
 
   const profileModificationHandler = async (e) => {
     e.preventDefault();

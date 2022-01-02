@@ -18,7 +18,6 @@ exports.list = async (req, res, next) => {
       itemsList: items,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       succes: false,
       error: error.message,
@@ -28,9 +27,9 @@ exports.list = async (req, res, next) => {
 
 exports.fetchitembyid = async (req, res, next) => {
   const itemID = req.params.itemID;
-
   try {
     const item = await Item.findOne({ _id: itemID });
+
     if (!item) {
       res.status(500).json({
         succes: false,

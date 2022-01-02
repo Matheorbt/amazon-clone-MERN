@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import ReactLoading from "react-loading";
 
@@ -48,7 +47,7 @@ const CartSummary = ({ history }) => {
       }
     };
     getCurrentUser();
-  }, [history, loading, userInfo.shoppingBag]);
+  }, [history, setLoading, userInfo.shoppingBag]);
 
   const handleEmptyCart = async () => {
     const config = {
@@ -59,7 +58,7 @@ const CartSummary = ({ history }) => {
     };
 
     try {
-      const { data } = await axios.delete("/api/cart/clear", config);
+      await axios.delete("/api/cart/clear", config);
     } catch (error) {
       setError("Error while trying to clear the cart");
       setTimeout(() => {
@@ -71,6 +70,7 @@ const CartSummary = ({ history }) => {
   return (
     <>
       <Navbar />
+      {error}
       {loading ? (
         <div className="w-[100%] flex items-center justify-center min-h-screen">
           <ReactLoading type="bubbles" color="#232F3F" height={50} width={50} />

@@ -42,7 +42,9 @@ const ItemCard = ({ item, history }) => {
         {!quantityLeft ? (
           <span className="text-warning font-bold">Out of stock</span>
         ) : (
-          <p>Only: {quantityLeft} left !</p>
+          <p>
+            Only <span className="font-bold">{quantityLeft}</span> left
+          </p>
         )}
         <ul className="flex gap-2">
           {tags

@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 
 const CartItem = ({ itemID, history, quantity }) => {
   const [item, setItem] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
   useEffect(() => {
     const fetchItemByID = async () => {
       const config = {
@@ -34,7 +34,7 @@ const CartItem = ({ itemID, history, quantity }) => {
       }
     };
     fetchItemByID();
-  }, [loading]);
+  }, [setLoading, history, itemID]);
 
   const { title, thumbnail, price, sale, quantityLeft, _id } = {
     ...item,
@@ -48,10 +48,7 @@ const CartItem = ({ itemID, history, quantity }) => {
       },
     };
     try {
-      const { data } = await axios.delete(
-        "/api/cart/removeitembyid/" + _id,
-        config
-      );
+      await axios.delete("/api/cart/removeitembyid/" + _id, config);
     } catch (error) {
       setError("Error while trying to add item to cart");
       setTimeout(() => {
@@ -62,6 +59,7 @@ const CartItem = ({ itemID, history, quantity }) => {
   return (
     <>
       <div className="flex flex-col items-start justify-between gap-8 shadow-md p-8 rounded-lg bg-white cursor-pointer flex-grow transition-shadow hover:shadow lg:flex lg:flex-row">
+        {error}
         <div
           className="flex flex-grow gap-4"
           onClick={() => history.push("/item/" + _id)}

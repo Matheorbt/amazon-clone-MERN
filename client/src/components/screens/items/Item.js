@@ -12,6 +12,7 @@ const Item = ({ history }) => {
   const [cartError, setCartError] = useState("");
   const [cartSuccess, setCartSuccess] = useState("");
   const [loading, setLoading] = useState(true);
+  const [itemsListLoading, setItemsListLoading] = useState(true);
 
   const [item, setItem] = useState([""]);
   const [itemsList, setItemsList] = useState([""]);
@@ -31,8 +32,11 @@ const Item = ({ history }) => {
     if (!localStorage.getItem("authToken")) {
       history.push("/login");
     }
+  }, [history]);
 
+  useEffect(() => {
     const fetchItemByID = async () => {
+      setLoading(true);
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -46,9 +50,11 @@ const Item = ({ history }) => {
           config
         );
         setItem(data.item);
+        // Source du problème
+        setThumbnail(data.item.thumbnail);
+        setImages([...data.item.images, data.item.thumbnail]);
+        //
         setLoading(false);
-        setThumbnail(item.thumbnail);
-        setImages([...item.images, item.thumbnail]);
       } catch (error) {
         setLoading(true);
         setError("Error while trying to retrieve item by ID");
@@ -66,6 +72,17 @@ const Item = ({ history }) => {
       setItemRating(Math.round(average * 10) / 10);
     };
 
+    fetchItemByID();
+
+    item.comment ? getAverageRating() : setItemRating(-1);
+
+    return () => {
+      setItem([""]);
+    };
+  }, [itemID]);
+
+  useEffect(() => {
+    setItemsListLoading(true);
     const fetchItemList = async () => {
       const config = {
         headers: {
@@ -79,14 +96,16 @@ const Item = ({ history }) => {
         const itemListRaw = JSON.stringify(data);
         const itemList = JSON.parse(itemListRaw);
         setItemsList(itemList.itemsList);
+        // Source du problème
         setFilteredList(
-          itemsList.filter((itemListElement) =>
+          itemList.itemsList.filter((itemListElement) =>
             item.tags.some((f) => itemListElement.tags.includes(f))
           )
         );
-        setLoading(false);
+        //
+        setItemsListLoading(false);
       } catch (error) {
-        setLoading(true);
+        setItemsListLoading(true);
         setError("Error while trying to retrieve items");
         setTimeout(() => {
           setError("");
@@ -94,17 +113,7 @@ const Item = ({ history }) => {
       }
     };
     fetchItemList();
-    fetchItemByID();
-    item.comment ? getAverageRating() : setItemRating(3);
-  }, [
-    item.comment,
-    item.thumbnail,
-    item.images,
-    item.tags,
-    history,
-    itemID,
-    setItemsList,
-  ]);
+  }, [itemID, item]);
 
   const handleAddItemToCart = async () => {
     if (item.quantityLeft === 0) {
@@ -121,10 +130,7 @@ const Item = ({ history }) => {
       },
     };
     try {
-      const { data } = await axios.get(
-        "/api/cart/additembyid/" + itemID,
-        config
-      );
+      await axios.get("/api/cart/additembyid/" + itemID, config);
       setCartSuccess("Item added to cart successfuly !");
       setTimeout(() => {
         setCartSuccess("");
@@ -153,10 +159,7 @@ const Item = ({ history }) => {
       },
     };
     try {
-      const { data } = await axios.get(
-        "/api/cart/additembyid/" + itemID,
-        config
-      );
+      await axios.get("/api/cart/additembyid/" + itemID, config);
       history.push("/checkout");
     } catch (error) {
       setError("Error while trying to add item to cart");
@@ -182,10 +185,7 @@ const Item = ({ history }) => {
       },
     };
     try {
-      const { data } = await axios.get(
-        "/api/items/addcomment/" + itemID,
-        config
-      );
+      await axios.get("/api/items/addcomment/" + itemID, config);
     } catch (error) {
       setError(error);
       setTimeout(() => {
@@ -197,6 +197,7 @@ const Item = ({ history }) => {
   return (
     <div className="min-h-screen">
       <Navbar history={history} />
+      {error}
       {loading ? (
         <div className="w-[100%] flex items-center justify-center min-h-screen">
           <ReactLoading type="bubbles" color="#232F3F" height={50} width={50} />
@@ -255,18 +256,22 @@ const Item = ({ history }) => {
                 ) : (
                   <p>Only: {item.quantityLeft} left !</p>
                 )}
-                <div className="flex justify-center gap-2 items-center">
-                  <Rating
-                    emptySymbol="fa fa-star-o fa-2x"
-                    fullSymbol="fa fa-star fa-2x"
-                    fractions={2}
-                    initialRating={itemRating ? itemRating : 2.5}
-                    readonly={true}
-                  />
-                  <span className="italic">
-                    {itemRating ? itemRating : 2.5}
-                  </span>
-                </div>
+                {!itemRating ? (
+                  <div className="flex justify-center gap-2 items-center">
+                    <span className="italic">No review on this item yet</span>
+                  </div>
+                ) : (
+                  <div className="flex justify-center gap-2 items-center">
+                    <Rating
+                      emptySymbol="fa fa-star-o fa-2x"
+                      fullSymbol="fa fa-star fa-2x"
+                      fractions={2}
+                      initialRating={itemRating}
+                      readonly={true}
+                    />
+                    <span className="italic">{itemRating}</span>
+                  </div>
+                )}
               </div>
             </section>
             <div className="flex flex-col gap-3 shadow-md rounded-lg p-3">
@@ -294,7 +299,16 @@ const Item = ({ history }) => {
           </div>
           <hr />
           <div className="flex flex-col justify-center mx-4 scroll">
-            {filteredList.length > 1 ? (
+            {itemsListLoading ? (
+              <div className="w-[100%] flex items-center justify-center min-h-screen">
+                <ReactLoading
+                  type="bubbles"
+                  color="#232F3F"
+                  height={50}
+                  width={50}
+                />
+              </div>
+            ) : (
               <div>
                 <h1 className="font-bold text-xl">
                   More items comporting the tags{" "}
@@ -312,17 +326,9 @@ const Item = ({ history }) => {
                   ))}
                 </ul>
               </div>
-            ) : (
-              <div className="w-[100%] flex items-center justify-center min-h-screen">
-                <ReactLoading
-                  type="bubbles"
-                  color="#232F3F"
-                  height={50}
-                  width={50}
-                />
-              </div>
             )}
             <div className="flex flex-col gap-2 m-4">
+              <hr className="my-4" />
               <h1 className="font-bold text-2xl">Write a review</h1>
               <form
                 onSubmit={createComment}

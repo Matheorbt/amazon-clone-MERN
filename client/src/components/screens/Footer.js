@@ -1,17 +1,11 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import logo from "../../assets/logo/Amazon-logo_white.png";
 
 const Footer = ({ history }) => {
   const location = useLocation();
   const pathname = location.pathname;
-
-  const logoutHandler = () => {
-    localStorage.removeItem("authToken");
-    console.clear();
-    history.push("/login");
-  };
 
   return (
     <>

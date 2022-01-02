@@ -1,14 +1,26 @@
 import axios from "axios";
 
-const getTotalCart = async ({ shoppingBag }) => {
+const getTotalCart = (shoppingBag) => {
   let totalCart = 0;
-  //   shoppingBag.length > 1
-  //     ? shoppingBag.map((item) => (totalCart += getItemTotal(item)))
-  //     : getItemTotal(shoppingBag[0]);
+
+  if (shoppingBag.length > 1) {
+    shoppingBag.map((item) =>
+      getItemTotal(item).then((value) => {
+        return value;
+      })
+    );
+  } else {
+    totalCart = getItemTotal(shoppingBag[0]).then((value) => {
+      return value;
+    });
+  }
+
   return totalCart;
 };
 
-const getItemTotal = async ({ cartItem }) => {
+const getItemTotal = async (cartItem) => {
+  let itemPrice = 0;
+
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -21,10 +33,13 @@ const getItemTotal = async ({ cartItem }) => {
       "/api/items/fetchitembyid/" + cartItem.item,
       config
     );
-    return data.item.price * cartItem.quantity;
+    itemPrice =
+      (data.item.price - (data.item.sale * data.item.price) / 100) *
+      cartItem.quantity;
   } catch (error) {
-    return error;
+    itemPrice = 0;
   }
+  return itemPrice;
 };
 
 export { getTotalCart };

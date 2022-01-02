@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
+import ReactLoading from "react-loading";
 
 import Navbar from "../Navbar";
 
@@ -10,8 +11,6 @@ const OrderConfirmation = ({ history }) => {
   const [error, setError] = useState("");
 
   const [userInfo, setUserInfo] = useState([""]);
-
-  const [totalCart, setTotalCart] = useState(0);
 
   const [loading, setLoading] = useState(true);
 
@@ -32,14 +31,6 @@ const OrderConfirmation = ({ history }) => {
         const userInfos = JSON.parse(userInfosRaw);
         setUserInfo(userInfos);
         setLoading(false);
-        userInfo.shoppingBag
-          ? userInfo.shoppingBag.forEach((cartItem) => {
-              tempTotalCart += Math.floor(
-                cartItem.price - (cartItem.price / 100) * cartItem.sale
-              );
-            })
-          : (tempTotalCart = 0);
-        setTotalCart(tempTotalCart);
       } catch (error) {
         setError("Error while trying to retrieve user infos");
         setTimeout(() => {
@@ -48,42 +39,21 @@ const OrderConfirmation = ({ history }) => {
       }
     };
     getCurrentUser();
-  }, [history, loading, userInfo.shoppingBag]);
-
-  const hanldeCheckout = async () => {
-    let idsList = [];
-    userInfo.shoppingBag.forEach((item) => {
-      idsList.push(item._id);
-    });
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      },
-    };
-
-    try {
-      const { data } = await axios.post(
-        "/api/cart/checkout",
-        {
-          idsList,
-        },
-        config
-      );
-    } catch (error) {
-      setError("Error while trying to attempt checkout");
-      setTimeout(() => {
-        setError("");
-      }, 5000);
-    }
-  };
+  }, [history, setLoading, userInfo.shoppingBag]);
 
   return (
     <>
       <Navbar />
-      <div className="flex justify-center items-start min-h-screen font-bold">
-        <span>Merci pour votre commande n°{orderID}</span>
-      </div>
+      {error}
+      {loading ? (
+        <div className="w-[100%] flex items-center justify-center min-h-screen">
+          <ReactLoading type="bubbles" color="#232F3F" height={50} width={50} />
+        </div>
+      ) : (
+        <div className="flex justify-center items-start min-h-screen font-bold">
+          <span>Merci pour votre commande n°{orderID}</span>
+        </div>
+      )}
     </>
   );
 };

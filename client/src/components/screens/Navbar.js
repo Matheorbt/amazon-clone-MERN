@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import CartItem from "./cart/CartItem";
 
@@ -10,9 +10,6 @@ import { getTotalCart } from "../../utils/getTotalCart.js";
 import logo from "../../assets/logo/Amazon-logo_white.png";
 
 const Navbar = ({ history }) => {
-  const location = useLocation();
-  const pathname = location.pathname;
-
   const [error, setError] = useState("");
 
   const [searchTitle, setSearchTitle] = useState("");
@@ -28,20 +25,7 @@ const Navbar = ({ history }) => {
   const [dropdownToggled, setDropdownToggled] = useState(false);
   const [dropdownCartToggled, setDropdownCartToggled] = useState(false);
 
-  const tags = [
-    "Tous",
-    "Santé, nutrition",
-    "Immobilier",
-    "Mode",
-    "Courses",
-    "Cosmétiques",
-    "Electronique",
-  ];
-
   useEffect(() => {
-    let tempTotalCart = 0;
-    let tempTotalItemCart = 0;
-
     const getCurrentUser = async () => {
       const config = {
         headers: {
@@ -86,14 +70,21 @@ const Navbar = ({ history }) => {
       }
     };
 
+    let tempTotalCart = 0;
+    let tempTotalItemCart = 0;
+
+    if (userInfo.shoppingBag) {
+      tempTotalCart = getTotalCart(userInfo.shoppingBag) || 0;
+    }
+
+    setTotalCart(tempTotalCart >= 0 ? tempTotalCart : 0);
+    userInfo.shoppingBag
+      ? setTotalItemCart(userInfo.shoppingBag.length)
+      : setTotalItemCart(0);
+
     fetchItemList();
     getCurrentUser();
-    userInfo.shoppingBag
-      ? (tempTotalCart = getTotalCart(userInfo.shoppingBag))
-      : (tempTotalItemCart = 0);
-    setTotalCart(tempTotalCart > 0 ? tempTotalCart : 0);
-    setTotalItemCart(tempTotalItemCart);
-  }, [history, loading, userInfo.shoppingBag]);
+  }, [setItemsList, setUserInfo, userInfo.shoppingBag]);
 
   const handleEmptyCart = async () => {
     const config = {
@@ -104,7 +95,7 @@ const Navbar = ({ history }) => {
     };
 
     try {
-      const { data } = await axios.delete("/api/cart/clear", config);
+      await axios.delete("/api/cart/clear", config);
       this.forceUpdate();
     } catch (error) {
       setError("Error while trying to clear the cart");
@@ -277,7 +268,7 @@ const Navbar = ({ history }) => {
                     <div className="flex-col min-w-[150px] p-3 ">
                       <h3 className="font-bold  text-lg">Buy again</h3>
                       <ul>
-                        <li>(Liste des 5 derniers commandes)</li>
+                        <li>(Liste des 5 dernieres commandes)</li>
                       </ul>
                     </div>
                   </div>

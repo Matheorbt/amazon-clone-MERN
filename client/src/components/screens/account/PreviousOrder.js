@@ -40,6 +40,7 @@ const PreviousOrder = ({ history }) => {
   return (
     <>
       <Navbar />
+      {error}
       {loading ? (
         <div className="w-[100%] flex items-center justify-center">
           <ReactLoading type="bubbles" color="#232F3F" height={50} width={50} />
