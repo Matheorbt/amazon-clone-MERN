@@ -15,7 +15,6 @@ const Item = ({ history }) => {
   const [itemsListLoading, setItemsListLoading] = useState(true);
 
   const [item, setItem] = useState([""]);
-  const [itemsList, setItemsList] = useState([""]);
   const [thumbnail, setThumbnail] = useState("");
   const [images, setImages] = useState([""]);
 
@@ -50,10 +49,8 @@ const Item = ({ history }) => {
           config
         );
         setItem(data.item);
-        // Source du problème
         setThumbnail(data.item.thumbnail);
         setImages([...data.item.images, data.item.thumbnail]);
-        //
         setLoading(false);
       } catch (error) {
         setLoading(true);
@@ -95,14 +92,13 @@ const Item = ({ history }) => {
         const { data } = await axios.get("/api/items/list", config);
         const itemListRaw = JSON.stringify(data);
         const itemList = JSON.parse(itemListRaw);
-        setItemsList(itemList.itemsList);
-        // Source du problème
         setFilteredList(
-          itemList.itemsList.filter((itemListElement) =>
-            item.tags.some((f) => itemListElement.tags.includes(f))
-          )
+          itemList.itemsList
+            .filter((itemListElement) =>
+              item.tags.some((f) => itemListElement.tags.includes(f))
+            )
+            .filter((itemListElement) => itemListElement._id !== item._id)
         );
-        //
         setItemsListLoading(false);
       } catch (error) {
         setItemsListLoading(true);
@@ -197,7 +193,6 @@ const Item = ({ history }) => {
   return (
     <div className="min-h-screen">
       <Navbar history={history} />
-      {error}
       {loading ? (
         <div className="w-[100%] flex items-center justify-center min-h-screen">
           <ReactLoading type="bubbles" color="#232F3F" height={50} width={50} />
@@ -256,7 +251,7 @@ const Item = ({ history }) => {
                 ) : (
                   <p>Only: {item.quantityLeft} left !</p>
                 )}
-                {!itemRating ? (
+                {itemRating === -1 || !itemRating ? (
                   <div className="flex justify-center gap-2 items-center">
                     <span className="italic">No review on this item yet</span>
                   </div>
